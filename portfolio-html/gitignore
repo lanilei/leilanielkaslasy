@@ -1,0 +1,5 @@
+# Ignore old HTML versions
+index-v*.html
+
+# Ignore macOS files
+.DS_Store
