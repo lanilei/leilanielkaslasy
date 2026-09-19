@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leilani Elkaslasy - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            background: rgb(30, 64, 120);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a237e;
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #4fc3f7;
+        }
+
+        /* Hero Section */
+        #hero {
+            position: relative;
+            min-height: 30vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow: hidden;
+            background: linear-gradient(180deg, #e0f7fa 0%, #80deea 50%, rgb(30, 64, 120) 100%);
+            max-width: none;
+            margin: 0;
+            width: 100%;
+        }
+
+        .headshot-container {
+            position: absolute;
+            bottom: 0;
+            z-index: 2;
+        }
+
+        .headshot {
+            width: 200px;
+            height: auto;
+            object-fit: cover;
+        }
+
+        /* Floating Bubbles */
+        .floating-bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .topic-bubble {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            pointer-events: all;
+            transition: all 0.3s ease;
+        }
+
+        .topic-bubble:hover {
+            transform: scale(1.15);
+        }
+
+        .icon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            padding: 10px;
+        }
+
+        .bubble-icon {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .bubble-label {
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: center;
+            color: #333;
+            max-width: 150px;
+        }
+
+        /* Position bubbles */
+        .bubble-1 {
+            top: 15%;
+            left: 20%;
+            animation: float1 6s ease-in-out infinite;
+        }
+
+        .bubble-2 {
+            top: 15%;
+            right: 20%;
+            animation: float2 7s ease-in-out infinite;
+        }
+
+        .bubble-3 {
+            bottom: 30%;
+            left: 15%;
+            animation: float3 8s ease-in-out infinite;
+        }
+
+        .bubble-4 {
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: float4 7.5s ease-in-out infinite;
+        }
+
+        .bubble-5 {
+            bottom: 30%;
+            right: 15%;
+            animation: float5 6.5s ease-in-out infinite;
+        }
+
+        /* Bubble colors */
+        .bubble-1 .icon-wrapper { background: linear-gradient(135deg, #4fc3f7, #29b6f6); }
+        .bubble-2 .icon-wrapper { background: linear-gradient(135deg, #66bb6a, #43a047); }
+        .bubble-3 .icon-wrapper { background: linear-gradient(135deg, #26c6da, #00acc1); }
+        .bubble-4 .icon-wrapper { background: linear-gradient(135deg, #5c6bc0, #3949ab); }
+        .bubble-5 .icon-wrapper { background: linear-gradient(135deg, #81c784, #66bb6a); }
+
+        /* Animations - bouncing off edges */
+        @keyframes float1 {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(40px, -40px); }
+            50% { transform: translate(80px, 0); }
+            75% { transform: translate(40px, 40px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        @keyframes float2 {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-40px, 40px); }
+            50% { transform: translate(-80px, 0); }
+            75% { transform: translate(-40px, -40px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        @keyframes float3 {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(50px, 50px); }
+            50% { transform: translate(0, 100px); }
+            75% { transform: translate(-50px, 50px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        @keyframes float4 {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-50px, -50px); }
+            50% { transform: translate(0, -100px); }
+            75% { transform: translate(50px, -50px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        @keyframes float5 {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(60px, -30px); }
+            50% { transform: translate(120px, 0); }
+            75% { transform: translate(60px, 30px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            display: inline-block;
+            font-size: 1rem;
+            color: white;
+            animation: bounce 2s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        /* Content Sections */
+        section {
+            padding: 5rem 2rem;
+            min-height: 60vh;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: transparent;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* About Me Section */
+        #about {
+            background: #f5f5f5;
+        }
+        
+        #about h2 {
+            color: #1a237e;
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: start;
+            margin-bottom: 3rem;
+        }
+
+        .about-photo {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .info-boxes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .info-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .info-box h3 {
+            color: #1a237e;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #4fc3f7;
+            padding-bottom: 0.5rem;
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-box li {
+            padding: 0.5rem 0;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .info-box li strong {
+            color: #1a237e;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Core Values specific styling */
+        .info-box:first-child li {
+            padding: 0.75rem 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-boxes {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            margin: 0.25rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .badge.electrical-engineering {
+            background: linear-gradient(135deg, #4fc3f7, #29b6f6);
+        }
+
+        .badge.design {
+            background: linear-gradient(135deg, #66bb6a, #43a047);
+        }
+
+        .badge.accessibility {
+            background: linear-gradient(135deg, #26c6da, #00acc1);
+        }
+
+        .badge.leadership {
+            background: linear-gradient(135deg, #5c6bc0, #3949ab);
+        }
+
+        .badge.sustainability {
+            background: linear-gradient(135deg, #81c784, #66bb6a);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Navigation */
+            nav {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0.75rem 1rem;
+            }
+            
+            .nav-name {
+                font-size: 1.2rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                justify-content: center;
+            }
+            
+            nav li {
+                font-size: 0.85rem;
+            }
+            
+            /* Hero section */
+            #hero {
+                padding: 1rem;
+                min-height: 28vh;
+            }
+            
+            .headshot { 
+                width: 125px;
+                height: auto;
+            }
+            
+            /* Floating bubbles */
+            .topic-bubble { 
+                padding: 0.75rem;
+                font-size: 0.7rem;
+            }
+            
+            .icon-wrapper { 
+                width: 40px;
+                height: 40px;
+                padding: 6px;
+            }
+            
+            .bubble-label {
+                font-size: 0.75rem;
+                max-width: 80px;
+            }
+            
+            /* Reposition bubbles for mobile */
+            .bubble-1 { 
+                top: 10%;
+                left: 5%;
+            }
+            
+            .bubble-2 { 
+                top: 10%;
+                right: 5%;
+            }
+            
+            .bubble-3 { 
+                bottom: 35%;
+                left: 5%;
+            }
+            
+            .bubble-4 { 
+                top: 25%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .bubble-5 { 
+                bottom: 35%;
+                right: 5%;
+            }
+            
+            .scroll-hint {
+                font-size: 0.85rem;
+                bottom: 1rem;
+            }
+            
+            /* About section */
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .info-boxes {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            /* Project/Research/Work items */
+            .item-container, .item-container.reverse {
+                grid-template-columns: 1fr;
+                direction: ltr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            .item-image {
+                height: 200px;
+            }
+            
+            .item-content h3 {
+                font-size: 1.4rem;
+            }
+            
+            .item-content p {
+                font-size: 0.95rem;
+            }
+            
+            /* Section headings */
+            section h2 {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 3rem 1rem;
+            }
+        }
+
+        /* Project/Research/Work Item Styling */
+        .item-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .item-container.reverse {
+            direction: rtl;
+        }
+
+        .item-container.reverse > * {
+            direction: ltr;
+        }
+
+        .item-image {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .item-content h3 {
+            font-size: 1.8rem;
+            color: #1a237e;
+            margin-bottom: 1rem;
+        }
+
+        .item-content p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .item-badges {
+            margin-bottom: 1.5rem;
+        }
+
+        .learn-more {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #4fc3f7, #29b6f6);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .learn-more:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 195, 247, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .item-container, .item-container.reverse {
+                grid-template-columns: 1fr;
+                direction: ltr;
+            }
+            
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-boxes {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Add mobile-specific responsive rules */
+            nav {
+                padding: 1rem;
+            }
+            
+            section {
+                padding: 3rem 1rem;
+            }
+        }
+        /* ===== FILTER ICON BARS (hero bottom + sticky top) ===== */
+        .filter-icons {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        .filter-icons .topic-bubble {
+            flex-direction: row;
+            gap: 0.5rem;
+            align-items: center;
+            padding: 0.35rem 0.85rem 0.35rem 0.4rem;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 999px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            text-decoration: none;
+        }
+        .filter-icons .topic-bubble:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 16px rgba(0, 0, 0, 0.18);
+        }
+        .filter-icons .topic-bubble.active {
+            box-shadow: 0 0 0 2px #29b6f6, 0 5px 16px rgba(41, 182, 246, 0.45);
+        }
+        .filter-icons .icon-wrapper {
+            width: 38px;
+            height: 38px;
+            padding: 7px;
+            flex: none;
+        }
+        .filter-icons .bubble-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #1a237e;
+            max-width: none;
+            white-space: nowrap;
+        }
+        /* category colors */
+        .icon-wrapper.ee     { background: linear-gradient(135deg, #4fc3f7, #29b6f6); }
+        .icon-wrapper.design { background: linear-gradient(135deg, #66bb6a, #43a047); }
+        .icon-wrapper.a11y   { background: linear-gradient(135deg, #26c6da, #00acc1); }
+        .icon-wrapper.lead   { background: linear-gradient(135deg, #5c6bc0, #3949ab); }
+        .icon-wrapper.sustain{ background: linear-gradient(135deg, #81c784, #66bb6a); }
+
+        /* hero bottom bar */
+        .hero-filter {
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            z-index: 4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 1.1rem 1rem 1.4rem;
+            background: linear-gradient(0deg, rgba(7, 28, 70, 0.65) 30%, rgba(7, 28, 70, 0));
+        }
+        .hero-filter .filter-hint {
+            color: #fff;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        /* sticky top bar */
+        .filter-sticky {
+            position: fixed;
+            left: 0; right: 0; top: 64px;
+            z-index: 900;
+            display: flex;
+            justify-content: center;
+            padding: 0.55rem 1rem;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 3px 14px rgba(0, 0, 0, 0.12);
+            transform: translateY(-130%);
+            transition: transform 0.35s ease;
+        }
+        .filter-sticky.show { transform: translateY(0); }
+        .filter-sticky .topic-bubble {
+            background: #f3f6fc;
+            box-shadow: none;
+        }
+        .filter-sticky .topic-bubble:hover { background: #fff; }
+
+        @media (max-width: 768px) {
+            .filter-icons .bubble-label { font-size: 0.72rem; }
+            .filter-icons .icon-wrapper { width: 32px; height: 32px; padding: 6px; }
+            .filter-sticky { padding: 0.45rem 0.5rem; }
+            .filter-sticky .filter-icons { gap: 0.4rem; }
+        }
+
+        /* ===== BLUEPRINT INTRO CURTAIN ===== */
+        body.bp-locked { overflow: hidden; }
+
+        .bp-layer { position: fixed; inset: 0; z-index: 9999; }
+        .bp-layer.bp-rolled { pointer-events: none; }
+
+        .bp-paper {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
+            overflow: hidden;
+            transition: height 2.9s cubic-bezier(.76,0,.24,1);
+        }
+        .bp-layer.bp-rolled .bp-paper { height: 0; }
+
+        .bp-sheet {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
+            background:
+              /* aged darker edges */
+              radial-gradient(ellipse at 50% 45%, transparent 48%, rgba(3,12,38,.55) 100%),
+              /* fold creases (tri-fold + centre) */
+              linear-gradient(90deg, transparent calc(33.33% - 1px), rgba(0,0,0,.12) 33.33%, rgba(255,255,255,.06) calc(33.33% + 1px), transparent calc(33.33% + 2px)),
+              linear-gradient(90deg, transparent calc(66.66% - 1px), rgba(0,0,0,.12) 66.66%, rgba(255,255,255,.06) calc(66.66% + 1px), transparent calc(66.66% + 2px)),
+              linear-gradient(0deg, transparent calc(50% - 1px), rgba(0,0,0,.12) 50%, rgba(255,255,255,.06) calc(50% + 1px), transparent calc(50% + 2px)),
+              /* uneven ink tone */
+              radial-gradient(circle at 50% 38%, rgba(60,120,220,.32), transparent 60%),
+              /* grid */
+              repeating-linear-gradient(0deg, transparent 0 24px, rgba(219,232,255,.16) 24px 25px),
+              repeating-linear-gradient(90deg, transparent 0 24px, rgba(219,232,255,.16) 24px 25px),
+              repeating-linear-gradient(0deg, transparent 0 124px, rgba(219,232,255,.30) 124px 125px),
+              repeating-linear-gradient(90deg, transparent 0 124px, rgba(219,232,255,.30) 124px 125px),
+              linear-gradient(160deg, #0c356e 0%, #072350 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        /* paper grain overlay */
+        .bp-texture {
+            position: absolute; inset: 0; pointer-events: none; z-index: 1;
+            background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='200'%20height='200'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.8'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='saturate'%20values='0'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            opacity: 0.45;
+            mix-blend-mode: overlay;
+        }
+        .bp-sheet::before, .bp-sheet::after {
+            content: ""; position: absolute; width: 34px; height: 34px;
+            border: 2px solid rgba(219,232,255,.30);
+        }
+        .bp-sheet::before { top: 26px; left: 26px; border-right: none; border-bottom: none; }
+        .bp-sheet::after { bottom: 26px; right: 26px; border-left: none; border-top: none; }
+
+        .bp-name-wrap { width: min(86vw, 900px); text-align: center; z-index: 2; }
+        .bp-name-svg { width: 100%; height: auto; overflow: visible; }
+        .bp-name-text {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 92px;
+            fill: transparent; stroke: #dbe8ff; stroke-width: 1.1;
+            stroke-dasharray: 7000; stroke-dashoffset: 7000;
+            animation: bpDraw 3.4s ease forwards .5s, bpInk 1.2s ease forwards 3.6s;
+        }
+        @keyframes bpDraw { to { stroke-dashoffset: 0; } }
+        @keyframes bpInk { to { fill: #dbe8ff; } }
+
+        .bp-subtitle {
+            font-family: 'Share Tech Mono', monospace;
+            color: rgba(219,232,255,.6);
+            letter-spacing: .35em; text-transform: uppercase;
+            font-size: clamp(.7rem, 1.6vw, 1rem);
+            margin-top: 1.2rem; opacity: 0;
+            animation: bpFadeUp .9s ease forwards 4.2s;
+        }
+        @keyframes bpFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+        .bp-titleblock {
+            position: absolute; bottom: 26px; right: 64px;
+            font-family: 'Share Tech Mono', monospace;
+            color: rgba(219,232,255,.6); font-size: .72rem; line-height: 1.5;
+            border: 1.5px solid rgba(219,232,255,.30); text-align: left;
+            opacity: 0; animation: bpFadeUp .8s ease forwards 4.4s;
+        }
+        .bp-titleblock div { padding: .35rem .8rem; border-bottom: 1.5px solid rgba(219,232,255,.30); }
+        .bp-titleblock div:last-child { border-bottom: none; }
+        .bp-titleblock strong { color: #dbe8ff; }
+
+        .bp-scrollcue {
+            position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%);
+            font-family: 'Share Tech Mono', monospace; color: rgba(219,232,255,.6);
+            font-size: .8rem; letter-spacing: .2em; opacity: 0;
+            animation: bpFadeUp .8s ease forwards 4.6s, bpBob 2s ease-in-out infinite 5s;
+        }
+        @keyframes bpBob { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
+
+        .bp-roll {
+            position: absolute; left: -2%; width: 104%; height: 74px;
+            top: calc(100vh - 37px); border-radius: 37px;
+            background:
+              /* soft shadow of the sheet lip tucking into the roll */
+              linear-gradient(180deg, rgba(0,0,0,.35) 0%, transparent 14%),
+              /* cylinder shading with a bright specular highlight */
+              linear-gradient(180deg,
+                #061a3d 0%, #0c356e 14%, #1b4f9c 32%,
+                #7aa6e6 46%, #eef4ff 50%, #7aa6e6 54%,
+                #1b4f9c 68%, #0c356e 86%, #061a3d 100%);
+            box-shadow: 0 26px 54px rgba(0,0,0,.55),
+                        inset 0 3px 0 rgba(255,255,255,.25),
+                        inset 0 -4px 8px rgba(0,0,0,.4);
+            transition: top 2.9s cubic-bezier(.76,0,.24,1);
+        }
+        /* spiral end caps — the coiled paper seen end-on */
+        /* curled paper lip bending over the top of the roll */
+        .bp-curl {
+            position: absolute; left: 0; right: 0; top: -20px;
+            height: 42px; pointer-events: none;
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            background:
+              repeating-linear-gradient(90deg, transparent 0 24px, rgba(219,232,255,.10) 24px 25px),
+              linear-gradient(180deg,
+                #0e3c7d 0%, #24589f 38%, #b6d2f5 66%, #eef4ff 82%, #6f9fe0 100%);
+            box-shadow: 0 -14px 20px -8px rgba(0,0,0,.5);
+        }
+        /* while rolling up, the whole scroll rides to the top */
+        .bp-layer.bp-rolled .bp-roll { top: -37px; }
+    </style>
+</head>
+<body>
+    <!-- ===== BLUEPRINT INTRO CURTAIN ===== -->
+    <div class="bp-layer" id="bpLayer">
+        <div class="bp-paper">
+            <div class="bp-sheet">
+                <div class="bp-texture"></div>
+                <div class="bp-name-wrap">
+                    <svg class="bp-name-svg" viewBox="0 0 900 170" preserveAspectRatio="xMidYMid meet">
+                        <text class="bp-name-text" x="450" y="118" text-anchor="middle" textLength="820" lengthAdjust="spacingAndGlyphs">Leilani Elkaslasy</text>
+                    </svg>
+                </div>
+                <div class="bp-subtitle">Engineer &nbsp;·&nbsp; Designer &nbsp;·&nbsp; Leader</div>
+                <div class="bp-titleblock">
+                    <div><strong>PORTFOLIO</strong></div>
+                    <div>DWG. NO. &nbsp;001</div>
+                    <div>SCALE &nbsp;1:1</div>
+                </div>
+                <div class="bp-scrollcue">▼ &nbsp;SCROLL TO ROLL UP</div>
+            </div>
+            <div class="bp-roll"><div class="bp-curl"></div></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#hero" class="nav-name">Leilani Elkaslasy</a>
+        <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#research">Research</a></li>
+            <li><a href="#experience">Work Experience</a></li>
+            <li><a href="#resume">Resume</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Sticky filter bar (appears after hero scrolls away) -->
+    <div class="filter-sticky" id="filterSticky">
+        <div class="filter-icons">
+            <a href="#projects" class="topic-bubble" data-filter="electrical-engineering">
+                <span class="icon-wrapper ee"><img src="images/circuit.png" class="bubble-icon" alt="Electrical Engineering"></span>
+                <span class="bubble-label">Electrical Engineering</span>
+            </a>
+            <a href="#projects" class="topic-bubble" data-filter="design">
+                <span class="icon-wrapper design"><img src="images/design.png" class="bubble-icon" alt="Design"></span>
+                <span class="bubble-label">Design</span>
+            </a>
+            <a href="#projects" class="topic-bubble" data-filter="accessibility">
+                <span class="icon-wrapper a11y"><img src="images/ADA.png" class="bubble-icon" alt="Accessibility"></span>
+                <span class="bubble-label">Accessibility</span>
+            </a>
+            <a href="#projects" class="topic-bubble" data-filter="leadership">
+                <span class="icon-wrapper lead"><img src="images/leadership.png" class="bubble-icon" alt="Leadership"></span>
+                <span class="bubble-label">Leadership</span>
+            </a>
+            <a href="#projects" class="topic-bubble" data-filter="sustainability">
+                <span class="icon-wrapper sustain"><img src="images/sustainability.png" class="bubble-icon" alt="Sustainability"></span>
+                <span class="bubble-label">Sustainability</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="headshot-container">
+            <img src="images/portfolioheadshot.PNG" class="headshot" alt="Leilani Elkaslasy">
+        </div>
+        
+        <div class="hero-filter">
+            <span class="filter-hint">Filter my work by focus area</span>
+            <div class="filter-icons">
+                <a href="#projects" class="topic-bubble" data-filter="electrical-engineering">
+                    <span class="icon-wrapper ee">
+                        <img src="images/circuit.png" class="bubble-icon" alt="Electrical Engineering">
+                    </span>
+                    <span class="bubble-label">Electrical Engineering</span>
+                </a>
+                <a href="#projects" class="topic-bubble" data-filter="design">
+                    <span class="icon-wrapper design">
+                        <img src="images/design.png" class="bubble-icon" alt="Design">
+                    </span>
+                    <span class="bubble-label">Design</span>
+                </a>
+                <a href="#projects" class="topic-bubble" data-filter="accessibility">
+                    <span class="icon-wrapper a11y">
+                        <img src="images/ADA.png" class="bubble-icon" alt="Accessibility">
+                    </span>
+                    <span class="bubble-label">Accessibility</span>
+                </a>
+                <a href="#projects" class="topic-bubble" data-filter="leadership">
+                    <span class="icon-wrapper lead">
+                        <img src="images/leadership.png" class="bubble-icon" alt="Leadership">
+                    </span>
+                    <span class="bubble-label">Leadership</span>
+                </a>
+                <a href="#projects" class="topic-bubble" data-filter="sustainability">
+                    <span class="icon-wrapper sustain">
+                        <img src="images/sustainability.png" class="bubble-icon" alt="Sustainability">
+                    </span>
+                    <span class="bubble-label">Sustainability</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about">
+        <h2>About Me</h2>
+        
+        <div class="about-container">
+            <img src="images/aboutme.jpeg" alt="Leilani Elkaslasy" class="about-photo">
+            
+            <div class="about-text">
+                <p>Hi I'm Leilani! Welcome to my portfolio! I am an engineer who loves to combine deep technical expertise with design thinking and creative problem solving. My greatest strength is my ability to adapt and learn quickly, diving in head first to bridge the gap between my experience and the task at hand. This is something I've honed through a broad range of unique experiences and projects. I'm a dedicated team member and love to assess the team and design space and move forward where I am most needed. I am excited to enter industry with curiosity and enthusiasm as I continue to grow.</p>
+            </div>
+        </div>
+
+        <div class="info-boxes">
+            <div class="info-box">
+                <h3>Core Values</h3>
+                <ul>
+                    <li>Collaboration</li>
+                    <li>Intensity</li>
+                    <li>Impact</li>
+                    <li>Creativity</li>
+                    <li>Adaptability</li>
+                    <li>Integrity</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>Skills</h3>
+                <ul>
+                    <li><strong>Programming:</strong> Python, R, System Verilog, C++, Assembly Language, Matlab</li>
+                    <li><strong>Software:</strong> Lattice FPGA, Questa, SolidWorks, COMSOL, LabView, KiCad, Keyshot</li>
+                    <li><strong>Machining:</strong> Lathe, mill, laser cutting, soldering, CNC machine, bandsaw, welding, reflow oven (PCB assembly)</li>
+                    <li><strong>Outdoor:</strong> Divemaster, AAUS scientific diver, expedition research, Wilderness First Aid</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>Education</h3>
+                <ul>
+                    <li><strong>Harvey Mudd College</strong></li>
+                    <li>Bachelor's in Engineering</li>
+                    <li>Emphasis: Environmental Analysis</li>
+                    <li>Minor: Art</li>
+                    <li>GPA: 3.5 (Dean's List)</li>
+                    <li>Graduation: May 2026</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2>Projects</h2>
+
+        <!-- PROJECT 1 - Image Left -->
+        <!-- NOTE: This project links to project1.html which embeds https://tlilygren.github.io/e155-project-portfolio/ -->
+        <div class="item-container">
+            <img src="images/project1.jpeg" alt="Barcode Beats" class="item-image">
+            
+            <div class="item-content">
+                <h3>Barcode Beats</h3>
+                
+                <div class="item-badges">
+                    <span class="badge electrical-engineering">Electrical Engineering</span>
+                    <span class="badge design">Design</span>
+                </div>
+                
+                <p>Built a digital synthesizer out of a barcode scanner by implementing a digital signal processing pipeline on an FPGA and MCU that manipulates a square-wave input from a barcode scanner to output an audible frequency-modulated sine wave in response to scanning a barcode pattern.</p>
+                
+                <a href="project1.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- PROJECT 2 - Image Right -->
+        <!-- NOTE: This project links to project2.html which embeds https://lanilei.github.io/E155portfolio/ -->
+        <div class="item-container reverse">
+            <img src="images/project2.png" alt="Microprocessor Systems and Design Coursework" class="item-image">
+            
+            <div class="item-content">
+                <h3>Microprocessor Systems and Design Coursework</h3>
+                
+                <div class="item-badges">
+                    <span class="badge electrical-engineering">Electrical Engineering</span>
+                </div>
+                
+                <p>Series of embedded systems projects on MCU and FPGA for E155 demonstrating mastery of MCU and FPGA programming and communication protocols.</p>
+                
+                <a href="project2.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- PROJECT 3 - Image Left -->
+        <div class="item-container">
+            <img src="images/project3.png" alt="Designed a Multicycle RISC-V Processor" class="item-image">
+            <div class="item-content">
+                <h3>Designed a Multicycle RISC-V Processor</h3>
+                <div class="item-badges">
+                    <span class="badge electrical-engineering">Electrical Engineering</span>
+                </div>
+                <p>Designed and implemented a multicycle RISC-V processor in SystemVerilog with unified memory and modified control signals. Simulated and verified functionality on Intel Quartus, achieving full test coverage and adapting single-cycle components developed in previous coursework.</p>
+                <a href="project3.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- PROJECT 4 - Image Right -->
+        <div class="item-container reverse">
+            <img src="images/project4.png" alt="Built an RV12 Aircraft" class="item-image">
+            <div class="item-content">
+                <h3>Built an RV12 Aircraft</h3>
+                <div class="item-badges">
+                    <span class="badge electrical-engineering">Electrical Engineering</span>
+                    <span class="badge design">Design</span>
+                </div>
+                <p>Built a Vans RV12is two-seat light sport aircraft fabricated primarily from sheet metal and pop rivets, with a 100 horsepower Rotax engine and Garmin VFR avionics. Aircraft Completed FAA inspections. Helped assemble the plane body and installed all avionics.</p>
+                <a href="project4.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- PROJECT 5 - Image Left -->
+        <div class="item-container">
+            <img src="images/project5.png" alt="Autonomous Underwater Vehicle Design" class="item-image">
+            <div class="item-content">
+                <h3>Autonomous Underwater Vehicle Design</h3>
+                <div class="item-badges">
+                    <span class="badge design">Design</span>
+                    <span class="badge electrical-engineering">Electrical Engineering</span>
+                </div>
+                <p>Designed and deployed an Autonomous Surface Vehicle to compare different hydrodynamics of cone and dome shaped nose cones in the ocean. The purpose of the experiment was to compare simulation to reality in a non-ideal environment to consider how both methods can be used to predict the behavior of underwater vehicles. The robot measured its own velocity along with the applied drag force to the nose cones and autonomously navigating a predetermined route using an embedded GPS.</p>
+                <a href="project5.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- PROJECT 6 - Image Right -->
+        <div class="item-container reverse">
+            <img src="images/project6.webp" alt="Skin on Frame Kayak" class="item-image">
+            <div class="item-content">
+                <h3>Skin on Frame Kayak</h3>
+                <div class="item-badges">
+                    <span class="badge design">Design</span>
+                </div>
+                <p>Designed and built a skin on frame kayak out of wood and treated canvas.</p>
+                <a href="project6.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- PROJECT 7 - Image Left -->
+        <div class="item-container">
+            <img src="images/project7.jpeg" alt="Adaptive Design Assistive Devices" class="item-image">
+            <div class="item-content">
+                <h3>Adaptive Design Assistive Devices</h3>
+                <div class="item-badges">
+                    <span class="badge accessibility">Accessibility</span>
+                    <span class="badge design">Design</span>
+                </div>
+                <p>Built a series of assistive devices including chairs, communication tools, and mobility devices during my tenure at the ADA.</p>
+                <a href="project7.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- PROJECT 8 - Image Right -->
+        <div class="item-container reverse">
+            <img src="images/project8.png" alt="Beach Furniture Made from Reclaimed Materials" class="item-image">
+            <div class="item-content">
+                <h3>Beach Furniture Made from Reclaimed Materials for the Cape Eleuthera Research Institute</h3>
+                <div class="item-badges">
+                    <span class="badge design">Design</span>
+                    <span class="badge accessibility">Accessibility</span>
+                    <span class="badge sustainability">Sustainability</span>
+                </div>
+                <p>After talking to the Cape Eleuthera community and discovering what infrastructure could increase beach accessibility and recreation, I built a tetherball net out of a reclaimed sailboat mast, tire and concrete; Built and installed a retractable shade structure out of self-milled invasive casuarina pine; Built a picnic table out of junkyard wood and rubber lumbar.</p>
+                <a href="project8.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- PROJECT 9 - Image Left -->
+        <div class="item-container">
+            <img src="images/project9.png" alt="Wearable Sculptures Made from Recycled PCBS, Gummy Bears, Gum Wrappers" class="item-image">
+            <div class="item-content">
+                <h3>Wearable Sculptures Made from Recycled PCBS, Gummy Bears, Gum Wrappers</h3>
+                <div class="item-badges">
+                    <span class="badge design">Design</span>
+                </div>
+                <p>Built wearable sculptures out of Recycled E-waste, Gummy Bears and Gum Wrappers. All pieces involved attaching components to each other without the use of a base.</p>
+                <a href="project9.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- PROJECT 10 - Image Right -->
+        <div class="item-container reverse">
+            <img src="images/project10.png" alt="Student Garden Ceramic Infrastructure" class="item-image">
+            <div class="item-content">
+                <h3>Student Garden Ceramic Infrastructure</h3>
+                <div class="item-badges">
+                    <span class="badge design">Design</span>
+                    <span class="badge leadership">Leadership</span>
+                </div>
+                <p>Created a passive watering system by making and installing hoyas a traditional indigenous way of watering plants through porous clay, an adobe native wildflower seed bomb pollinator garden to support native species, chicken furniture to support enrichment for the chickens, restored a neglected pomelo tree by building and installing tree supports, and created fruit bowls to be placed throughout campus for students to eat the fruits grown in the garden that previously went unnoticed. This was a collaborative effort that involved understanding community interactions with the garden, garden steward needs, and collaborating with a group of artists.</p>
+                <a href="project10.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Section -->
+    <section id="research">
+        <h2>Research</h2>
+
+        <!-- RESEARCH 1 - Image Left -->
+        <div class="item-container">
+            <img src="images/research1.jpeg" alt="Tribology Lab" class="item-image">
+            <!-- ADD: research1 thumbnail image -->
+            
+            <div class="item-content">
+                <h3>Tribology Lab</h3>
+                <p style="font-style: italic; color: #666; margin-bottom: 0.5rem;">Harvey Mudd College</p>
+                
+                <div class="item-badges">
+                    <span class="badge design">Design</span>
+                    <span class="badge sustainability">Sustainability</span>
+                </div>
+                
+                <p>Developed a novel ceramic resin and calculated the average abrasiveness of available commercial resins for the purpose of additive manufacturing through Stereolithography 3-D printing. Co-Authored 3 abstracts and 2 posters presented and published through the Society of Tribologists and Lubricant Engineers 2025 conference.</p>
+                
+                <a href="research1.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- RESEARCH 2 - Image Right -->
+        <div class="item-container reverse">
+            <img src="images/research2.png" alt="VLSI Lab" class="item-image">
+            
+            <div class="item-content">
+                <h3>VLSI Lab</h3>
+                <h4 style="color: #666; font-size: 1.1rem; margin-bottom: 1rem;">Harvey Mudd College</h4>
+                
+                <div class="item-badges">
+                    <span class="badge electrical-engineering">Electrical Engineering</span>
+                </div>
+                
+                <p>Volunteered for the Clay-Wolkin Fellowship at Harvey Mudd Designing Wally, a CORE-V RISC-V microprocessor in collaboration with the Open Hardware Group. Involved in design and verification of the processor. Co-developed a python script that automates a daily run of all test benches, updating our team of bugs daily.</p>
+                
+                <a href="research2.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- RESEARCH 3 -->
+        <div class="item-container">
+            <img src="images/research3.jpeg" alt="Bahena Water Research Lab" class="item-image">
+            
+            <div class="item-content">
+                <h3>Bahena Water Research Lab</h3>
+                <p style="font-style: italic; color: #666; margin-bottom: 0.5rem;">Harvey Mudd College</p>
+                
+                <div class="item-badges">
+                    <span class="badge sustainability">Sustainability</span>
+                </div>
+                
+                <p>Built a fully automated bench-scale reverse osmosis system using LabVIEW to reduce manual testing time by 90%, enabling multi-day continuous operation. Research supports optimization of power plant water reuse.</p>
+                
+                <a href="research3.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- RESEARCH 4 - Image Right -->
+        <div class="item-container reverse">
+            <img src="images/research4.png" alt="Kelp Forest Ecology" class="item-image">
+            <div class="item-content">
+                <h3>Kelp Forest Ecology</h3>
+                <p style="font-style: italic; color: #666; margin-bottom: 1rem;">Stanford's Hopkins Marine Station</p>
+                
+                <div class="item-badges">
+                    <span class="badge sustainability">Sustainability</span>
+                </div>
+                
+                <p>Conducted underwater diving surveys of local giant kelp forests continuing the longest running kelp dataset (30 years). Co-Created an open-source database of benthic and ocean floor survey videos for national research efforts. Designed and conducted original research project investigating nudibranchs and sea sponge interdependence.</p>
+                
+                <a href="research4.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- RESEARCH 5 - Image Left -->
+        <div class="item-container">
+            <img src="images/research5.webp" alt="Reading Outreach Research" class="item-image">
+            <div class="item-content">
+                <h3>Reading Outreach Research</h3>
+                <p><strong>Eleuthera, Bahamas</strong></p>
+                <div class="item-badges">
+                    <span class="badge leadership">Leadership</span>
+                    <span class="badge accessibility">Accessibility</span>
+                </div>
+                <p>I was part of a team of 8 students who worked with the local primary school to tutor struggling readers and lead a weekly library hour for students grades 2 through 5. We designed a reading outreach model and data collection methods to research the impact of student tutoring (results: students improved by an average of two reading levels over the course of a semester-2x the average rate!) Presented results to the Bahamian Minister of Education.</p>
+                <a href="research5.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- RESEARCH 6 - Image Right -->
+        <div class="item-container reverse">
+            <img src="images/research6.webp" alt="Osteoarthritis Research" class="item-image">
+            
+            <div class="item-content">
+                <h3>Osteoarthritis Research</h3>
+                <p><strong>NYU Langone Medical Center</strong></p>
+                
+                <div class="item-badges">
+                    <span class="badge design">Design</span>
+                </div>
+                
+                <p>Researched the effect of a novel drug on osteoarthritis and wrote a paper.</p>
+                
+                <a href="research6.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+    </section>
+    </section>
+
+    <!-- Work Experience Section -->
+    <section id="experience">
+        <h2>Work Experience</h2>
+
+        <!-- WORK 1 - Image Left -->
+        <div class="item-container">
+            <img src="images/work1.jpeg" alt="Engineering Team Lead at Xdemics" class="item-image">
+            
+            <div class="item-content">
+                <h3>Engineering Team Lead | Xdemics</h3>
+                
+                <div class="item-badges">
+                    <span class="badge electrical-engineering">Electrical Engineering</span>
+                    <span class="badge design">Design</span>
+                    <span class="badge sustainability">Sustainability</span>
+                </div>
+                
+                <p>Leading a team of 7 peers in Robotic Automation of a new class of bioreactors in the cell and gene therapy space. Company will deploy this in server farms like clean rooms for mass production of life saving biologics.</p>
+                
+                <a href="work1.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- WORK 2 - Image Right -->
+        <div class="item-container reverse">
+            <img src="images/work2.png" alt="Design for Sustainability Intern at Thermo Fisher" class="item-image">
+            <div class="item-content">
+                <h3>Design for Sustainability Intern | Thermo Fisher</h3>
+                <div class="item-badges">
+                    <span class="badge design">Design</span>
+                    <span class="badge sustainability">Sustainability</span>
+                    <span class="badge accessibility">Accessibility</span>
+                </div>
+                <p>Worked in the experience design center as a product designer and sustainability consultant to different instrument teams and business units as part of a multidisciplinary tiger team.</p>
+                <a href="work2.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- WORK 3 - Image Left -->
+        <div class="item-container">
+            <img src="images/work3.png" alt="Hardware Engineer at USDA" class="item-image">
+            <div class="item-content">
+                <h3>Hardware Engineer | USDA</h3>
+                <div class="item-badges">
+                    <span class="badge electrical-engineering">Electrical Engineering</span>
+                    <span class="badge design">Design</span>
+                    <span class="badge sustainability">Sustainability</span>
+                </div>
+                <p>Collaborated with peers, USDA, and Auburn University to digitize an entomology research tool (Electropenetrography) used to study insect feeding behavior by designing and verifying a hand held Bluetooth enabled system to replace the legacy instrument which previously required 8x4 feet of bench space.</p>
+                <a href="work3.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- WORK 4 - Image Right -->
+        <div class="item-container reverse">
+            <img src="images/work4.webp" alt="Adaptive Design Fellow at Adaptive Design Association" class="item-image">
+            <div class="item-content">
+                <h3>Adaptive Design Fellow | Adaptive Design Association</h3>
+                <div class="item-badges">
+                    <span class="badge accessibility">Accessibility</span>
+                    <span class="badge leadership">Leadership</span>
+                </div>
+                <p>Designing and fabricated adapted technologies, consulting with occupational therapists, educators, and families to ensure client needs were met.</p>
+                <a href="work4.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+
+        <!-- WORK 5 - Image Left -->
+        <div class="item-container">
+            <img src="images/work5.webp" alt="Program Lead at Seatrek BVI" class="item-image">
+            <div class="item-content">
+                <h3>Program Lead | Seatrek BVI</h3>
+                <div class="item-badges">
+                    <span class="badge sustainability">Sustainability</span>
+                    <span class="badge leadership">Leadership</span>
+                </div>
+                <p>Progressed from being an intern to being a marine ecology instructor and scuba diving guide, to leading their Bahamas program, overseeing a 60' sailboat, 5 crew members, and 20 students for Summer 2021. Created a new place-based science curriculum for a new course area, and worked as a Divemaster (3 years, taught and led 200 divers) and Program Lead (1 year) while actively maintaining and operating yachts and overseeing young adults (ages 12-22).</p>
+                <a href="work5.html" class="learn-more">Learn More →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="resume">
+        <h2>Resume</h2>
+        
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <a href="resume/Leilani-Elkaslasy-Resume.pdf" class="learn-more" download>Download Resume (PDF) ↓</a>
+            <!-- REPLACE: Add your resume PDF to a 'resume' folder and update the filename -->
+        </div>
+        
+        <div style="max-width: 900px; margin: 0 auto;">
+            <embed src="resume/Leilani-Elkaslasy-Resume.pdf" type="application/pdf" width="100%" height="1000px" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" />
+            <!-- REPLACE: Update the PDF filename to match your resume -->
+            
+            <!-- Fallback for browsers that don't support embedded PDFs -->
+            <p style="text-align: center; margin-top: 1rem;">
+                <em>If the PDF doesn't display, <a href="resume/Leilani-Elkaslasy-Resume.pdf" target="_blank" style="color: #4fc3f7;">click here to view it in a new tab</a>.</em>
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>Your contact information here</p>
+    </section>
+
+    <script>
+        // Filtering + sticky filter bar
+        document.addEventListener('DOMContentLoaded', function () {
+            const nav = document.querySelector('nav');
+            const sticky = document.getElementById('filterSticky');
+            const heroFilter = document.querySelector('.hero-filter');
+            const bubbles = document.querySelectorAll('.topic-bubble');
+            const allItems = document.querySelectorAll('.item-container');
+            let activeFilter = null;
+
+            // keep the sticky bar tucked right under the nav
+            function placeSticky() { if (nav && sticky) sticky.style.top = nav.offsetHeight + 'px'; }
+            placeSticky();
+            window.addEventListener('resize', placeSticky);
+
+            // reveal the sticky bar once the hero filter scrolls under the nav
+            if (heroFilter && sticky && 'IntersectionObserver' in window) {
+                const navH = nav ? nav.offsetHeight : 0;
+                const obs = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (e) {
+                        if (e.isIntersecting) sticky.classList.remove('show');
+                        else sticky.classList.add('show');
+                    });
+                }, { rootMargin: '-' + (navH + 4) + 'px 0px 0px 0px', threshold: 0 });
+                obs.observe(heroFilter);
+            }
+
+            bubbles.forEach(function (bubble) {
+                bubble.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const filterClass = this.dataset.filter;
+                    if (activeFilter === filterClass) {
+                        showAll(); activeFilter = null; setActive(null); removeShowAllButton();
+                    } else {
+                        activeFilter = filterClass; filterItems(filterClass); setActive(filterClass); addShowAllButton();
+                    }
+                });
+            });
+
+            function filterItems(filterClass) {
+                allItems.forEach(function (item) {
+                    if (item.querySelector('.badge.' + filterClass)) {
+                        item.style.display = 'grid';
+                        item.style.animation = 'fadeIn 0.5s ease-in';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            function showAll() {
+                allItems.forEach(function (item) {
+                    item.style.display = 'grid';
+                    item.style.animation = 'fadeIn 0.5s ease-in';
+                });
+            }
+
+            // highlight the active category in BOTH the hero bar and the sticky bar
+            function setActive(filterClass) {
+                bubbles.forEach(function (b) {
+                    b.classList.toggle('active', !!filterClass && b.dataset.filter === filterClass);
+                });
+            }
+
+            function addShowAllButton() {
+                removeShowAllButton();
+                ['projects', 'research', 'experience'].forEach(function (id) {
+                    const section = document.getElementById(id);
+                    if (!section) return;
+                    const button = document.createElement('button');
+                    button.textContent = '← Show All';
+                    button.className = 'show-all-btn';
+                    button.onclick = function () {
+                        showAll(); activeFilter = null; setActive(null); removeShowAllButton();
+                    };
+                    section.insertBefore(button, section.querySelector('.item-container'));
+                });
+            }
+
+            function removeShowAllButton() {
+                document.querySelectorAll('.show-all-btn').forEach(function (btn) { btn.remove(); });
+            }
+        });
+    </script>
+
+    <style>
+        .show-all-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #66bb6a, #43a047);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .show-all-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 187, 106, 0.4);
+        }
+    </style>
+
+    <script>
+        // ===== BLUEPRINT INTRO CURTAIN =====
+        (function () {
+            var bp = document.getElementById('bpLayer');
+            if (!bp) return;
+            document.body.classList.add('bp-locked');
+            var introDone = false, lastY = 0;
+            // After the name finishes drawing, unlock scrolling; the roll is now scroll-driven
+            setTimeout(function () {
+                document.body.classList.remove('bp-locked');
+                introDone = true;
+            }, 4800);
+            window.addEventListener('scroll', function () {
+                if (!introDone) return;
+                if (window.scrollY > 2) bp.classList.add('bp-rolled');      // scrolled down -> roll up
+                else bp.classList.remove('bp-rolled');                      // at the top -> unroll
+            }, { passive: true });
+        })();
+    </script>
+</body>
+</html>
