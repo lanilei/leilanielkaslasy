@@ -729,7 +729,7 @@
             font-size: 92px;
             fill: transparent; stroke: #dbe8ff; stroke-width: 1.1;
             stroke-dasharray: 7000; stroke-dashoffset: 7000;
-            animation: bpDraw 3.4s ease forwards .5s, bpInk 1.2s ease forwards 3.6s;
+            animation: bpDraw 1.8s ease forwards .4s, bpInk 1s ease forwards 2s;
         }
         @keyframes bpDraw { to { stroke-dashoffset: 0; } }
         @keyframes bpInk { to { fill: #dbe8ff; } }
@@ -740,7 +740,7 @@
             letter-spacing: .35em; text-transform: uppercase;
             font-size: clamp(.7rem, 1.6vw, 1rem);
             margin-top: 1.2rem; opacity: 0;
-            animation: bpFadeUp .9s ease forwards 4.2s;
+            animation: bpFadeUp .9s ease forwards 2.4s;
         }
         @keyframes bpFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -749,7 +749,7 @@
             font-family: 'Share Tech Mono', monospace;
             color: rgba(219,232,255,.6); font-size: .72rem; line-height: 1.5;
             border: 1.5px solid rgba(219,232,255,.30); text-align: left;
-            opacity: 0; animation: bpFadeUp .8s ease forwards 4.4s;
+            opacity: 0; animation: bpFadeUp .8s ease forwards 2.6s;
         }
         .bp-titleblock div { padding: .35rem .8rem; border-bottom: 1.5px solid rgba(219,232,255,.30); }
         .bp-titleblock div:last-child { border-bottom: none; }
@@ -759,7 +759,7 @@
             position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%);
             font-family: 'Share Tech Mono', monospace; color: rgba(219,232,255,.6);
             font-size: .8rem; letter-spacing: .2em; opacity: 0;
-            animation: bpFadeUp .8s ease forwards 4.6s, bpBob 2s ease-in-out infinite 5s;
+            animation: bpFadeUp .8s ease forwards 2.8s, bpBob 2s ease-in-out infinite 3.2s;
         }
         @keyframes bpBob { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
 
@@ -1440,7 +1440,7 @@
             setTimeout(function () {
                 document.body.classList.remove('bp-locked');
                 introDone = true;
-            }, 4800);
+            }, 2600);
             window.addEventListener('scroll', function () {
                 if (!introDone) return;
                 if (window.scrollY > 2) bp.classList.add('bp-rolled');      // scrolled down -> roll up
