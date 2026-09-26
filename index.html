@@ -716,6 +716,83 @@
     .subpage-frame-wrap,.subpage-frame{min-height:50vh;}
   }
 
+  /* PDF subpages (poster + final report) */
+  .subpage-eyebrow{
+    font-style:italic;
+    color:var(--blue);
+    opacity:.8;
+    margin:0 0 .5rem;
+  }
+  .doc-block{margin-top:clamp(36px,6vw,64px);}
+  .doc-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:16px;
+    padding-bottom:10px;
+    border-bottom:3px solid var(--blue);
+  }
+  .doc-head h2{
+    font-family:var(--font-heading);
+    font-weight:800;
+    color:var(--blue);
+    font-size:clamp(24px,3.4vw,34px);
+  }
+  .doc-open{
+    color:var(--blue);
+    text-decoration:none;
+    font-weight:700;
+    font-family:var(--font-heading);
+    font-size:.95rem;
+  }
+  .doc-open:hover,.doc-open:focus-visible{text-decoration:underline;}
+  .doc-frame{
+    border:4px solid var(--cream);
+    box-shadow:10px 10px 0 var(--blue);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--cream);
+    margin-inline:auto;
+  }
+  .doc-frame-poster{max-width:760px;}
+  .doc-frame-report{
+    max-width:960px;
+    height:min(90vh,1100px);
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .sim-stack{
+    display:flex;
+    flex-direction:column;
+    gap:clamp(14px,2.4vw,24px);
+    max-width:960px;
+    width:100%;
+    margin:clamp(28px,5vw,48px) auto 0;
+  }
+  .sim-stack img{
+    width:100%;
+    height:auto;
+    border:4px solid var(--cream);
+    border-radius:10px;
+    box-shadow:8px 8px 0 var(--blue);
+  }
+  .doc-pending{
+    max-width:760px;
+    margin-inline:auto;
+    padding:2rem;
+    text-align:center;
+    border:2px dashed var(--blue);
+    border-radius:10px;
+    color:var(--blue);
+    font-weight:600;
+  }
+  @media (max-width:600px){
+    .doc-frame{box-shadow:6px 6px 0 var(--blue);}
+    .doc-frame-report{height:75vh;}
+  }
+
   @media (max-width:760px){
     .item,.item.reverse{grid-template-columns:1fr;}
     .item.reverse .item-media{order:0;}
@@ -744,7 +821,30 @@
     border-radius:8px;
     overflow:hidden;
   }
-  .resume-frame embed{display:block;width:100%;height:900px;}
+  .resume-frame{background:#fff;}
+
+  /* PDF pages drawn with PDF.js, so they look like paper on every device
+     (phones can't show an embedded PDF inline). */
+  .pdf-view{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    background:var(--cream);
+  }
+  .pdf-page{
+    position:relative;
+    width:100%;
+    background:#fff;
+  }
+  .pdf-page canvas{display:block;width:100%;height:100%;}
+  .pdf-status{
+    padding:2rem 1rem;
+    text-align:center;
+    color:var(--blue);
+    font-weight:600;
+    background:#fff;
+  }
+  .pdf-status a{color:var(--blue);}
   .resume-fallback{
     text-align:center;
     margin-top:1.2rem;
@@ -829,6 +929,28 @@
   @media (prefers-reduced-motion:reduce){
     html.js .reveal{opacity:1;transform:none;transition:none;}
   }
+
+  /* ---------- CARD HOVER GROW ---------- */
+  /* Uses the standalone `scale` property rather than `transform` so it
+     doesn't fight the scroll-reveal transform on the same elements. */
+  .item,.info-card,.currently-spotlight{
+    scale:1;
+    transition:scale .3s cubic-bezier(.34,1.56,.64,1);
+  }
+  html.js .reveal.info-card,html.js .reveal.currently-spotlight{
+    transition:opacity .65s cubic-bezier(.16,.8,.3,1),transform .65s cubic-bezier(.16,.8,.3,1),scale .3s cubic-bezier(.34,1.56,.64,1);
+    transition-delay:var(--reveal-delay,0s),var(--reveal-delay,0s),0s;
+  }
+  @media (hover:hover){
+    .item:hover,.info-card:hover,.currently-spotlight:hover{
+      scale:1.03;
+      z-index:5;
+    }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .item,.info-card,.currently-spotlight{transition:none;}
+    .item:hover,.info-card:hover,.currently-spotlight:hover{scale:1;}
+  }
 </style>
 </head>
 <body>
@@ -837,9 +959,9 @@
     <a href="#hero" class="nav-word">LEILANI ELKASLASY</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#research">Research</a></li>
-      <li><a href="#experience">Experience</a></li>
       <li><a href="#currently">Currently</a></li>
       <li><a href="#resume">Resume</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -866,23 +988,23 @@
   <div class="wrap">
     <span class="filter-hint">Filter my work by focus area</span>
     <div class="filter-icons">
-      <a href="#projects" class="topic-bubble" data-filter="ee">
+      <a href="#experience" class="topic-bubble" data-filter="ee">
         <span class="bubble-icon-wrap"><img src="images/circuit.png" alt=""></span>
         <span class="bubble-label">Electrical Engineering</span>
       </a>
-      <a href="#projects" class="topic-bubble" data-filter="design">
+      <a href="#experience" class="topic-bubble" data-filter="design">
         <span class="bubble-icon-wrap"><img src="images/design.png" alt=""></span>
         <span class="bubble-label">Design</span>
       </a>
-      <a href="#projects" class="topic-bubble" data-filter="accessibility">
+      <a href="#experience" class="topic-bubble" data-filter="accessibility">
         <span class="bubble-icon-wrap"><img src="images/ada.png" alt=""></span>
         <span class="bubble-label">Accessibility</span>
       </a>
-      <a href="#projects" class="topic-bubble" data-filter="leadership">
+      <a href="#experience" class="topic-bubble" data-filter="leadership">
         <span class="bubble-icon-wrap"><img src="images/leadership.png" alt=""></span>
         <span class="bubble-label">Leadership</span>
       </a>
-      <a href="#projects" class="topic-bubble" data-filter="sustainability">
+      <a href="#experience" class="topic-bubble" data-filter="sustainability">
         <span class="bubble-icon-wrap"><img src="images/sustainability.png" alt=""></span>
         <span class="bubble-label">Sustainability</span>
       </a>
@@ -948,6 +1070,69 @@
   </div>
 </section>
 
+<section class="panel bg-blue" id="experience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 class="head-yellow">Work Experience</h2>
+      <div class="dots head-yellow"></div>
+      <div class="gear-deco on-blue" aria-hidden="true">
+        <svg class="gear gear-back" viewBox="0 0 100 100"><path fill-rule="evenodd" d="M 50.00,16.00 L 56.16,16.56 L 57.97,6.73 L 68.98,10.31 L 64.67,19.33 L 69.98,22.49 L 74.64,26.57 L 81.88,19.68 L 88.69,29.05 L 79.90,33.81 L 82.34,39.49 L 83.70,45.53 L 93.62,44.21 L 93.62,55.79 L 83.70,54.47 L 82.34,60.51 L 79.90,66.19 L 88.69,70.95 L 81.88,80.32 L 74.64,73.43 L 69.98,77.51 L 64.67,80.67 L 68.98,89.69 L 57.97,93.27 L 56.16,83.44 L 50.00,84.00 L 43.84,83.44 L 42.03,93.27 L 31.02,89.69 L 35.33,80.67 L 30.02,77.51 L 25.36,73.43 L 18.12,80.32 L 11.31,70.95 L 20.10,66.19 L 17.66,60.51 L 16.30,54.47 L 6.38,55.79 L 6.38,44.21 L 16.30,45.53 L 17.66,39.49 L 20.10,33.81 L 11.31,29.05 L 18.12,19.68 L 25.36,26.57 L 30.02,22.49 L 35.33,19.33 L 31.02,10.31 L 42.03,6.73 L 43.84,16.56 Z M 38.00,50.00 A 12.00,12.00 0 1,0 62.00,50.00 A 12.00,12.00 0 1,0 38.00,50.00 Z"/></svg>
+        <svg class="gear gear-front" viewBox="0 0 100 100"><path fill-rule="evenodd" d="M 50.00,16.00 L 57.68,16.88 L 59.94,7.14 L 73.28,12.67 L 67.99,21.15 L 74.04,25.96 L 78.85,32.01 L 87.33,26.72 L 92.86,40.06 L 83.12,42.32 L 84.00,50.00 L 83.12,57.68 L 92.86,59.94 L 87.33,73.28 L 78.85,67.99 L 74.04,74.04 L 67.99,78.85 L 73.28,87.33 L 59.94,92.86 L 57.68,83.12 L 50.00,84.00 L 42.32,83.12 L 40.06,92.86 L 26.72,87.33 L 32.01,78.85 L 25.96,74.04 L 21.15,67.99 L 12.67,73.28 L 7.14,59.94 L 16.88,57.68 L 16.00,50.00 L 16.88,42.32 L 7.14,40.06 L 12.67,26.72 L 21.15,32.01 L 25.96,25.96 L 32.01,21.15 L 26.72,12.67 L 40.06,7.14 L 42.32,16.88 Z M 37.00,50.00 A 13.00,13.00 0 1,0 63.00,50.00 A 13.00,13.00 0 1,0 37.00,50.00 Z"/></svg>
+      </div>
+    </div>
+    <div class="item-list" id="experienceList">
+
+      <div class="item" data-badges="ee design sustainability">
+        <div class="item-media"><img src="images/work1.jpg" alt="Engineering Team Lead at Xdemics"></div>
+        <div class="item-content">
+          <h3>Engineering Team Lead · Xdemics</h3>
+          <div class="item-badges"><span class="badge ee">Electrical Engineering</span><span class="badge design">Design</span><span class="badge sustainability">Sustainability</span></div>
+          <p>Leading a team of 7 peers in robotic automation of a new class of bioreactors in the cell and gene therapy space. The company will deploy this in server-farm-like clean rooms for mass production of life-saving biologics.</p>
+          <a href="#xdemics-project" class="item-link" data-subpage-link="xdemics-project">Learn More →</a>
+        </div>
+      </div>
+
+      <div class="item reverse" data-badges="design sustainability accessibility">
+        <div class="item-media"><img src="images/work2.jpg" alt="Design for Sustainability Intern at Thermo Fisher"></div>
+        <div class="item-content">
+          <h3>Design for Sustainability Intern · Thermo Fisher</h3>
+          <div class="item-badges"><span class="badge design">Design</span><span class="badge sustainability">Sustainability</span><span class="badge accessibility">Accessibility</span></div>
+          <p>Worked in the experience design center as a product designer and sustainability consultant to different instrument teams and business units as part of a multidisciplinary tiger team.</p>
+        </div>
+      </div>
+
+      <div class="item" data-badges="ee design sustainability">
+        <div class="item-media"><img src="images/work3.jpg" alt="Hardware Engineer at USDA"></div>
+        <div class="item-content">
+          <h3>Hardware Engineer · USDA</h3>
+          <div class="item-badges"><span class="badge ee">Electrical Engineering</span><span class="badge design">Design</span><span class="badge sustainability">Sustainability</span></div>
+          <p>Collaborated with peers, USDA, and Auburn University to digitize an entomology research tool (electropenetrography) used to study insect feeding behavior, designing and verifying a hand-held Bluetooth-enabled system to replace the legacy instrument, which previously required 8x4 feet of bench space.</p>
+          <a href="#usda-project" class="item-link" data-subpage-link="usda-project">Learn More →</a>
+        </div>
+      </div>
+
+      <div class="item reverse" data-badges="accessibility leadership">
+        <div class="item-media"><img src="images/work4.jpg" alt="Adaptive Design Fellow at Adaptive Design Association" style="object-position:center 12%;"></div>
+        <div class="item-content">
+          <h3>Adaptive Design Fellow · Adaptive Design Association</h3>
+          <div class="item-badges"><span class="badge accessibility">Accessibility</span><span class="badge leadership">Leadership</span></div>
+          <p>Designed and fabricated adapted technologies, consulting with occupational therapists, educators, and families to ensure client needs were met.</p>
+        </div>
+      </div>
+
+      <div class="item" data-badges="sustainability leadership">
+        <div class="item-media"><img src="images/work5.jpg" alt="Program Lead at Seatrek BVI"></div>
+        <div class="item-content">
+          <h3>Program Lead · Seatrek BVI</h3>
+          <div class="item-badges"><span class="badge sustainability">Sustainability</span><span class="badge leadership">Leadership</span></div>
+          <p>Progressed from intern to marine ecology instructor and scuba diving guide, to leading the Bahamas program — overseeing a 60' sailboat, 5 crew members, and 20 students for Summer 2021. Created a new place-based science curriculum, and worked as a Divemaster (3 years, taught and led 200 divers) and Program Lead (1 year) while maintaining and operating yachts and overseeing young adults ages 12–22.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <section class="panel bg-blue" id="projects">
   <div class="wrap">
     <div class="section-head reveal">
@@ -1000,11 +1185,12 @@
       </div>
 
       <div class="item" data-badges="design ee">
-        <div class="item-media"><img src="images/project5.jpg" alt="Autonomous Underwater Vehicle Design"></div>
+        <div class="item-media"><img src="images/project5.jpg" alt="Autonomous Surface Vehicle Design"></div>
         <div class="item-content">
-          <h3>Autonomous Underwater Vehicle Design</h3>
+          <h3>Autonomous Surface Vehicle Design</h3>
           <div class="item-badges"><span class="badge design">Design</span><span class="badge ee">Electrical Engineering</span></div>
           <p>Designed and deployed an Autonomous Surface Vehicle to compare different hydrodynamics of cone and dome shaped nose cones in the ocean, comparing simulation to reality in a non-ideal environment. The robot measured its own velocity and applied drag force while autonomously navigating a predetermined route using an embedded GPS.</p>
+          <a href="#asv-project" class="item-link" data-subpage-link="asv-project">Learn More →</a>
         </div>
       </div>
 
@@ -1135,67 +1321,6 @@
   </div>
 </section>
 
-<section class="panel bg-blue" id="experience">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <h2 class="head-yellow">Work Experience</h2>
-      <div class="dots head-yellow"></div>
-      <div class="gear-deco on-blue" aria-hidden="true">
-        <svg class="gear gear-back" viewBox="0 0 100 100"><path fill-rule="evenodd" d="M 50.00,16.00 L 56.16,16.56 L 57.97,6.73 L 68.98,10.31 L 64.67,19.33 L 69.98,22.49 L 74.64,26.57 L 81.88,19.68 L 88.69,29.05 L 79.90,33.81 L 82.34,39.49 L 83.70,45.53 L 93.62,44.21 L 93.62,55.79 L 83.70,54.47 L 82.34,60.51 L 79.90,66.19 L 88.69,70.95 L 81.88,80.32 L 74.64,73.43 L 69.98,77.51 L 64.67,80.67 L 68.98,89.69 L 57.97,93.27 L 56.16,83.44 L 50.00,84.00 L 43.84,83.44 L 42.03,93.27 L 31.02,89.69 L 35.33,80.67 L 30.02,77.51 L 25.36,73.43 L 18.12,80.32 L 11.31,70.95 L 20.10,66.19 L 17.66,60.51 L 16.30,54.47 L 6.38,55.79 L 6.38,44.21 L 16.30,45.53 L 17.66,39.49 L 20.10,33.81 L 11.31,29.05 L 18.12,19.68 L 25.36,26.57 L 30.02,22.49 L 35.33,19.33 L 31.02,10.31 L 42.03,6.73 L 43.84,16.56 Z M 38.00,50.00 A 12.00,12.00 0 1,0 62.00,50.00 A 12.00,12.00 0 1,0 38.00,50.00 Z"/></svg>
-        <svg class="gear gear-front" viewBox="0 0 100 100"><path fill-rule="evenodd" d="M 50.00,16.00 L 57.68,16.88 L 59.94,7.14 L 73.28,12.67 L 67.99,21.15 L 74.04,25.96 L 78.85,32.01 L 87.33,26.72 L 92.86,40.06 L 83.12,42.32 L 84.00,50.00 L 83.12,57.68 L 92.86,59.94 L 87.33,73.28 L 78.85,67.99 L 74.04,74.04 L 67.99,78.85 L 73.28,87.33 L 59.94,92.86 L 57.68,83.12 L 50.00,84.00 L 42.32,83.12 L 40.06,92.86 L 26.72,87.33 L 32.01,78.85 L 25.96,74.04 L 21.15,67.99 L 12.67,73.28 L 7.14,59.94 L 16.88,57.68 L 16.00,50.00 L 16.88,42.32 L 7.14,40.06 L 12.67,26.72 L 21.15,32.01 L 25.96,25.96 L 32.01,21.15 L 26.72,12.67 L 40.06,7.14 L 42.32,16.88 Z M 37.00,50.00 A 13.00,13.00 0 1,0 63.00,50.00 A 13.00,13.00 0 1,0 37.00,50.00 Z"/></svg>
-      </div>
-    </div>
-    <div class="item-list" id="experienceList">
-
-      <div class="item" data-badges="ee design sustainability">
-        <div class="item-media"><img src="images/work1.jpg" alt="Engineering Team Lead at Xdemics"></div>
-        <div class="item-content">
-          <h3>Engineering Team Lead · Xdemics</h3>
-          <div class="item-badges"><span class="badge ee">Electrical Engineering</span><span class="badge design">Design</span><span class="badge sustainability">Sustainability</span></div>
-          <p>Leading a team of 7 peers in robotic automation of a new class of bioreactors in the cell and gene therapy space. The company will deploy this in server-farm-like clean rooms for mass production of life-saving biologics.</p>
-        </div>
-      </div>
-
-      <div class="item reverse" data-badges="design sustainability accessibility">
-        <div class="item-media"><img src="images/work2.jpg" alt="Design for Sustainability Intern at Thermo Fisher"></div>
-        <div class="item-content">
-          <h3>Design for Sustainability Intern · Thermo Fisher</h3>
-          <div class="item-badges"><span class="badge design">Design</span><span class="badge sustainability">Sustainability</span><span class="badge accessibility">Accessibility</span></div>
-          <p>Worked in the experience design center as a product designer and sustainability consultant to different instrument teams and business units as part of a multidisciplinary tiger team.</p>
-        </div>
-      </div>
-
-      <div class="item" data-badges="ee design sustainability">
-        <div class="item-media"><img src="images/work3.jpg" alt="Hardware Engineer at USDA"></div>
-        <div class="item-content">
-          <h3>Hardware Engineer · USDA</h3>
-          <div class="item-badges"><span class="badge ee">Electrical Engineering</span><span class="badge design">Design</span><span class="badge sustainability">Sustainability</span></div>
-          <p>Collaborated with peers, USDA, and Auburn University to digitize an entomology research tool (electropenetrography) used to study insect feeding behavior, designing and verifying a hand-held Bluetooth-enabled system to replace the legacy instrument, which previously required 8x4 feet of bench space.</p>
-        </div>
-      </div>
-
-      <div class="item reverse" data-badges="accessibility leadership">
-        <div class="item-media"><img src="images/work4.jpg" alt="Adaptive Design Fellow at Adaptive Design Association" style="object-position:center 12%;"></div>
-        <div class="item-content">
-          <h3>Adaptive Design Fellow · Adaptive Design Association</h3>
-          <div class="item-badges"><span class="badge accessibility">Accessibility</span><span class="badge leadership">Leadership</span></div>
-          <p>Designed and fabricated adapted technologies, consulting with occupational therapists, educators, and families to ensure client needs were met.</p>
-        </div>
-      </div>
-
-      <div class="item" data-badges="sustainability leadership">
-        <div class="item-media"><img src="images/work5.jpg" alt="Program Lead at Seatrek BVI"></div>
-        <div class="item-content">
-          <h3>Program Lead · Seatrek BVI</h3>
-          <div class="item-badges"><span class="badge sustainability">Sustainability</span><span class="badge leadership">Leadership</span></div>
-          <p>Progressed from intern to marine ecology instructor and scuba diving guide, to leading the Bahamas program — overseeing a 60' sailboat, 5 crew members, and 20 students for Summer 2021. Created a new place-based science curriculum, and worked as a Divemaster (3 years, taught and led 200 divers) and Program Lead (1 year) while maintaining and operating yachts and overseeing young adults ages 12–22.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <section class="panel bg-blue" id="currently">
   <div class="wrap">
     <div class="section-head reveal">
@@ -1276,6 +1401,91 @@
   </div>
 </div>
 
+<div class="subpage" id="xdemics-project" data-subpage aria-hidden="true">
+  <div class="wrap subpage-inner">
+    <div class="subpage-topbar">
+      <a href="#experience" class="subpage-back" data-subpage-close>← Back to Portfolio</a>
+    </div>
+    <p class="subpage-eyebrow">Engineering Team Lead · Xdemics Clinic</p>
+    <h1 class="subpage-title">Multi-Axis Motion and Vibration System for Bioreactor Cell Seeding and Recovery</h1>
+
+    <div class="doc-block">
+      <div class="doc-head">
+        <h2>Poster</h2>
+        <a href="docs/xdemics-poster.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+      </div>
+      <div class="doc-frame doc-frame-poster" style="--doc-ratio:2592/4032">
+        <div class="pdf-view" data-pdf="docs/xdemics-poster.pdf" role="document" aria-label="Xdemics clinic poster"></div>
+      </div>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head">
+        <h2>Final Report</h2>
+        <a href="docs/xdemics-final-report.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+      </div>
+      <div class="doc-frame doc-frame-report">
+        <div class="pdf-view" data-pdf="docs/xdemics-final-report.pdf" role="document" aria-label="Xdemics clinic final report"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="subpage" id="asv-project" data-subpage aria-hidden="true">
+  <div class="wrap subpage-inner">
+    <div class="subpage-topbar">
+      <a href="#projects" class="subpage-back" data-subpage-close>← Back to Portfolio</a>
+    </div>
+    <h1 class="subpage-title">Autonomous Surface Vehicle Design</h1>
+
+    <div class="sim-stack">
+      <img src="images/asv-sim-1.png" alt="Flow simulation around a flat, box-shaped nose showing a wide low-velocity wake" loading="lazy">
+      <img src="images/asv-sim-2.png" alt="Flow simulation around a cone-shaped nose showing a narrower wake" loading="lazy">
+      <img src="images/asv-sim-3.png" alt="Flow simulation around a dome-shaped nose with the wake region highlighted" loading="lazy">
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head">
+        <h2>Final Report</h2>
+        <a href="docs/asv-final-report.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+      </div>
+      <div class="doc-frame doc-frame-report">
+        <div class="pdf-view" data-pdf="docs/asv-final-report.pdf" role="document" aria-label="Autonomous Surface Vehicle final report"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="subpage" id="usda-project" data-subpage aria-hidden="true">
+  <div class="wrap subpage-inner">
+    <div class="subpage-topbar">
+      <a href="#experience" class="subpage-back" data-subpage-close>← Back to Portfolio</a>
+    </div>
+    <p class="subpage-eyebrow">Hardware Engineer · Auburn University &amp; USDA Clinic</p>
+    <h1 class="subpage-title">Digital AC-DC Electropenetrograph (EPG)</h1>
+
+    <div class="doc-block">
+      <div class="doc-head">
+        <h2>Poster</h2>
+        <a href="docs/usda-poster.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+      </div>
+      <div class="doc-frame doc-frame-poster" style="--doc-ratio:2592/4032">
+        <div class="pdf-view" data-pdf="docs/usda-poster.pdf" role="document" aria-label="Auburn-USDA Projects Day poster"></div>
+      </div>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head">
+        <h2>Final Report</h2>
+        <a href="docs/usda-final-report.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+      </div>
+      <div class="doc-frame doc-frame-report">
+        <div class="pdf-view" data-pdf="docs/usda-final-report.pdf" role="document" aria-label="Auburn-USDA final report"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <section class="panel bg-blue" id="resume">
   <div class="wrap">
     <div class="section-head reveal">
@@ -1291,7 +1501,7 @@
       <a href="resume/Leilani-Elkaslasy-Resume.pdf" class="resume-btn" target="_blank" rel="noopener">View / Save Resume (PDF) ↓</a>
     </div>
     <div class="resume-frame reveal">
-      <embed src="resume/Leilani-Elkaslasy-Resume.pdf" type="application/pdf">
+      <div class="pdf-view" data-pdf="resume/Leilani-Elkaslasy-Resume.pdf" role="document" aria-label="Leilani Elkaslasy resume"></div>
     </div>
     <p class="resume-fallback">If the PDF doesn't display, <a href="resume/Leilani-Elkaslasy-Resume.pdf" target="_blank" rel="noopener">click here to view it in a new tab</a>.</p>
   </div>
@@ -1511,7 +1721,7 @@
       setActive(null);
       removeShowAllButton();
     });
-    var projectsHead = document.querySelector('#projects .section-head');
+    var projectsHead = document.querySelector('#experience .section-head');
     if(projectsHead) projectsHead.after(showAllBtn);
   }
 
@@ -1533,7 +1743,7 @@
         applyFilter(filter);
         setActive(filter);
         ensureShowAllButton();
-        document.getElementById('projects').scrollIntoView({behavior:'smooth', block:'start'});
+        document.getElementById('experience').scrollIntoView({behavior:'smooth', block:'start'});
       }
     });
   });
@@ -1602,6 +1812,90 @@
   if(initialHash){
     openSubpage(initialHash);
   }
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+(function(){
+  // Draw each PDF as white "paper" pages with PDF.js instead of relying on
+  // the browser's built-in viewer, which most phones don't provide inline.
+  // Pages are laid out right away at the right size, but only rendered as
+  // they scroll into view, so long reports stay light.
+  var views = document.querySelectorAll('.pdf-view[data-pdf]');
+  if(!views.length) return;
+
+  function fallback(view, msg){
+    var url = view.dataset.pdf;
+    view.innerHTML = '<div class="pdf-status">' + msg +
+      ' <a href="' + url + '" target="_blank" rel="noopener">Open the PDF ↗</a></div>';
+  }
+
+  if(typeof pdfjsLib === 'undefined' || !('IntersectionObserver' in window)){
+    views.forEach(function(v){ fallback(v, 'This document can’t be previewed here.'); });
+    return;
+  }
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  var pageObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      pageObserver.unobserve(entry.target);
+      renderPage(entry.target);
+    });
+  }, {rootMargin:'600px 0px'});
+
+  function renderPage(slot){
+    var page = slot._pdfPage;
+    var cssWidth = slot.clientWidth || 800;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var base = page.getViewport({scale:1});
+    var viewport = page.getViewport({scale:(cssWidth * dpr) / base.width});
+    var canvas = document.createElement('canvas');
+    canvas.width = Math.floor(viewport.width);
+    canvas.height = Math.floor(viewport.height);
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    page.render({canvasContext:ctx, viewport:viewport}).promise.then(function(){
+      slot.appendChild(canvas);
+    });
+  }
+
+  function loadView(view){
+    view.innerHTML = '<div class="pdf-status">Loading…</div>';
+    pdfjsLib.getDocument(view.dataset.pdf).promise.then(function(pdf){
+      view.innerHTML = '';
+      var chain = Promise.resolve();
+      for(var n = 1; n <= pdf.numPages; n++){
+        (function(num){
+          chain = chain.then(function(){ return pdf.getPage(num); }).then(function(page){
+            var vp = page.getViewport({scale:1});
+            var slot = document.createElement('div');
+            slot.className = 'pdf-page';
+            slot.style.aspectRatio = vp.width + ' / ' + vp.height;
+            slot._pdfPage = page;
+            view.appendChild(slot);
+            pageObserver.observe(slot);
+          });
+        })(n);
+      }
+      return chain;
+    }).catch(function(){
+      fallback(view, 'This document couldn’t be loaded.');
+    });
+  }
+
+  // Start each document once it is near the screen (subpages count once opened).
+  var viewObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      viewObserver.unobserve(entry.target);
+      loadView(entry.target);
+    });
+  }, {rootMargin:'400px 0px'});
+  views.forEach(function(v){ viewObserver.observe(v); });
 })();
 </script>
 
