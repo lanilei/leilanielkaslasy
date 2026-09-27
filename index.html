@@ -797,6 +797,41 @@
   .detail-list li{margin-bottom:.5rem;}
   .stat-row + .detail-list{margin:clamp(20px,3vw,28px) auto 0;}
 
+  /* Publications / talks list */
+  .pub-list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:clamp(16px,3vw,28px);
+    max-width:960px;
+    margin-inline:auto;
+  }
+  .pub{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:.7rem;
+    padding:clamp(18px,3vw,26px);
+    background:var(--cream);
+    border-radius:12px;
+    box-shadow:6px 6px 0 var(--blue);
+  }
+  .pub-title{
+    font-family:var(--font-heading);
+    font-weight:700;
+    font-size:clamp(1.1rem,2vw,1.3rem);
+    line-height:1.3;
+    color:var(--blue);
+    margin:0;
+  }
+  .pub-authors{margin:0;font-size:.92rem;line-height:1.5;color:var(--ink);}
+  .pub-authors strong{color:var(--blue);}
+  .pub-authors-center{text-align:center;margin:-4px auto 16px;max-width:760px;}
+  .pub .item-link{margin-top:auto;}
+  .pub-meta{font-size:.8rem;color:var(--ink);opacity:.7;}
+  @media (max-width:760px){
+    .pub-list{grid-template-columns:1fr;}
+  }
+
   /* Headline numbers on detail pages */
   .stat-row{
     display:grid;
@@ -1565,6 +1600,7 @@
           <h3>Tribology Lab</h3>
           <div class="item-badges"><span class="badge design">Design</span><span class="badge sustainability">Sustainability</span></div>
           <p>Developed a novel ceramic resin and calculated the average abrasiveness of available commercial resins for stereolithography 3-D printing. Co-authored 3 abstracts and 2 posters presented and published through the Society of Tribologists and Lubricant Engineers 2025 conference.</p>
+          <a href="#tribology-lab" class="item-link" data-subpage-link="tribology-lab">Learn More →</a>
         </div>
       </div>
 
@@ -1690,6 +1726,57 @@
       </div>
       <div class="doc-frame doc-frame-report">
         <div class="pdf-view" data-pdf="docs/xdemics-final-report.pdf" role="document" aria-label="Xdemics clinic final report"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="subpage" id="tribology-lab" data-subpage aria-hidden="true">
+  <div class="wrap subpage-inner">
+    <div class="subpage-topbar">
+      <a href="#research" class="subpage-back" data-subpage-close>← Back to Portfolio</a>
+    </div>
+    <p class="subpage-eyebrow">Harvey Mudd College · Department of Engineering · with Prof. Gordon Krauss</p>
+    <h1 class="subpage-title">Tribology Lab</h1>
+    <p class="subpage-lede">Tribology is the study of friction and wear between surfaces in motion. Our lab studied how abrasive stereolithography (SLA) 3D-printed parts are, and how to tune that abrasiveness through the resin itself and through metal and ceramic additives. The work was presented at the Society of Tribologists and Lubrication Engineers (STLE) 2025 conference.</p>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>STLE 2025 Presentations</h2></div>
+      <div class="pub-list">
+        <article class="pub">
+          <h3 class="pub-title">Modification of Abrasiveness of Additive Manufacturing (SLA) Produced Components through Resin Formulation</h3>
+          <p class="pub-authors">Kanoa Parker, Miranda Brandt, <strong>Leilani Elkaslasy</strong>, Gordon G. Krauss</p>
+          <a href="docs/tribology-stle-parker.pdf" target="_blank" rel="noopener" class="item-link">View slides ↗</a>
+          <span class="pub-meta">PDF · 32 slides · 31 MB</span>
+        </article>
+        <article class="pub">
+          <h3 class="pub-title">Modification of Abrasiveness of SLA Additive Manufacturing Produced Components through Metal and Ceramic Additives</h3>
+          <p class="pub-authors">Miranda Brandt, Kanoa Parker, <strong>Leilani Elkaslasy</strong>, Gordon G. Krauss</p>
+          <a href="docs/tribology-stle-brandt.pdf" target="_blank" rel="noopener" class="item-link">View slides ↗</a>
+          <span class="pub-meta">PDF · 31 slides · 29 MB</span>
+        </article>
+      </div>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head">
+        <h2>Poster: A Tribological Study of the Optimization of Pizza Making</h2>
+        <a href="docs/tribology-pizza-poster.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+      </div>
+      <p class="pub-authors pub-authors-center">Gordon Krauss, Miranda Brandt, <strong>Leilani Elkaslasy</strong>, Kanoa Parker</p>
+      <div class="doc-frame doc-frame-poster">
+        <div class="pdf-view" data-pdf="docs/tribology-pizza-poster.pdf" role="document" aria-label="Poster: A Tribological Study of the Optimization of Pizza Making"></div>
+      </div>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head">
+        <h2>Poster: Testing Abrasiveness of 3D Printed Ceramics</h2>
+        <a href="docs/tribology-ceramics-poster.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+      </div>
+      <p class="pub-authors pub-authors-center">Gordon Krauss, Miranda Brandt, Kanoa Parker</p>
+      <div class="doc-frame doc-frame-poster">
+        <div class="pdf-view" data-pdf="docs/tribology-ceramics-poster.pdf" role="document" aria-label="Poster: Testing Abrasiveness of 3D Printed Ceramics"></div>
       </div>
     </div>
   </div>
