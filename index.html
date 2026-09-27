@@ -1009,6 +1009,17 @@
     box-shadow:8px 8px 0 var(--blue);
   }
   .doc-figure-narrow{max-width:520px;}
+  .doc-figure-top{margin-top:clamp(24px,4vw,40px);}
+  .doc-figure-video{margin-top:clamp(28px,5vw,44px);}
+  .loop-video{
+    display:block;
+    width:100%;
+    height:auto;
+    background:#000;
+    border:4px solid var(--cream);
+    border-radius:10px;
+    box-shadow:8px 8px 0 var(--blue);
+  }
   .doc-figure figcaption{
     margin-top:14px;
     text-align:center;
@@ -1800,7 +1811,16 @@
     </div>
     <p class="subpage-eyebrow">Harvey Mudd College · Department of Engineering · with Prof. Gordon Krauss</p>
     <h1 class="subpage-title">Tribology Lab</h1>
+    <figure class="doc-figure doc-figure-top">
+      <img src="images/stle-atlanta-team.jpg" alt="Four team members standing in front of the STLE Atlanta sponsor wall at the conference" loading="lazy">
+      <figcaption>Presenting at STLE's 79th Annual Meeting in Atlanta with Prof. Gordon Krauss, Miranda Brandt and Kanoa Parker.</figcaption>
+    </figure>
     <p class="subpage-lede">Tribology is the study of friction and wear between surfaces in motion. Our lab studied how abrasive stereolithography (SLA) 3D-printed parts are, and how to tune that abrasiveness through the resin itself and through metal and ceramic additives. The work was presented at the Society of Tribologists and Lubrication Engineers (STLE) 2025 conference.</p>
+
+    <figure class="doc-figure doc-figure-narrow doc-figure-video">
+      <video class="loop-video" data-src="images/stle-demo.mp4" muted loop playsinline preload="none" width="886" height="662" aria-label="Pin-on-disk wear test: a steel pin spins on a white 3D-printed disk, wearing a dark track into its surface"></video>
+      <figcaption>A pin-on-disk wear test in the Universal Mechanical Tester, wearing a track into a 3D-printed disk.</figcaption>
+    </figure>
 
     <div class="doc-block">
       <div class="doc-head"><h2>STLE 2025 Presentations</h2></div>
@@ -2940,6 +2960,30 @@
   updateHud();
   setWind();
   resize();
+})();
+</script>
+
+<script>
+(function(){
+  // GIF-style looping videos: load and start playing only once they scroll
+  // into view, and never autoplay for visitors who prefer reduced motion.
+  var vids = document.querySelectorAll('video.loop-video[data-src]');
+  if(!vids.length) return;
+  var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function start(v){
+    if(!v.src) v.src = v.dataset.src;
+    if(reduced){ v.controls = true; return; }
+    var p = v.play();
+    if(p && p.catch) p.catch(function(){ v.controls = true; });
+  }
+  if(!('IntersectionObserver' in window)){ vids.forEach(start); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting) start(e.target);
+      else if(!e.target.paused) e.target.pause();
+    });
+  }, {rootMargin:'200px 0px'});
+  vids.forEach(function(v){ io.observe(v); });
 })();
 </script>
 
