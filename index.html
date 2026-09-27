@@ -956,6 +956,77 @@
     padding-bottom:22px;
   }
 
+  /* ---------- PAPER TOSS GAME ---------- */
+  .game-card{
+    max-width:960px;
+    margin:0 auto;
+    background:var(--cream);
+    border-radius:14px;
+    box-shadow:10px 10px 0 var(--yellow);
+    overflow:hidden;
+  }
+  .game-hud{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px clamp(16px,4vw,40px);
+    padding:14px clamp(16px,3vw,24px);
+    border-bottom:3px solid var(--blue);
+  }
+  .game-stat{display:flex;align-items:baseline;gap:8px;}
+  .game-stat-label{
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--blue);
+    opacity:.75;
+  }
+  .game-stat-value{
+    font-family:var(--font-heading);
+    font-weight:800;
+    font-size:1.35rem;
+    color:var(--blue);
+    font-variant-numeric:tabular-nums;
+  }
+  .game-wind{margin-left:auto;}
+  .game-canvas{
+    display:block;
+    width:100%;
+    aspect-ratio:16/9;
+    touch-action:none;
+    cursor:grab;
+    background:#fffdf7;
+  }
+  .game-canvas.is-aiming{cursor:grabbing;}
+  .game-foot{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    padding:12px clamp(16px,3vw,24px);
+    border-top:3px solid var(--blue);
+  }
+  .game-hint{margin:0;font-size:.9rem;color:var(--ink);}
+  .game-reset{
+    padding:.45rem 1.1rem;
+    background:var(--blue);
+    color:var(--cream);
+    border:none;
+    border-radius:999px;
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:.85rem;
+    cursor:pointer;
+    transition:transform .15s ease;
+  }
+  .game-reset:hover{transform:translateY(-2px);}
+  @media (max-width:600px){
+    .game-card{box-shadow:6px 6px 0 var(--yellow);}
+    .game-canvas{aspect-ratio:4/3;}
+    .game-wind{margin-left:0;}
+  }
+
   /* ---------- SCROLL REVEAL ---------- */
   html.js .reveal{
     opacity:0;
@@ -1643,6 +1714,29 @@
     </dl>
   </div>
 </section>
+
+<section class="panel bg-blue game" id="paper-toss">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 class="head-yellow">Take a Break</h2>
+      <div class="dots head-yellow"></div>
+    </div>
+    <div class="game-card">
+      <div class="game-hud">
+        <div class="game-stat"><span class="game-stat-label">Score</span><span class="game-stat-value" id="tossScore">0</span></div>
+        <div class="game-stat"><span class="game-stat-label">Streak</span><span class="game-stat-value" id="tossStreak">0</span></div>
+        <div class="game-stat"><span class="game-stat-label">Best</span><span class="game-stat-value" id="tossBest">0</span></div>
+        <div class="game-stat game-wind"><span class="game-stat-label">Wind</span><span class="game-stat-value" id="tossWind">calm</span></div>
+      </div>
+      <canvas class="game-canvas" id="tossCanvas" role="img" aria-label="Paper toss game: drag back from the crumpled paper ball and let go to throw it into the trash can"></canvas>
+      <div class="game-foot">
+        <p class="game-hint">Drag back from the paper ball, aim, and let go.</p>
+        <button type="button" class="game-reset" id="tossReset">Reset score</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer class="credit">© 2026 Leilani Elkaslasy. All rights reserved.</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
@@ -2007,6 +2101,414 @@
     });
   }, {rootMargin:'400px 0px'});
   views.forEach(function(v){ viewObserver.observe(v); });
+})();
+</script>
+
+<script>
+(function(){
+  // Paper toss: drag back from the crumpled paper ball (slingshot style) and
+  // release to throw it into the wire trash can. Everything runs in a fixed
+  // 800-unit-wide coordinate space that is scaled to the canvas size.
+  var canvas = document.getElementById('tossCanvas');
+  if(!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d');
+  var scoreEl = document.getElementById('tossScore');
+  var streakEl = document.getElementById('tossStreak');
+  var bestEl = document.getElementById('tossBest');
+  var windEl = document.getElementById('tossWind');
+
+  var css = getComputedStyle(document.documentElement);
+  var BLUE = css.getPropertyValue('--blue').trim() || '#004aad';
+  var INK = css.getPropertyValue('--ink').trim() || '#401804';
+  var YELLOW = css.getPropertyValue('--yellow').trim() || '#fce08b';
+  var HEADING_FONT = "800 32px 'Baloo 2', 'Poppins', sans-serif";
+
+  var W = 800, H = 450, FLOOR = 410, scale = 1;
+  var R = 14;                 // paper ball radius
+  var GRAVITY = 1500;
+  var MAX_PULL = 170, POWER = 7.4;
+  var START = {x:110, y:0};
+
+  var ball, bin, wind = 0, state = 'ready';
+  var score = 0, streak = 0, best = 0;
+  var aim = null;             // {x, y} pointer while dragging
+  var msg = null;             // {text, t}
+  var restTimer = 0, touchedRim = false, running = false, lastT = 0;
+
+  try { best = parseInt(localStorage.getItem('paperTossBest'), 10) || 0; } catch(e) {}
+
+  // A crumpled-paper outline: jagged polygon plus a few crease lines.
+  var shape = [], creases = [];
+  (function makeShape(){
+    var n = 11;
+    for(var i = 0; i < n; i++){
+      var a = (i / n) * Math.PI * 2 + (Math.random() - .5) * .35;
+      var r = R * (0.82 + Math.random() * 0.3);
+      shape.push([Math.cos(a) * r, Math.sin(a) * r]);
+    }
+    for(var k = 0; k < 3; k++){
+      var a1 = Math.random() * Math.PI * 2, a2 = a1 + 1.6 + Math.random() * 1.6;
+      creases.push([Math.cos(a1) * R * .75, Math.sin(a1) * R * .75,
+                    Math.cos(a2) * R * .35, Math.sin(a2) * R * .35]);
+    }
+  })();
+
+  function resize(){
+    var rect = canvas.getBoundingClientRect();
+    if(!rect.width) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    scale = canvas.width / W;
+    H = W * rect.height / rect.width;
+    FLOOR = H - 40;
+    START.y = FLOOR - 120;
+    if(!bin) placeBin(true); else bin.base = FLOOR;
+    if(state === 'ready') resetBall();
+    draw();
+  }
+
+  function placeBin(first){
+    var x = first ? 600 : 430 + Math.random() * 300;
+    bin = {x:x, top:90, bottom:72, h:105, base:FLOOR};
+  }
+
+  // The bin's walls as line segments (left wall, right wall, floor of the bin).
+  function binSegments(){
+    var t = bin.base - bin.h;
+    return [
+      [bin.x - bin.top / 2, t, bin.x - bin.bottom / 2, bin.base],
+      [bin.x + bin.top / 2, t, bin.x + bin.bottom / 2, bin.base],
+      [bin.x - bin.bottom / 2, bin.base, bin.x + bin.bottom / 2, bin.base]
+    ];
+  }
+
+  function resetBall(){
+    ball = {x:START.x, y:START.y, vx:0, vy:0, rot:0};
+    state = 'ready';
+    touchedRim = false;
+    restTimer = 0;
+  }
+
+  function setWind(){
+    // Wind kicks in after a few baskets and gets gustier as the score climbs.
+    if(score < 3){ wind = 0; }
+    else {
+      var maxW = Math.min(120 + score * 25, 420);
+      wind = Math.round((Math.random() * 2 - 1) * maxW);
+    }
+    if(!wind){ windEl.textContent = 'calm'; return; }
+    windEl.textContent = (wind < 0 ? '← ' : '') + Math.abs(Math.round(wind / 30)) + (wind > 0 ? ' →' : '');
+  }
+
+  function updateHud(){
+    scoreEl.textContent = score;
+    streakEl.textContent = streak;
+    bestEl.textContent = best;
+  }
+
+  function flash(text){ msg = {text:text, t:1.4}; }
+
+  function collideSegment(s, e, isRim){
+    var x1 = s[0], y1 = s[1], x2 = s[2], y2 = s[3];
+    var dx = x2 - x1, dy = y2 - y1;
+    var t = ((ball.x - x1) * dx + (ball.y - y1) * dy) / (dx * dx + dy * dy);
+    t = Math.max(0, Math.min(1, t));
+    var px = x1 + dx * t, py = y1 + dy * t;
+    var ox = ball.x - px, oy = ball.y - py;
+    var d = Math.sqrt(ox * ox + oy * oy);
+    if(d >= R || d === 0) return false;
+    var nx = ox / d, ny = oy / d;
+    ball.x = px + nx * R;
+    ball.y = py + ny * R;
+    var vn = ball.vx * nx + ball.vy * ny;
+    if(vn < 0){
+      ball.vx -= (1 + e) * vn * nx;
+      ball.vy -= (1 + e) * vn * ny;
+      ball.vx *= .96; ball.vy *= .96;
+      if(isRim && t < .15) touchedRim = true;
+    }
+    return true;
+  }
+
+  function insideBin(){
+    var t = bin.base - bin.h;
+    if(ball.y < t + R * .5 || ball.y > bin.base) return false;
+    var f = (ball.y - t) / bin.h;
+    var half = (bin.top + (bin.bottom - bin.top) * f) / 2;
+    return Math.abs(ball.x - bin.x) < half;
+  }
+
+  function step(dt){
+    ball.vy += GRAVITY * dt;
+    ball.vx += wind * dt;
+    ball.vx *= (1 - .15 * dt);
+    ball.x += ball.vx * dt;
+    ball.y += ball.vy * dt;
+    ball.rot += ball.vx * dt / R * .6;
+
+    var segs = binSegments();
+    collideSegment(segs[0], .35, true);
+    collideSegment(segs[1], .35, true);
+    collideSegment(segs[2], .2, false);
+
+    // Floor
+    if(ball.y > FLOOR - R){
+      ball.y = FLOOR - R;
+      if(ball.vy > 0) ball.vy *= -.35;
+      ball.vx *= .9;
+    }
+
+    if(state === 'flying' && insideBin() && ball.vy >= 0){
+      state = 'scored';
+      score++; streak++;
+      if(score > best){
+        best = score;
+        try { localStorage.setItem('paperTossBest', best); } catch(e) {}
+      }
+      updateHud();
+      flash(touchedRim ? (streak > 2 ? streak + ' in a row!' : 'In!') : 'Nothing but net!');
+    }
+  }
+
+  function tick(now){
+    var dt = Math.min((now - lastT) / 1000, 1 / 30);
+    lastT = now;
+    if(state === 'flying' || state === 'scored' || state === 'missed'){
+      var sub = 4;
+      for(var i = 0; i < sub; i++) step(dt / sub);
+      var slow = Math.abs(ball.vx) < 25 && Math.abs(ball.vy) < 40;
+      var offscreen = ball.x > W + 40 || ball.x < -40;
+      if(state === 'flying' && (offscreen || (slow && ball.y >= FLOOR - R - 1))){
+        state = 'missed';
+        streak = 0;
+        updateHud();
+        flash(offscreen ? 'Way off!' : 'So close…');
+      }
+      if(state !== 'flying' && (slow || offscreen)) restTimer += dt; else restTimer = 0;
+      if(restTimer > .6){
+        if(state === 'scored') placeBin(false);
+        setWind();
+        resetBall();
+      }
+    }
+    if(msg){ msg.t -= dt; if(msg.t <= 0) msg = null; }
+    draw();
+    if(state !== 'ready' || msg){ requestAnimationFrame(tick); }
+    else { running = false; }
+  }
+
+  function start(){
+    if(running) return;
+    running = true;
+    lastT = performance.now();
+    requestAnimationFrame(tick);
+  }
+
+  // ---------- drawing ----------
+  function drawPaper(){
+    // Notebook paper: faint blue rules plus a red margin line.
+    ctx.fillStyle = '#fffdf7';
+    ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(0,74,173,.13)';
+    ctx.lineWidth = 1.5;
+    for(var y = 34; y < H; y += 30){
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+    ctx.strokeStyle = 'rgba(214,80,80,.35)';
+    ctx.beginPath(); ctx.moveTo(56, 0); ctx.lineTo(56, H); ctx.stroke();
+    // Floor
+    ctx.strokeStyle = INK;
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(0, FLOOR); ctx.lineTo(W, FLOOR); ctx.stroke();
+  }
+
+  function binPath(){
+    var t = bin.base - bin.h;
+    ctx.beginPath();
+    ctx.moveTo(bin.x - bin.top / 2, t);
+    ctx.lineTo(bin.x + bin.top / 2, t);
+    ctx.lineTo(bin.x + bin.bottom / 2, bin.base);
+    ctx.lineTo(bin.x - bin.bottom / 2, bin.base);
+    ctx.closePath();
+  }
+
+  function drawBinBack(){
+    binPath();
+    ctx.fillStyle = 'rgba(0,74,173,.12)';
+    ctx.fill();
+  }
+
+  function drawBinFront(){
+    var t = bin.base - bin.h;
+    ctx.save();
+    binPath();
+    ctx.clip();
+    // Wire mesh
+    ctx.strokeStyle = 'rgba(0,74,173,.45)';
+    ctx.lineWidth = 1.5;
+    for(var i = -6; i <= 6; i++){
+      ctx.beginPath();
+      ctx.moveTo(bin.x + i * (bin.top / 12), t);
+      ctx.lineTo(bin.x + i * (bin.bottom / 12), bin.base);
+      ctx.stroke();
+    }
+    for(var y = t + 18; y < bin.base; y += 18){
+      ctx.beginPath(); ctx.moveTo(bin.x - bin.top, y); ctx.lineTo(bin.x + bin.top, y); ctx.stroke();
+    }
+    ctx.restore();
+    binPath();
+    ctx.strokeStyle = BLUE;
+    ctx.lineWidth = 3.5;
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+    // Rim
+    ctx.beginPath();
+    ctx.moveTo(bin.x - bin.top / 2 - 4, t);
+    ctx.lineTo(bin.x + bin.top / 2 + 4, t);
+    ctx.lineWidth = 6;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+  }
+
+  function drawBall(){
+    ctx.save();
+    ctx.translate(ball.x, ball.y);
+    ctx.rotate(ball.rot);
+    ctx.beginPath();
+    shape.forEach(function(p, i){ i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); });
+    ctx.closePath();
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    ctx.strokeStyle = INK;
+    ctx.lineWidth = 2;
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(64,24,4,.4)';
+    ctx.lineWidth = 1.2;
+    creases.forEach(function(c){
+      ctx.beginPath(); ctx.moveTo(c[0], c[1]); ctx.lineTo(c[2], c[3]); ctx.stroke();
+    });
+    ctx.restore();
+  }
+
+  function launchVelocity(){
+    var dx = ball.x - aim.x, dy = ball.y - aim.y;
+    var d = Math.sqrt(dx * dx + dy * dy);
+    if(d > MAX_PULL){ dx *= MAX_PULL / d; dy *= MAX_PULL / d; }
+    return {vx:dx * POWER, vy:dy * POWER};
+  }
+
+  function drawAim(){
+    var v = launchVelocity();
+    // Pull band
+    ctx.strokeStyle = 'rgba(64,24,4,.35)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4, 5]);
+    ctx.beginPath(); ctx.moveTo(START.x, START.y); ctx.lineTo(ball.x - v.vx / POWER, ball.y - v.vy / POWER); ctx.stroke();
+    ctx.setLineDash([]);
+    // Short trajectory preview (only the first part, so it still takes skill)
+    ctx.fillStyle = BLUE;
+    var x = ball.x, y = ball.y, vx = v.vx, vy = v.vy, dt = 1 / 60;
+    for(var i = 1; i <= 16; i++){
+      for(var k = 0; k < 2; k++){
+        vy += GRAVITY * dt; vx += wind * dt; x += vx * dt; y += vy * dt;
+      }
+      if(i % 2) continue;
+      ctx.globalAlpha = 1 - i / 18;
+      ctx.beginPath(); ctx.arc(x, y, 3.2, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function drawMessage(){
+    if(!msg) return;
+    var a = Math.min(1, msg.t / .4);
+    ctx.save();
+    ctx.globalAlpha = a;
+    ctx.font = HEADING_FONT;
+    ctx.textAlign = 'center';
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = BLUE;
+    ctx.fillStyle = YELLOW;
+    var y = 70 - (1.4 - msg.t) * 12;
+    ctx.strokeText(msg.text, W / 2, y);
+    ctx.fillText(msg.text, W / 2, y);
+    ctx.restore();
+  }
+
+  function drawIdleHint(){
+    if(state !== 'ready' || aim || score > 0 || streak > 0) return;
+    ctx.fillStyle = 'rgba(0,74,173,.7)';
+    ctx.font = "600 15px 'Poppins', sans-serif";
+    ctx.textAlign = 'left';
+    ctx.fillText('drag me back ↙', START.x + 24, START.y - 22);
+  }
+
+  function draw(){
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    drawPaper();
+    drawBinBack();
+    if(aim) drawAim();
+    drawBall();
+    drawBinFront();
+    drawIdleHint();
+    drawMessage();
+  }
+
+  // ---------- input ----------
+  function toLocal(e){
+    var rect = canvas.getBoundingClientRect();
+    return {x:(e.clientX - rect.left) * W / rect.width, y:(e.clientY - rect.top) * H / rect.height};
+  }
+
+  canvas.addEventListener('pointerdown', function(e){
+    if(state !== 'ready') return;
+    var p = toLocal(e);
+    var dx = p.x - ball.x, dy = p.y - ball.y;
+    if(dx * dx + dy * dy > 90 * 90) return;   // generous grab area for small phone screens
+    aim = p;
+    try { canvas.setPointerCapture(e.pointerId); } catch(err) {}
+    canvas.classList.add('is-aiming');
+    draw();
+  });
+  canvas.addEventListener('pointermove', function(e){
+    if(!aim) return;
+    aim = toLocal(e);
+    draw();
+  });
+  function release(e){
+    if(!aim) return;
+    var v = launchVelocity();
+    aim = null;
+    canvas.classList.remove('is-aiming');
+    if(Math.abs(v.vx) + Math.abs(v.vy) < 120){ draw(); return; }  // too small a pull: ignore
+    ball.vx = v.vx; ball.vy = v.vy;
+    state = 'flying';
+    start();
+  }
+  canvas.addEventListener('pointerup', release);
+  canvas.addEventListener('pointercancel', function(){ aim = null; canvas.classList.remove('is-aiming'); draw(); });
+
+  document.getElementById('tossReset').addEventListener('click', function(){
+    score = 0; streak = 0; msg = null;
+    placeBin(true);
+    setWind();
+    resetBall();
+    updateHud();
+    draw();
+  });
+
+  var resizeTimer;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 120);
+  });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+
+  updateHud();
+  setWind();
+  resize();
 })();
 </script>
 
