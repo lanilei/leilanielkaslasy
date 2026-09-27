@@ -832,6 +832,32 @@
     line-height:1.7;
     color:var(--ink);
   }
+  .photo-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:clamp(16px,3vw,28px);
+    max-width:960px;
+    margin-inline:auto;
+  }
+  .photo-grid figure{margin:0;}
+  .photo-grid img{
+    width:100%;
+    aspect-ratio:4/3;
+    object-fit:cover;
+    border:4px solid var(--cream);
+    border-radius:10px;
+    box-shadow:6px 6px 0 var(--blue);
+  }
+  .photo-grid figcaption{
+    margin-top:10px;
+    font-style:italic;
+    color:var(--blue);
+    font-size:.92rem;
+    line-height:1.5;
+  }
+  @media (max-width:600px){
+    .photo-grid{grid-template-columns:1fr;}
+  }
   .doc-figure{
     max-width:960px;
     margin:0 auto clamp(24px,4vw,40px);
@@ -1665,6 +1691,16 @@
           </ul>
         </li>
       </ol>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Photos</h2></div>
+      <div class="photo-grid">
+        <figure><img src="images/seatrek-1.webp" alt="Seatrek students holding Seatrek banners in front of a stone tower on a rocky hilltop" loading="lazy"></figure>
+        <figure><img src="images/seatrek-2.webp" alt="A student throwing a yellow ring buoy to a swimmer during a water rescue drill, with catamarans behind" loading="lazy"></figure>
+        <figure><img src="images/seatrek-3.webp" alt="Students gathered on a catamaran deck at dusk watching a projector presentation" loading="lazy"></figure>
+        <figure><img src="images/seatrek-4.webp" alt="Students with a Seatrek flag on a misty, jungle-covered summit" loading="lazy"></figure>
+      </div>
     </div>
   </div>
 </div>
