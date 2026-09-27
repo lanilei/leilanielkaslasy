@@ -797,23 +797,23 @@
   .detail-list li{margin-bottom:.5rem;}
   .stat-row + .detail-list{margin:clamp(20px,3vw,28px) auto 0;}
 
-  /* Publications / talks list */
-  .pub-list{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:clamp(16px,3vw,28px);
+  /* Talks: each slide deck gets its own panel and inline viewer */
+  .deck-list{
+    display:flex;
+    flex-direction:column;
+    gap:clamp(28px,5vw,44px);
     max-width:960px;
     margin-inline:auto;
   }
-  .pub{
+  .deck{
     display:flex;
     flex-direction:column;
     align-items:flex-start;
     gap:.7rem;
-    padding:clamp(18px,3vw,26px);
+    padding:clamp(18px,3vw,28px);
     background:var(--cream);
-    border-radius:12px;
-    box-shadow:6px 6px 0 var(--blue);
+    border-radius:14px;
+    box-shadow:8px 8px 0 var(--blue);
   }
   .pub-title{
     font-family:var(--font-heading);
@@ -826,77 +826,6 @@
   .pub-authors{margin:0;font-size:.92rem;line-height:1.5;color:var(--ink);}
   .pub-authors strong{color:var(--blue);}
   .pub-authors-center{text-align:center;margin:-4px auto 16px;max-width:760px;}
-  .pub .item-link{margin-top:auto;}
-  button.item-link{border:none;cursor:pointer;font-family:var(--font-body);}
-  .pub.is-showing{outline:3px solid var(--blue);outline-offset:3px;}
-  .pub-meta a{color:var(--blue);font-weight:600;}
-
-  /* Inline slide viewer: one slide at a time, fetched on demand */
-  .slide-stage{
-    max-width:960px;
-    margin:clamp(24px,4vw,36px) auto 0;
-  }
-  .slide-stage-title{
-    margin:0 0 12px;
-    font-family:var(--font-heading);
-    font-weight:700;
-    font-size:clamp(1rem,1.8vw,1.15rem);
-    color:var(--blue);
-    text-align:center;
-  }
-  .slide-frame{
-    position:relative;
-    aspect-ratio:16/9;
-    background:#fff;
-    border:4px solid var(--cream);
-    border-radius:10px;
-    box-shadow:10px 10px 0 var(--blue);
-    overflow:hidden;
-    touch-action:pan-y;
-  }
-  .slide-frame:focus-visible{outline:3px solid var(--blue);outline-offset:4px;}
-  .slide-canvas{display:block;width:100%;height:100%;}
-  .slide-loading{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(255,255,255,.85);
-    color:var(--blue);
-    font-weight:600;
-  }
-  .slide-loading[hidden]{display:none;}
-  .slide-controls{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:clamp(12px,3vw,24px);
-    margin-top:20px;
-  }
-  .slide-btn{
-    padding:.55rem 1.2rem;
-    background:var(--blue);
-    color:var(--cream);
-    border:none;
-    border-radius:999px;
-    font-family:var(--font-body);
-    font-weight:700;
-    font-size:.9rem;
-    cursor:pointer;
-  }
-  .slide-btn:disabled{opacity:.35;cursor:default;}
-  .slide-count{
-    min-width:5.5em;
-    text-align:center;
-    font-weight:700;
-    color:var(--blue);
-    font-variant-numeric:tabular-nums;
-  }
-  @media (max-width:600px){
-    .slide-frame{box-shadow:6px 6px 0 var(--blue);}
-  }
-  .pub-lead{grid-column:1 / -1;}
   .pub-tag{
     padding:.2rem .7rem;
     border-radius:999px;
@@ -907,9 +836,62 @@
     letter-spacing:.08em;
     text-transform:uppercase;
   }
-  .pub-meta{font-size:.8rem;color:var(--ink);opacity:.7;}
-  @media (max-width:760px){
-    .pub-list{grid-template-columns:1fr;}
+  .pub-meta{margin:0;font-size:.82rem;color:var(--ink);opacity:.75;}
+  .pub-meta a{color:var(--blue);font-weight:600;}
+  .deck-meta{align-self:center;}
+
+  /* Inline slide viewer: one slide at a time, fetched on demand */
+  .slide-frame{
+    position:relative;
+    width:100%;
+    margin-top:.4rem;
+    aspect-ratio:16/9;
+    background:#fff;
+    border:2px solid rgba(0,74,173,.25);
+    border-radius:8px;
+    overflow:hidden;
+    touch-action:pan-y;
+  }
+  .slide-frame:focus-visible{outline:3px solid var(--blue);outline-offset:3px;}
+  .slide-canvas{display:block;width:100%;height:100%;}
+  .slide-loading{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:1rem;
+    text-align:center;
+    background:rgba(255,255,255,.85);
+    color:var(--blue);
+    font-weight:600;
+  }
+  .slide-loading[hidden]{display:none;}
+  .slide-controls{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:clamp(12px,3vw,24px);
+    align-self:center;
+  }
+  .slide-btn{
+    padding:.5rem 1.1rem;
+    background:var(--blue);
+    color:var(--cream);
+    border:none;
+    border-radius:999px;
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:.88rem;
+    cursor:pointer;
+  }
+  .slide-btn:disabled{opacity:.35;cursor:default;}
+  .slide-count{
+    min-width:5.5em;
+    text-align:center;
+    font-weight:700;
+    color:var(--blue);
+    font-variant-numeric:tabular-nums;
   }
 
   /* Headline numbers on detail pages */
@@ -1822,39 +1804,50 @@
 
     <div class="doc-block">
       <div class="doc-head"><h2>STLE 2025 Presentations</h2></div>
-      <div class="pub-list">
-        <article class="pub pub-lead">
+      <div class="deck-list">
+        <article class="deck deck-lead">
           <span class="pub-tag">Lead author</span>
           <h3 class="pub-title">Influence of SLA Additive Manufacturing Patterning Techniques on the Wear of Metal Countersurfaces for 3D Printed Ceramics</h3>
           <p class="pub-authors"><strong>Leilani Elkaslasy</strong>, Miranda Brandt, Kanoa Parker, Gordon G. Krauss</p>
-          <button type="button" class="item-link slide-open" data-pdf="docs/tribology-stle-elkaslasy.pdf">View slides</button>
-          <span class="pub-meta">35 slides · <a href="docs/tribology-stle-elkaslasy.pdf" target="_blank" rel="noopener">Open PDF ↗</a> (32 MB)</span>
+          <div class="slide-frame" data-pdf="docs/tribology-stle-elkaslasy.pdf" tabindex="0" aria-label="Slides: Influence of SLA Additive Manufacturing Patterning Techniques on the Wear of Metal Countersurfaces for 3D Printed Ceramics. Use the left and right arrow keys to change slides.">
+            <canvas class="slide-canvas"></canvas>
+            <div class="slide-loading">Slides load when you scroll here…</div>
+          </div>
+          <div class="slide-controls">
+            <button type="button" class="slide-btn slide-prev" aria-label="Previous slide">← Prev</button>
+            <span class="slide-count" aria-live="polite">– / 35</span>
+            <button type="button" class="slide-btn slide-next" aria-label="Next slide">Next →</button>
+          </div>
+          <p class="pub-meta deck-meta">35 slides · <a href="docs/tribology-stle-elkaslasy.pdf" target="_blank" rel="noopener">Open full PDF ↗</a> (32 MB)</p>
         </article>
-        <article class="pub">
+        <article class="deck">
           <h3 class="pub-title">Modification of Abrasiveness of Additive Manufacturing (SLA) Produced Components through Resin Formulation</h3>
           <p class="pub-authors">Kanoa Parker, Miranda Brandt, <strong>Leilani Elkaslasy</strong>, Gordon G. Krauss</p>
-          <button type="button" class="item-link slide-open" data-pdf="docs/tribology-stle-parker.pdf">View slides</button>
-          <span class="pub-meta">32 slides · <a href="docs/tribology-stle-parker.pdf" target="_blank" rel="noopener">Open PDF ↗</a> (31 MB)</span>
+          <div class="slide-frame" data-pdf="docs/tribology-stle-parker.pdf" tabindex="0" aria-label="Slides: Modification of Abrasiveness of Additive Manufacturing (SLA) Produced Components through Resin Formulation. Use the left and right arrow keys to change slides.">
+            <canvas class="slide-canvas"></canvas>
+            <div class="slide-loading">Slides load when you scroll here…</div>
+          </div>
+          <div class="slide-controls">
+            <button type="button" class="slide-btn slide-prev" aria-label="Previous slide">← Prev</button>
+            <span class="slide-count" aria-live="polite">– / 32</span>
+            <button type="button" class="slide-btn slide-next" aria-label="Next slide">Next →</button>
+          </div>
+          <p class="pub-meta deck-meta">32 slides · <a href="docs/tribology-stle-parker.pdf" target="_blank" rel="noopener">Open full PDF ↗</a> (31 MB)</p>
         </article>
-        <article class="pub">
+        <article class="deck">
           <h3 class="pub-title">Modification of Abrasiveness of SLA Additive Manufacturing Produced Components through Metal and Ceramic Additives</h3>
           <p class="pub-authors">Miranda Brandt, Kanoa Parker, <strong>Leilani Elkaslasy</strong>, Gordon G. Krauss</p>
-          <button type="button" class="item-link slide-open" data-pdf="docs/tribology-stle-brandt.pdf">View slides</button>
-          <span class="pub-meta">31 slides · <a href="docs/tribology-stle-brandt.pdf" target="_blank" rel="noopener">Open PDF ↗</a> (29 MB)</span>
+          <div class="slide-frame" data-pdf="docs/tribology-stle-brandt.pdf" tabindex="0" aria-label="Slides: Modification of Abrasiveness of SLA Additive Manufacturing Produced Components through Metal and Ceramic Additives. Use the left and right arrow keys to change slides.">
+            <canvas class="slide-canvas"></canvas>
+            <div class="slide-loading">Slides load when you scroll here…</div>
+          </div>
+          <div class="slide-controls">
+            <button type="button" class="slide-btn slide-prev" aria-label="Previous slide">← Prev</button>
+            <span class="slide-count" aria-live="polite">– / 31</span>
+            <button type="button" class="slide-btn slide-next" aria-label="Next slide">Next →</button>
+          </div>
+          <p class="pub-meta deck-meta">31 slides · <a href="docs/tribology-stle-brandt.pdf" target="_blank" rel="noopener">Open full PDF ↗</a> (29 MB)</p>
         </article>
-      </div>
-
-      <div class="slide-stage" hidden>
-        <p class="slide-stage-title"></p>
-        <div class="slide-frame" tabindex="0" aria-label="Slide viewer. Use the left and right arrow keys to change slides.">
-          <canvas class="slide-canvas"></canvas>
-          <div class="slide-loading">Loading slides…</div>
-        </div>
-        <div class="slide-controls">
-          <button type="button" class="slide-btn slide-prev" aria-label="Previous slide">← Prev</button>
-          <span class="slide-count" aria-live="polite">–</span>
-          <button type="button" class="slide-btn slide-next" aria-label="Next slide">Next →</button>
-        </div>
       </div>
     </div>
 
@@ -2952,51 +2945,46 @@
 
 <script>
 (function(){
-  // Inline slide viewer for the big slide-deck PDFs. Instead of downloading a
-  // whole ~30 MB deck, PDF.js is asked to fetch only the byte ranges needed
-  // for the slide on screen (GitHub Pages supports range requests).
-  var buttons = document.querySelectorAll('.slide-open[data-pdf]');
-  if(!buttons.length || typeof pdfjsLib === 'undefined') return;
-
-  var docs = {};   // url -> PDF.js loading promise, so reopening a deck is instant
-
-  function getDoc(url){
-    if(!docs[url]){
-      docs[url] = pdfjsLib.getDocument({url:url, disableAutoFetch:true, disableStream:true}).promise;
-    }
-    return docs[url];
+  // Inline slide viewers for the big slide-deck PDFs. Each deck shows one
+  // slide at a time; PDF.js fetches only the byte ranges needed for the slide
+  // on screen (GitHub Pages supports range requests), so a ~30 MB deck never
+  // has to download in full. A deck starts loading when it scrolls near view.
+  var frames = document.querySelectorAll('.slide-frame[data-pdf]');
+  if(!frames.length) return;
+  if(typeof pdfjsLib === 'undefined' || !('IntersectionObserver' in window)){
+    frames.forEach(function(f){
+      var l = f.querySelector('.slide-loading');
+      if(l) l.innerHTML = 'Slides can’t be shown here. <a href="' + f.dataset.pdf + '" target="_blank" rel="noopener">Open the PDF ↗</a>';
+    });
+    return;
   }
 
-  buttons.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var block = btn.closest('.doc-block');
-      var stage = block && block.querySelector('.slide-stage');
-      if(stage) openDeck(stage, btn);
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      io.unobserve(entry.target);
+      entry.target._viewer.start();
     });
+  }, {rootMargin:'300px 0px'});
+
+  frames.forEach(function(frame){
+    frame._viewer = makeViewer(frame);
+    io.observe(frame);
   });
 
-  function openDeck(stage, btn){
-    var s = stage._viewer || (stage._viewer = makeViewer(stage));
-    var card = btn.closest('.pub');
-    stage.parentNode.querySelectorAll('.pub').forEach(function(p){ p.classList.toggle('is-showing', p === card); });
-    s.title.textContent = card ? card.querySelector('.pub-title').textContent : '';
-    stage.hidden = false;
-    s.load(btn.dataset.pdf);
-    stage.scrollIntoView({behavior:'smooth', block:'center'});
-  }
-
-  function makeViewer(stage){
-    var frame = stage.querySelector('.slide-frame');
-    var canvas = stage.querySelector('.slide-canvas');
-    var loading = stage.querySelector('.slide-loading');
-    var prev = stage.querySelector('.slide-prev');
-    var next = stage.querySelector('.slide-next');
-    var count = stage.querySelector('.slide-count');
+  function makeViewer(frame){
+    var deck = frame.closest('.deck') || frame.parentNode;
+    var url = frame.dataset.pdf;
+    var canvas = frame.querySelector('.slide-canvas');
+    var loading = frame.querySelector('.slide-loading');
+    var prev = deck.querySelector('.slide-prev');
+    var next = deck.querySelector('.slide-next');
+    var count = deck.querySelector('.slide-count');
     var ctx = canvas.getContext('2d');
-    var pdf = null, page = 1, url = null, token = 0, task = null;
+    var pdf = null, page = 1, token = 0, task = null, started = false;
 
     function update(){
-      count.textContent = pdf ? page + ' / ' + pdf.numPages : '–';
+      if(pdf) count.textContent = page + ' / ' + pdf.numPages;
       prev.disabled = !pdf || page <= 1;
       next.disabled = !pdf || page >= pdf.numPages;
     }
@@ -3013,6 +3001,7 @@
         var dpr = Math.min(window.devicePixelRatio || 1, 2);
         var vp = p.getViewport({scale:(frame.clientWidth || 800) * dpr / base.width});
         if(task) task.cancel();
+        // Draw off-screen first so the old slide stays visible until the new one is ready.
         var off = document.createElement('canvas');
         off.width = Math.floor(vp.width);
         off.height = Math.floor(vp.height);
@@ -3026,8 +3015,7 @@
           canvas.height = off.height;
           ctx.drawImage(off, 0, 0);
           loading.hidden = true;
-          // Warm up the next slide so paging forward feels instant.
-          if(page < pdf.numPages) pdf.getPage(page + 1);
+          if(page < pdf.numPages) pdf.getPage(page + 1);   // warm up the next slide
         });
       }).catch(function(err){
         if(err && err.name === 'RenderingCancelledException') return;
@@ -3050,8 +3038,7 @@
       if(e.key === 'ArrowRight'){ e.preventDefault(); go(page + 1); }
       if(e.key === 'ArrowLeft'){ e.preventDefault(); go(page - 1); }
     });
-    // Swipe left/right on touch screens
-    var sx = null, sy = null;
+    var sx = null, sy = null;   // swipe on touch screens
     frame.addEventListener('pointerdown', function(e){ sx = e.clientX; sy = e.clientY; });
     frame.addEventListener('pointerup', function(e){
       if(sx === null) return;
@@ -3061,24 +3048,19 @@
     });
     var rt;
     window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(render, 200); });
+    update();
 
     return {
-      title: stage.querySelector('.slide-stage-title'),
-      load: function(newUrl){
-        if(newUrl === url && pdf){ frame.focus({preventScroll:true}); return; }
-        url = newUrl; pdf = null; page = 1; token++;
-        update();
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        loading.hidden = false;
+      start: function(){
+        if(started) return;
+        started = true;
         loading.textContent = 'Loading slides…';
-        getDoc(newUrl).then(function(doc){
-          if(url !== newUrl) return;
+        pdfjsLib.getDocument({url:url, disableAutoFetch:true, disableStream:true}).promise.then(function(doc){
           pdf = doc;
           update();
           render();
-          frame.focus({preventScroll:true});
         }).catch(function(){
-          if(url === newUrl) loading.innerHTML = 'The slides couldn’t be loaded here. <a href="' + newUrl + '" target="_blank" rel="noopener">Open the PDF ↗</a>';
+          loading.innerHTML = 'The slides couldn’t be loaded here. <a href="' + url + '" target="_blank" rel="noopener">Open the PDF ↗</a>';
         });
       }
     };
