@@ -993,8 +993,71 @@
     font-size:.92rem;
     line-height:1.5;
   }
+  .photo-grid-3{grid-template-columns:repeat(3,1fr);}
+  .photo-grid .materials{
+    display:block;
+    margin-top:4px;
+    font-style:normal;
+    font-size:.8rem;
+    color:var(--ink);
+    opacity:.75;
+  }
+  @media (max-width:900px){
+    .photo-grid-3{grid-template-columns:repeat(2,1fr);}
+  }
   @media (max-width:600px){
-    .photo-grid{grid-template-columns:1fr;}
+    .photo-grid,.photo-grid-3{grid-template-columns:1fr;}
+  }
+
+  /* Photo + text side by side */
+  .split{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:clamp(20px,4vw,40px);
+    align-items:center;
+    max-width:960px;
+    margin-inline:auto;
+  }
+  .split-media{margin:0;}
+  .split-media img{
+    width:100%;
+    border:4px solid var(--cream);
+    border-radius:10px;
+    box-shadow:6px 6px 0 var(--blue);
+  }
+  .split-text p{margin:0 0 1.2rem;line-height:1.75;color:var(--ink);font-size:clamp(15px,1.6vw,17px);}
+  .catalogue-link{
+    display:inline-flex;
+    flex-direction:column;
+    gap:8px;
+    max-width:320px;
+    text-decoration:none;
+    color:var(--blue);
+    font-weight:700;
+    font-family:var(--font-heading);
+    transition:transform .15s ease;
+  }
+  .catalogue-link img{
+    width:100%;
+    background:#fff;
+    border-radius:8px;
+    padding:8px;
+    box-shadow:5px 5px 0 var(--blue);
+  }
+  .catalogue-link:hover,.catalogue-link:focus-visible{transform:translateY(-2px);}
+  .video-embed{margin-top:clamp(28px,5vw,44px);}
+  .video-embed-frame{
+    position:relative;
+    aspect-ratio:16/9;
+    border:4px solid var(--cream);
+    border-radius:10px;
+    box-shadow:8px 8px 0 var(--blue);
+    overflow:hidden;
+    background:#000;
+  }
+  .video-embed-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  @media (max-width:760px){
+    .split{grid-template-columns:1fr;}
   }
   .doc-figure{
     max-width:960px;
@@ -1515,6 +1578,7 @@
           <h3>Adaptive Design Fellow · Adaptive Design Association</h3>
           <div class="item-badges"><span class="badge accessibility">Accessibility</span><span class="badge leadership">Leadership</span></div>
           <p>Designed and fabricated adapted technologies, consulting with occupational therapists, educators, and families to ensure client needs were met.</p>
+          <a href="#adaptive-design" class="item-link" data-subpage-link="adaptive-design">Learn More →</a>
         </div>
       </div>
 
@@ -1799,6 +1863,85 @@
       </div>
       <div class="doc-frame doc-frame-report">
         <div class="pdf-view" data-pdf="docs/xdemics-final-report.pdf" role="document" aria-label="Xdemics clinic final report"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="subpage" id="adaptive-design" data-subpage aria-hidden="true">
+  <div class="wrap subpage-inner">
+    <div class="subpage-topbar">
+      <a href="#experience" class="subpage-back" data-subpage-close>← Back to Portfolio</a>
+    </div>
+    <p class="subpage-eyebrow">Adaptive Design Association · Adaptive Design at Mudd · Tikkun Olam Makers</p>
+    <h1 class="subpage-title">Adaptive Design</h1>
+    <p class="subpage-lede">For the last 12 years, I've interned for the Adaptive Design Association, an organization that builds adaptive technologies for people with intellectual and physical disabilities. During my time with the organization, I've learned just how impactful design can be.</p>
+
+    <figure class="doc-figure doc-figure-narrow doc-figure-top">
+      <img src="images/ada/ada-intro.webp" alt="A smiling young child sitting in a pink custom-built adaptive chair with a tray and red side supports" loading="lazy">
+    </figure>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Adaptive Design Association</h2></div>
+      <div class="photo-grid photo-grid-3">
+        <figure>
+          <img src="images/ada/ada-fabrication.jpg" alt="Working on the Adaptive Design Association fabrication team" loading="lazy">
+          <figcaption>I've worked on the fabrication team building adaptations.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/ada/ada-training.jpg" alt="Training others in adaptive design fabrication" loading="lazy">
+          <figcaption>I've also helped train interns and young adults with autism in ADA fabrication, part of a program that prepares them for the workforce.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/ada/ada-fellow.jpg" alt="Adaptive Design Fellow outreach" loading="lazy">
+          <figcaption>I've since become an Adaptive Design Fellow, helping further ADA's mission through outreach, fundraising and education.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Adaptive Design at Mudd</h2></div>
+      <div class="split">
+        <figure class="split-media"><img src="images/ada/mudd-club.jpg" alt="Newspaper article headlined 'Fresh eyes, new solutions: HMC students' work helps disabled, elderly', with a photo of the club at an outdoor table" loading="lazy"></figure>
+        <div class="split-text">
+          <p>Over the last three years, I started an organization on campus that trains my peers to build adaptations for the surrounding community. We were even featured in the local paper for our work!</p>
+          <a href="https://drive.google.com/file/d/1NGA7y7alp1axKOpXnd7lG5Vg3KqNaEmc/view?usp=sharing" target="_blank" rel="noopener" class="catalogue-link">
+            <img src="images/ada/catalogue.jpg" alt="" loading="lazy">
+            <span>View the AdAM catalogue ↗</span>
+          </a>
+        </div>
+      </div>
+      <figure class="doc-figure video-embed">
+        <div class="video-embed-frame">
+          <iframe src="https://www.youtube-nocookie.com/embed/KVBS1ibAD2Q" title="Accessible checkers, an Adaptive Design at Mudd project" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+        </div>
+        <figcaption>Accessible checkers.</figcaption>
+      </figure>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Tikkun Olam Makers Fellowship 2023–2024</h2></div>
+      <div class="split">
+        <figure class="split-media"><img src="images/ada/tom-fellowship.jpg" alt="The Tikkun Olam Makers fellowship cohort posed with rows of adaptive wheeled seats" loading="lazy"></figure>
+        <div class="split-text">
+          <p>Accepted into the TOM Fellowship 2023 class for my work on my college campus with Adaptive Design at Mudd.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Selected Adaptations</h2></div>
+      <div class="photo-grid photo-grid-3">
+        <figure><img src="images/ada/nicky-chair.webp" alt="Freestanding cardboard chair with removable footplates" loading="lazy"><figcaption>Freestanding chair for Nicky with removable footplates to accommodate growth. <span class="materials">Cardboard, recycled yoga mat, foam &amp; webbing</span></figcaption></figure>
+        <figure><img src="images/ada/mobility-trainer.webp" alt="A toddler moving on his own in a mobility trainer" loading="lazy"><figcaption>Toddler Mobility Trainer for CJ: the first time CJ got to move on his own. Before this, he was either cradled in a caregiver's arms, sitting or lying down.</figcaption></figure>
+        <figure><img src="images/ada/school-chair.webp" alt="Modified school chair for a little person" loading="lazy"><figcaption>Little person school chair modification. <span class="materials">Cardboard, PVC &amp; recycled yoga mat</span></figcaption></figure>
+        <figure><img src="images/ada/drawing-easel.webp" alt="Cardboard drawing easel with a lazy Susan built into the base" loading="lazy"><figcaption>Drawing easel for a one-armed inmate, with a lazy Susan embedded in the bottom. <span class="materials">Cardboard, lazy Susan &amp; grippy mat</span></figcaption></figure>
+        <figure><img src="images/ada/floor-seater.webp" alt="Floor seater with an attachable table" loading="lazy"><figcaption>Floor seater with an attachable table for circle time in class. <span class="materials">Cardboard &amp; recycled yoga mat</span></figcaption></figure>
+        <figure><img src="images/ada/rocking-perch.webp" alt="Rocking perch seat" loading="lazy"><figcaption>Rocking perch for ADHD and anxiety. <span class="materials">Cardboard &amp; yoga mat</span></figcaption></figure>
+        <figure><img src="images/ada/sensory-chairs.jpg" alt="Soft sensory chairs shaped like a garden and a hamburger" loading="lazy"><figcaption>Memory foam garden and hamburger sensory chairs for soothing students with autism.</figcaption></figure>
+        <figure><img src="images/ada/garden-handle.jpg" alt="Gardening tool with a built-up grip handle" loading="lazy"><figcaption>Gardening tool handle for better grip for users with reduced fine motor skills.</figcaption></figure>
+        <figure><img src="images/ada/weighted-tools.jpg" alt="Weighted gardening tools" loading="lazy"><figcaption>Weighted gardening tools for improved proprioceptive feedback: awareness of the body's movement and position.</figcaption></figure>
+        <figure><img src="images/ada/jar-opener.jpg" alt="Ergonomic 3D-printed jar seal opener" loading="lazy"><figcaption>Ergonomic 3D-printed tool for opening jar seals without needing a sharp object.</figcaption></figure>
       </div>
     </div>
   </div>
