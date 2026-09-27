@@ -786,6 +786,16 @@
     color:var(--ink);
   }
   .subpage-lede + .doc-figure{margin-top:clamp(28px,5vw,48px);}
+  .detail-list{
+    max-width:760px;
+    margin:clamp(14px,2.5vw,20px) 0 0;
+    padding-left:1.2rem;
+    color:var(--ink);
+    font-size:clamp(15px,1.6vw,17px);
+    line-height:1.75;
+  }
+  .detail-list li{margin-bottom:.5rem;}
+  .detail-list li::marker{color:var(--blue);}
 
   /* Role timeline (a job with several roles over time) */
   .role-list{
@@ -1574,6 +1584,7 @@
           <h3>Osteoarthritis Research</h3>
           <div class="item-badges"><span class="badge design">Design</span></div>
           <p>Researched the effect of a novel drug on osteoarthritis and wrote a paper.</p>
+          <a href="#osteoarthritis-research" class="item-link" data-subpage-link="osteoarthritis-research">Learn More →</a>
         </div>
       </div>
 
@@ -1647,6 +1658,31 @@
       </div>
       <div class="doc-frame doc-frame-report">
         <div class="pdf-view" data-pdf="docs/xdemics-final-report.pdf" role="document" aria-label="Xdemics clinic final report"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="subpage" id="osteoarthritis-research" data-subpage aria-hidden="true">
+  <div class="wrap subpage-inner">
+    <div class="subpage-topbar">
+      <a href="#research" class="subpage-back" data-subpage-close>← Back to Portfolio</a>
+    </div>
+    <p class="subpage-eyebrow">NYU Langone Medical Center · Lab of Dr. Bruce Cronstein</p>
+    <h1 class="subpage-title">Effect of the Activation of A2A Receptors on the Modulation of NURR1</h1>
+    <p class="subpage-lede">Summer research intern for Principal Investigator Dr. Bruce Cronstein, a leader in the field of rheumatology.</p>
+    <ul class="detail-list">
+      <li>Independently managed active cell cultures, completed protein assays, ran western blots, and stained and imaged slides.</li>
+      <li>Given permission to test novel drugs, I designed my own time-course trial on live cell cultures to test the effectiveness of a novel drug being developed. I wrote a paper on my trial and presented my findings at a symposium at my high school.</li>
+    </ul>
+
+    <div class="doc-block">
+      <div class="doc-head">
+        <h2>Paper</h2>
+        <a href="docs/nurr1-a2a-paper.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+      </div>
+      <div class="doc-frame doc-frame-report">
+        <div class="pdf-view" data-pdf="docs/nurr1-a2a-paper.pdf" role="document" aria-label="Research paper: Effect of the Activation of A2A Receptors on the Modulation of NURR1"></div>
       </div>
     </div>
   </div>
