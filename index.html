@@ -778,6 +778,60 @@
     border-radius:10px;
     box-shadow:8px 8px 0 var(--blue);
   }
+  .subpage-lede{
+    max-width:760px;
+    margin:clamp(16px,3vw,24px) 0 0;
+    font-size:clamp(16px,1.8vw,20px);
+    line-height:1.7;
+    color:var(--ink);
+  }
+  .subpage-lede + .doc-figure{margin-top:clamp(28px,5vw,48px);}
+
+  /* Role timeline (a job with several roles over time) */
+  .role-list{
+    list-style:none;
+    margin:0 auto;
+    padding:0;
+    max-width:760px;
+    border-left:3px dotted var(--blue);
+  }
+  .role{
+    position:relative;
+    padding:0 0 clamp(24px,4vw,36px) clamp(22px,4vw,34px);
+  }
+  .role:last-child{padding-bottom:0;}
+  .role::before{
+    content:"";
+    position:absolute;
+    left:-10px;top:.35rem;
+    width:17px;height:17px;
+    border-radius:50%;
+    background:var(--yellow);
+    border:3px solid var(--blue);
+  }
+  .role-when{
+    margin:0 0 .2rem;
+    font-size:.78rem;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--blue);
+    opacity:.8;
+  }
+  .role-title{
+    font-family:var(--font-heading);
+    font-weight:800;
+    font-size:clamp(1.3rem,2.4vw,1.6rem);
+    color:var(--blue);
+    margin:0 0 .4rem;
+  }
+  .role p:not(.role-when){margin:0;line-height:1.7;color:var(--ink);}
+  .role-duties{
+    margin:.7rem 0 0;
+    padding-left:1.1rem;
+    line-height:1.7;
+    color:var(--ink);
+  }
   .doc-figure{
     max-width:960px;
     margin:0 auto clamp(24px,4vw,40px);
@@ -1295,6 +1349,7 @@
           <h3>Program Lead · Seatrek BVI</h3>
           <div class="item-badges"><span class="badge sustainability">Sustainability</span><span class="badge leadership">Leadership</span></div>
           <p>Progressed from intern to marine ecology instructor and scuba diving guide, to leading the Bahamas program — overseeing a 60' sailboat, 5 crew members, and 20 students for Summer 2021. Created a new place-based science curriculum, and worked as a Divemaster (3 years, taught and led 200 divers) and Program Lead (1 year) while maintaining and operating yachts and overseeing young adults ages 12–22.</p>
+          <a href="#seatrek-experience" class="item-link" data-subpage-link="seatrek-experience">Learn More →</a>
         </div>
       </div>
 
@@ -1567,6 +1622,49 @@
       <div class="doc-frame doc-frame-report">
         <div class="pdf-view" data-pdf="docs/xdemics-final-report.pdf" role="document" aria-label="Xdemics clinic final report"></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="subpage" id="seatrek-experience" data-subpage aria-hidden="true">
+  <div class="wrap subpage-inner">
+    <div class="subpage-topbar">
+      <a href="#experience" class="subpage-back" data-subpage-close>← Back to Portfolio</a>
+    </div>
+    <p class="subpage-eyebrow">Summers 2018 – 2021</p>
+    <h1 class="subpage-title">Seatrek</h1>
+    <p class="subpage-lede">Seatrek is a summer camp at sea that takes students ages 12–22 on liveaboard educational diving trips.</p>
+
+    <figure class="doc-figure doc-figure-narrow">
+      <img src="images/work5.jpg" alt="Seatrek group walking along a marina dock" loading="lazy">
+    </figure>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Roles</h2></div>
+      <ol class="role-list">
+        <li class="role">
+          <p class="role-when">Summers 2018 – 2021</p>
+          <h3 class="role-title">Boat Biologist</h3>
+          <p>Designed and taught a place-based marine biology curriculum, and advised students' research and community service projects.</p>
+        </li>
+        <li class="role">
+          <p class="role-when">Summers 2018 – 2021</p>
+          <h3 class="role-title">Divemaster</h3>
+          <p>Coordinated dive operations for 75 students across 5 vessels, and helped teach Master Diver and Rescue Diver courses.</p>
+        </li>
+        <li class="role">
+          <p class="role-when">Summer 2021</p>
+          <h3 class="role-title">Bahamas Program Director</h3>
+          <p>Planned and led Seatrek's Bahamas Voyage.</p>
+          <ul class="role-duties">
+            <li>Wellbeing of 16 teenage students</li>
+            <li>Marine science curriculum</li>
+            <li>Scuba diving curriculum</li>
+            <li>Leading the crew</li>
+            <li>Boat operations and maintenance</li>
+          </ul>
+        </li>
+      </ol>
     </div>
   </div>
 </div>
