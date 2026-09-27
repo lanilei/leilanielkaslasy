@@ -957,6 +957,14 @@
   }
 
   /* ---------- PAPER TOSS GAME ---------- */
+  .game-intro{
+    max-width:760px;
+    margin:0 auto clamp(28px,4vw,40px);
+    text-align:center;
+    color:var(--cream);
+    font-size:clamp(15px,1.6vw,18px);
+    line-height:1.8;
+  }
   .game-card{
     max-width:960px;
     margin:0 auto;
@@ -1721,6 +1729,7 @@
       <h2 class="head-yellow">Take a Break</h2>
       <div class="dots head-yellow"></div>
     </div>
+    <p class="game-intro reveal">I'm someone who isn't afraid to try new things. Not every idea will be fruitful, but it could turn out to be a stepping stone or lesson that paves the way for the next project, job, or experience. I invite you to participate in the joy of the crumpled-up pieces of paper that never made it to this site but got us where we are.</p>
     <div class="game-card">
       <div class="game-hud">
         <div class="game-stat"><span class="game-stat-label">Score</span><span class="game-stat-value" id="tossScore">0</span></div>
