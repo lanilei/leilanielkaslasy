@@ -795,6 +795,37 @@
     line-height:1.75;
   }
   .detail-list li{margin-bottom:.5rem;}
+  .stat-row + .detail-list{margin:clamp(20px,3vw,28px) auto 0;}
+
+  /* Headline numbers on detail pages */
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:clamp(12px,2vw,20px);
+    max-width:960px;
+    margin-inline:auto;
+  }
+  .stat{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    padding:1rem 1.1rem;
+    background:var(--cream);
+    border-radius:10px;
+    box-shadow:5px 5px 0 var(--blue);
+  }
+  .stat-num{
+    font-family:var(--font-heading);
+    font-weight:800;
+    font-size:clamp(1.8rem,3.4vw,2.4rem);
+    line-height:1.1;
+    color:var(--blue);
+    font-variant-numeric:tabular-nums;
+  }
+  .stat-label{font-size:.88rem;line-height:1.45;color:var(--ink);}
+  @media (max-width:760px){
+    .stat-row{grid-template-columns:repeat(2,1fr);}
+  }
   .detail-list li::marker{color:var(--blue);}
 
   /* Role timeline (a job with several roles over time) */
@@ -1574,6 +1605,7 @@
           <h3>Reading Outreach Research</h3>
           <div class="item-badges"><span class="badge leadership">Leadership</span><span class="badge accessibility">Accessibility</span></div>
           <p>Part of a team of 8 students who worked with the local primary school to tutor struggling readers and lead a weekly library hour for students grades 2 through 5. We designed a reading outreach model and data collection methods to research the impact of student tutoring — students improved by an average of two reading levels over a semester, 2x the average rate — and presented results to the Bahamian Minister of Education.</p>
+          <a href="#reading-outreach-research" class="item-link" data-subpage-link="reading-outreach-research">Learn More →</a>
         </div>
       </div>
 
@@ -1659,6 +1691,46 @@
       <div class="doc-frame doc-frame-report">
         <div class="pdf-view" data-pdf="docs/xdemics-final-report.pdf" role="document" aria-label="Xdemics clinic final report"></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="subpage" id="reading-outreach-research" data-subpage aria-hidden="true">
+  <div class="wrap subpage-inner">
+    <div class="subpage-topbar">
+      <a href="#research" class="subpage-back" data-subpage-close>← Back to Portfolio</a>
+    </div>
+    <p class="subpage-eyebrow">The Island School × Deep Creek Primary School · Eleuthera, Bahamas</p>
+    <h1 class="subpage-title">Reading Outreach: One Tutoring Session at a Time</h1>
+    <p class="subpage-lede">Deep Creek Primary School asked The Island School for help supporting its young readers. Our team of eight paired each Island School student with a struggling reader for weekly one-on-one tutoring, then tracked their progress to answer one question: is our help helpful?</p>
+
+    <figure class="doc-figure">
+      <img src="images/reading-outreach-tutoring.webp" alt="An Island School student leaning in to help a young reader work through a book at a classroom table" loading="lazy">
+    </figure>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Results</h2></div>
+      <div class="stat-row">
+        <div class="stat"><span class="stat-num">+1.7</span><span class="stat-label">reading levels on average, pre- to post-test</span></div>
+        <div class="stat"><span class="stat-num">+16%</span><span class="stat-label">reading independence</span></div>
+        <div class="stat"><span class="stat-num">+12%</span><span class="stat-label">motivation to read</span></div>
+        <div class="stat"><span class="stat-num">+10%</span><span class="stat-label">focus during reading</span></div>
+      </div>
+      <ul class="detail-list">
+        <li>Tutors spent 22 total hours with their buddies, about 3.5 hours per student, and the relationships they built were key to motivating reading growth.</li>
+        <li>Progress was measured objectively with pre- and post-test running records (accuracy, errors, self-corrections and reading level) and subjectively with field notes rating each buddy's focus, motivation, confidence and independence.</li>
+        <li>One student rose 4 reading levels in 3 months, the equivalent of 1.5 grades.</li>
+      </ul>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head">
+        <h2>Poster</h2>
+        <a href="images/reading-outreach-poster.webp" target="_blank" rel="noopener" class="doc-open">Open full size ↗</a>
+      </div>
+      <figure class="doc-figure">
+        <a href="images/reading-outreach-poster.webp" target="_blank" rel="noopener"><img src="images/reading-outreach-poster.webp" alt="Research poster: Reading Outreach, One Tutoring Session at a Time, with sections on background, methodology, results charts and discussion" loading="lazy"></a>
+      </figure>
     </div>
   </div>
 </div>
