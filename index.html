@@ -934,6 +934,88 @@
   }
   .doc-text + .detail-list{margin-top:0;}
   .detail-list + .doc-text{margin-top:1rem;}
+  .doc-text-after{margin-top:clamp(20px,3vw,28px);}
+
+  /* Placeholder where a photo will go */
+  .photo-slot{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    aspect-ratio:4/3;
+    width:100%;
+    padding:1rem;
+    text-align:center;
+    border:2px dashed rgba(0,74,173,.4);
+    border-radius:10px;
+    background:rgba(255,255,255,.35);
+    color:var(--blue);
+    font-size:.85rem;
+    font-weight:600;
+    opacity:.85;
+  }
+  .status-tag{
+    display:inline-block;
+    padding:.2rem .7rem;
+    border-radius:999px;
+    background:var(--cream);
+    border:1.5px dashed var(--blue);
+    color:var(--blue);
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+
+  /* Stories: photo + short narrative */
+  .story-list{display:flex;flex-direction:column;gap:clamp(20px,3vw,28px);max-width:960px;margin-inline:auto;}
+  .story{
+    display:grid;
+    grid-template-columns:minmax(0,2fr) minmax(0,3fr);
+    gap:clamp(16px,3vw,28px);
+    align-items:center;
+    padding:clamp(16px,2.5vw,24px);
+    background:var(--cream);
+    border-radius:14px;
+    box-shadow:6px 6px 0 var(--blue);
+  }
+  .story-title{
+    font-family:var(--font-heading);
+    font-weight:800;
+    font-size:clamp(1.2rem,2.2vw,1.45rem);
+    color:var(--blue);
+    margin:0 0 .4rem;
+  }
+  .story p{margin:0 0 .8rem;line-height:1.7;color:var(--ink);}
+  @media (max-width:640px){ .story{grid-template-columns:1fr;} }
+
+  /* Project portfolio boxes */
+  .portfolio-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+    gap:clamp(14px,2.5vw,22px);
+    max-width:960px;
+    margin-inline:auto;
+  }
+  .portfolio-card{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:.55rem;
+    padding:12px;
+    background:var(--cream);
+    border-radius:12px;
+    box-shadow:5px 5px 0 var(--blue);
+  }
+  .portfolio-card .photo-slot{aspect-ratio:1;font-size:.75rem;}
+  .portfolio-card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;}
+  .portfolio-card h3{
+    margin:0;
+    font-family:var(--font-heading);
+    font-weight:700;
+    font-size:1.02rem;
+    line-height:1.3;
+    color:var(--blue);
+  }
 
   /* Role timeline (a job with several roles over time) */
   .role-list{
@@ -1819,8 +1901,142 @@
 
 <div class="subpage" id="back-to-school" data-subpage aria-hidden="true">
   <div class="wrap subpage-inner">
-    <a href="#currently" class="subpage-back" data-subpage-close>← Back</a>
+    <div class="subpage-topbar">
+      <a href="#currently" class="subpage-back" data-subpage-close>← Back to Portfolio</a>
+    </div>
+    <p class="subpage-eyebrow">Watson Fellowship · Kabarnet School for the DeafBlind · Kabarnet, Kenya</p>
     <h1 class="subpage-title">Back to School Looks a Little Different This Year</h1>
+    <p class="subpage-lede">This fall I began a residency at Kabarnet School for the DeafBlind, where I'm starting a workshop to build assistive devices for learners with disabilities, and running a curriculum with the teachers so they can keep adapting to their learners' challenges through design after I leave.</p>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Arriving</h2></div>
+      <div class="split">
+        <div class="photo-slot">Photo coming soon: in front of the school</div>
+        <div class="split-text">
+          <p>I arrived in mid-August, a week before the school term began. The learners here are children with complex disabilities: some have combined deafblindness, some use wheelchairs, and many live with more than one.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>What I Noticed</h2></div>
+      <p class="doc-text">The learners' challenges were plentiful, and most came back to resources. The school operates at the edge of making ends meet; there have even been terms when teachers volunteered without pay. Much of what's considered basic support for learners with disabilities simply wasn't there.</p>
+      <ul class="detail-list">
+        <li><strong>Wheelchairs</strong> were poorly fitted, with no safe way to secure learners in them.</li>
+        <li><strong>Communication</strong> was a huge challenge. Most learners don't communicate verbally, and while some use sign language, most don't.</li>
+        <li><strong>Medical and developmental needs</strong>, like stiffness in joints and limbs, were beyond my scope as an engineer, so I knew right away I wanted to work closely with the county's occupational therapists to see what was possible.</li>
+      </ul>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Getting Approval</h2></div>
+      <div class="split">
+        <div class="split-text">
+          <p>After I arrived, it turned out the project needed buy-in from Baringo County's Board of Education and Teachers Service Commission, since it was an activity involving their students and teachers. Working with local authorities to earn that approval became the first step of the project.</p>
+        </div>
+        <div class="photo-slot">Photo coming soon: meeting with county officials</div>
+      </div>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Setting Up the Workshop</h2></div>
+      <div class="split">
+        <figure class="split-media"><img src="images/currently-kadc-photo.jpg" alt="Leilani kneeling beside a teacher using a jigsaw to cut wood on a workbench outside the school" loading="lazy"></figure>
+        <div class="split-text">
+          <p>I set aside $2,000 for the workshop. In Nairobi I shopped for the basic power tools I expected to need, and when I arrived the school gave me an empty room. I built a cabinet, ordered tables, and painted the room.</p>
+          <p>Startup cost: about <strong>$500 in tools</strong> and <strong>$200 in timber and paint</strong> for the cabinet, walls, and tables.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>The Curriculum, Week by Week</h2></div>
+      <p class="doc-text">After I met with the school's board of directors and principal, they were excited about the project and asked the teachers to commit three afternoons a week to the workshop. I wanted to get them making things for their learners right away, so I started with clear, step-by-step plans anyone could follow, whatever their experience with fabrication, and scaled up our activities and materials week by week.</p>
+      <ol class="role-list">
+        <li class="role">
+          <p class="role-when">Week 1</p>
+          <h3 class="role-title">Setting up</h3>
+          <p>Set up the workshop and got to know the school.</p>
+        </li>
+        <li class="role">
+          <p class="role-when">Week 2</p>
+          <h3 class="role-title">Communication cards</h3>
+          <p>Our first build: stations that every teacher rotated through, each with printed instructions.</p>
+        </li>
+        <li class="role">
+          <p class="role-when">Week 3</p>
+          <h3 class="role-title">Built-up spoon handles</h3>
+          <p>Many learners struggled with independent activities like eating and brushing their teeth because of fine motor challenges, so we made large handles for spoons.</p>
+        </li>
+        <li class="role">
+          <p class="role-when">Week 4</p>
+          <h3 class="role-title">Sensory curtains</h3>
+          <p>PVC-pipe sensory curtains that encourage learners to reach and stretch.</p>
+        </li>
+        <li class="role">
+          <p class="role-when">Week 5</p>
+          <h3 class="role-title">Wheelchair support straps + independent projects</h3>
+          <p>Learners had been tied into their wheelchairs with bed sheets, so we made proper support straps. We also kicked off independent projects.</p>
+        </li>
+        <li class="role">
+          <p class="role-when">Week 6</p>
+          <h3 class="role-title">Harnesses and cushions</h3>
+          <p>Finished the harnesses and made improved wheelchair cushions, including pommels (abductors), for better fit.</p>
+        </li>
+        <li class="role">
+          <p class="role-when">Week 7</p>
+          <h3 class="role-title">Alternative seating</h3>
+          <p>Built chairs that give learners who use wheelchairs somewhere else to sit.</p>
+        </li>
+      </ol>
+      <p class="doc-text doc-text-after">The structured weeks were productive, but I wanted to move teachers quickly from following instructions to solving problems on their own. I interviewed 40 teachers, met with 70 learners, and scoped an individualized project for each teacher and learner. With teachers' limited time, I knew much of the work would fall to me, so I made sure to bring them into the workshop at the critical points: ideating, designing, and making the first prototype together.</p>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Braces with the Occupational Therapists</h2></div>
+      <p class="doc-text">Alongside the teachers, my own project with the county's occupational therapists has been making affordable PVC-pipe braces, backslabs and elbow braces, for learners whose muscle contractures make it hard to extend their knees and elbows while they sleep. I was lucky to meet an orthopedic technologist who agreed to train me in making them, and they're nearly done. Next, I want to bring in the learners' caregivers.</p>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Stories</h2></div>
+      <div class="story-list">
+        <article class="story">
+          <div class="photo-slot">Photos coming soon</div>
+          <div>
+            <h3 class="story-title">Eating independently</h3>
+            <p>Three learners who couldn't eat on their own before can now feed themselves with built-up spoon handles.</p>
+            <span class="status-tag">Story in progress</span>
+          </div>
+        </article>
+        <article class="story">
+          <div class="photo-slot">Photos coming soon</div>
+          <div>
+            <h3 class="story-title">Wheelchair fitting</h3>
+            <p>Fitting wheelchairs for learners who had been held in place with bed sheets.</p>
+            <span class="status-tag">Story in progress</span>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Project Portfolio</h2></div>
+      <div class="portfolio-grid">
+        <div class="portfolio-card"><div class="photo-slot"></div><h3>Spoon &amp; toothbrush handles</h3><span class="status-tag">In progress</span></div>
+        <div class="portfolio-card"><div class="photo-slot"></div><h3>Sensory curtains</h3><span class="status-tag">In progress</span></div>
+        <div class="portfolio-card"><div class="photo-slot"></div><h3>Wheelchair straps</h3><span class="status-tag">In progress</span></div>
+        <div class="portfolio-card"><div class="photo-slot"></div><h3>Parallel bars</h3><span class="status-tag">In progress</span></div>
+        <div class="portfolio-card"><div class="photo-slot"></div><h3>Tippy stool</h3><span class="status-tag">In progress</span></div>
+        <div class="portfolio-card"><div class="photo-slot"></div><h3>Rocking chair</h3><span class="status-tag">In progress</span></div>
+        <div class="portfolio-card"><div class="photo-slot"></div><h3>Elbow braces</h3><span class="status-tag">In progress</span></div>
+        <div class="portfolio-card"><div class="photo-slot"></div><h3>Backslabs</h3><span class="status-tag">In progress</span></div>
+        <div class="portfolio-card"><div class="photo-slot"></div><h3>Mermaid brace</h3><span class="status-tag">In progress</span></div>
+        <div class="portfolio-card"><div class="photo-slot"></div><h3>Loom</h3><span class="status-tag">In progress</span></div>
+        <div class="portfolio-card"><div class="photo-slot"></div><h3>Shakers</h3><span class="status-tag">In progress</span></div>
+        <div class="portfolio-card"><div class="photo-slot"></div><h3>Learning numbers</h3><span class="status-tag">In progress</span></div>
+        <div class="portfolio-card"><div class="photo-slot"></div><h3>Fine motor fidget board</h3><span class="status-tag">In progress</span></div>
+      </div>
+    </div>
   </div>
 </div>
 
