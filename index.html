@@ -924,6 +924,16 @@
     .stat-row{grid-template-columns:repeat(2,1fr);}
   }
   .detail-list li::marker{color:var(--blue);}
+  .detail-list strong{color:var(--blue);}
+  .doc-text{
+    max-width:760px;
+    margin:0 0 1rem;
+    color:var(--ink);
+    font-size:clamp(15px,1.6vw,17px);
+    line-height:1.75;
+  }
+  .doc-text + .detail-list{margin-top:0;}
+  .detail-list + .doc-text{margin-top:1rem;}
 
   /* Role timeline (a job with several roles over time) */
   .role-list{
@@ -1667,7 +1677,17 @@
         </div>
       </div>
 
-      <div class="item" data-badges="design">
+      <div class="item" data-badges="design sustainability">
+        <div class="item-media"><img src="images/at-record-stand.jpg" alt="A folded cardboard packaging corner reused as a stand holding a vinyl record, draped with a patterned tenugui cloth"></div>
+        <div class="item-content">
+          <h3>Audio-Technica Turntable Packaging</h3>
+          <div class="item-badges"><span class="badge design">Design</span><span class="badge sustainability">Sustainability</span></div>
+          <p>With a team of four, redesigned Audio-Technica's turntable packaging to replace Styrofoam with engineered cardboard: kirigami-inspired folded corners, layered corrugated barriers, and a woven cardboard mesh. After unboxing, the corners become vinyl record stands, and a Japanese tenugui cloth replaces the plastic cover to honor the brand's heritage.</p>
+          <a href="#audio-technica-packaging" class="item-link" data-subpage-link="audio-technica-packaging">Learn More →</a>
+        </div>
+      </div>
+
+      <div class="item reverse" data-badges="design">
         <div class="item-media"><img src="images/project6.jpg" alt="Skin on Frame Kayak"></div>
         <div class="item-content">
           <h3>Skin on Frame Kayak</h3>
@@ -1676,7 +1696,7 @@
         </div>
       </div>
 
-      <div class="item reverse" data-badges="accessibility design">
+      <div class="item" data-badges="accessibility design">
         <div class="item-media"><img src="images/project7.jpg" alt="Adaptive Design Assistive Devices"></div>
         <div class="item-content">
           <h3>Adaptive Design Assistive Devices</h3>
@@ -1685,7 +1705,7 @@
         </div>
       </div>
 
-      <div class="item" data-badges="design accessibility sustainability">
+      <div class="item reverse" data-badges="design accessibility sustainability">
         <div class="item-media"><img src="images/project8.jpg" alt="Beach Furniture Made from Reclaimed Materials"></div>
         <div class="item-content">
           <h3>Beach Furniture Made from Reclaimed Materials for the Cape Eleuthera Research Institute</h3>
@@ -1694,7 +1714,7 @@
         </div>
       </div>
 
-      <div class="item reverse" data-badges="design">
+      <div class="item" data-badges="design">
         <div class="item-media"><img src="images/project9.jpg" alt="Wearable Sculptures Made from Recycled PCBs, Gummy Bears, Gum Wrappers"></div>
         <div class="item-content">
           <h3>Wearable Sculptures Made from Recycled PCBs, Gummy Bears, Gum Wrappers</h3>
@@ -1703,7 +1723,7 @@
         </div>
       </div>
 
-      <div class="item" data-badges="design leadership">
+      <div class="item reverse" data-badges="design leadership">
         <div class="item-media"><img src="images/ceramics-cover.jpg" alt="Handmade ceramic lidded pots lined up in a red wooden shelf box beside garden books, set on two tree stumps"></div>
         <div class="item-content">
           <h3>Student Garden Ceramic Infrastructure</h3>
@@ -1863,6 +1883,88 @@
       </div>
       <div class="doc-frame doc-frame-report">
         <div class="pdf-view" data-pdf="docs/xdemics-final-report.pdf" role="document" aria-label="Xdemics clinic final report"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="subpage" id="audio-technica-packaging" data-subpage aria-hidden="true">
+  <div class="wrap subpage-inner">
+    <div class="subpage-topbar">
+      <a href="#projects" class="subpage-back" data-subpage-close>← Back to Portfolio</a>
+    </div>
+    <p class="subpage-eyebrow">E185B · Harvey Mudd College × Audio-Technica · Spring 2025 · with Max Plush, Juni Cleary &amp; Gaven Jesse</p>
+    <h1 class="subpage-title">Folding the Future of Packaging</h1>
+    <p class="subpage-lede">Audio-Technica ships its turntables in expanded polystyrene (EPS) foam: cheap and protective, but not recyclable or compostable, and it breaks down into microplastics. Our brief was to replace it with a paper-based, affordable alternative that could survive the company's drop-test standard and be mass produced.</p>
+
+    <div class="photo-grid doc-figure-top">
+      <figure>
+        <img src="images/at-pulp-insert.jpg" alt="A molded cardboard-pulp prototype with a geometric, faceted surface" loading="lazy">
+        <figcaption>Our first prototype: molded cardboard pulp, formed in a 3D-printed geometric mold.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/at-record-stand.jpg" alt="A folded cardboard packaging corner reused as a stand holding a vinyl record, draped with a patterned tenugui cloth" loading="lazy">
+        <figcaption>Packaging becomes product: the folded corners double as record stands, next to the tenugui cloth that replaced the plastic cover.</figcaption>
+      </figure>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>The Challenge</h2></div>
+      <ul class="detail-list">
+        <li><strong>Paper only:</strong> fully paper-based materials, including cardboard, that are recyclable and/or biodegradable.</li>
+        <li><strong>Protective:</strong> meet Audio-Technica's standard of a 20 lb product surviving six drops from 70 cm.</li>
+        <li><strong>Practical:</strong> cost-competitive with EPS and mass producible.</li>
+      </ul>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Design Process</h2></div>
+      <p class="doc-text">We explored corrugation manipulation, kirigami, molded cardboard pulp, and woven cardboard. Molded pulp came first: we 3D-printed a mold and tuned the recipe, finding that cornstarch worked as a binder where tapioca didn't, and that a finer, longer-blended pulp was stronger. When client feedback made clear pulp wasn't practical to manufacture at scale, we pivoted to engineering standard cardboard. The final system combined four elements:</p>
+      <ul class="detail-list">
+        <li><strong>Kirigami-inspired corners</strong> that fold to fit a range of box sizes, with slits so they can be reused as record display stands.</li>
+        <li><strong>Firm cross-sections</strong> of stacked, glued corrugated cardboard along the sides for lateral protection.</li>
+        <li><strong>Woven cardboard mesh</strong> above and below the turntable to spread and absorb impact.</li>
+        <li><strong>Gap-filling barriers</strong> to stop the turntable from shifting in the box.</li>
+      </ul>
+      <p class="doc-text">We also swapped the plastic dust cover wrap for a Japanese tenugui towel, inspired by furoshiki wrapping, to celebrate Audio-Technica's heritage and give customers something worth keeping.</p>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Testing &amp; What We Learned</h2></div>
+      <p class="doc-text">Using conservation of energy, we matched the 20 lb / 70 cm standard by dropping our 5.73 lb AT-LP60X turntable from 8 ft. One round at 70 cm only chipped a plastic hinge; after two rounds at 8 ft, the damage was severe enough that we stopped short of the full protocol.</p>
+      <ul class="detail-list">
+        <li>The sides protected by <strong>woven mesh</strong> took little to no damage, making it the most promising material.</li>
+        <li>The sides relying on the firm cross-sections and corners cracked, especially near the back hinges, and the turntable had too much room to move.</li>
+        <li>Next iteration: wrap the whole turntable in woven mesh, tighten the fit, and reinforce the hinge side.</li>
+      </ul>
+      <p class="doc-text">The biggest lesson was about sustainability itself: packaging is most sustainable when people want to keep it instead of throwing it away.</p>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Final Presentation</h2></div>
+      <div class="deck-list">
+        <article class="deck">
+          <div class="slide-frame" data-pdf="docs/audio-technica-packaging.pdf" tabindex="0" aria-label="Slides: Folding the Future of Packaging. Use the left and right arrow keys to change slides.">
+            <canvas class="slide-canvas"></canvas>
+            <div class="slide-loading">Slides load when you scroll here…</div>
+          </div>
+          <div class="slide-controls">
+            <button type="button" class="slide-btn slide-prev" aria-label="Previous slide">← Prev</button>
+            <span class="slide-count" aria-live="polite">– / 17</span>
+            <button type="button" class="slide-btn slide-next" aria-label="Next slide">Next →</button>
+          </div>
+          <p class="pub-meta deck-meta">17 slides · <a href="docs/audio-technica-packaging.pdf" target="_blank" rel="noopener">Open full PDF ↗</a> (6 MB)</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head">
+        <h2>Final Report</h2>
+        <a href="docs/audio-technica-report.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+      </div>
+      <div class="doc-frame doc-frame-report">
+        <div class="pdf-view" data-pdf="docs/audio-technica-report.pdf" role="document" aria-label="E185B final report: Replacement of Styrofoam to a Paper-based Material for Shipment"></div>
       </div>
     </div>
   </div>
