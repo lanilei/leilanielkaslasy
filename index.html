@@ -935,6 +935,19 @@
   .doc-text + .detail-list{margin-top:0;}
   .detail-list + .doc-text{margin-top:1rem;}
   .doc-text-after{margin-top:clamp(20px,3vw,28px);}
+  .callout{
+    max-width:760px;
+    margin:clamp(18px,3vw,26px) 0 0;
+    padding:1rem 1.2rem;
+    background:var(--cream);
+    border-left:6px solid var(--blue);
+    border-radius:8px;
+    color:var(--blue);
+    font-family:var(--font-heading);
+    font-weight:700;
+    font-size:clamp(1rem,1.9vw,1.2rem);
+    line-height:1.5;
+  }
 
   /* Placeholder where a photo will go */
   .photo-slot{
@@ -2285,6 +2298,7 @@
         <li><strong>The control system</strong></li>
       </ul>
       <p class="doc-text">I learned a lot about what it takes to create a robust testing setup, and about the challenging reality of putting together a complex system.</p>
+      <p class="callout">Three years later, this very system is still in use, facilitating cutting-edge water research at Harvey Mudd.</p>
     </div>
 
     <div class="doc-block">
