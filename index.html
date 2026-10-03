@@ -1196,6 +1196,19 @@
   }
   .split-media{margin:0;}
   .split-portrait{grid-template-columns:3fr 2fr;}
+  /* Two photos side by side at equal height: columns sized to each
+     photo's aspect ratio (painting 3:4 portrait, cabinet roughly square). */
+  .photo-pair{
+    display:grid;
+    grid-template-columns:.75fr 1.02fr;
+    gap:clamp(16px,3vw,28px);
+    align-items:start;
+    max-width:720px;
+    margin:clamp(20px,3vw,28px) auto 0;
+  }
+  @media (max-width:520px){
+    .photo-pair{grid-template-columns:1fr;max-width:400px;}
+  }
   .split-portrait-left{grid-template-columns:2fr 3fr;}
   .split-media img{
     width:100%;
@@ -2048,19 +2061,17 @@
 
     <div class="doc-block">
       <div class="doc-head"><h2>Setting Up the Workshop</h2></div>
-      <div class="split split-portrait-left">
+      <p class="doc-text">In Nairobi I shopped for the basic power tools I expected to need, and when I arrived the school gave me an empty room. I built a cabinet, ordered tables, and painted the room to turn it into a workshop.</p>
+      <div class="photo-pair">
         <figure class="split-media">
           <img src="images/kabarnet-painting.webp" alt="Leilani painting a teal wall inside the empty workshop room, with a man and a boy helping and paint buckets on the floor" loading="lazy">
           <figcaption>Painting the workshop.</figcaption>
         </figure>
-        <div class="split-text">
-          <p>In Nairobi I shopped for the basic power tools I expected to need, and when I arrived the school gave me an empty room. I built a cabinet, ordered tables, and painted the room to turn it into a workshop.</p>
-        </div>
+        <figure class="split-media">
+          <img src="images/kabarnet-cabinet.jpg" alt="The tool cabinet Leilani built, painted green, yellow and blue, with its doors and a drawer open to show power tools, supplies and a bucket of hand tools beside it" loading="lazy">
+          <figcaption>The tool cabinet I built for the workshop.</figcaption>
+        </figure>
       </div>
-      <figure class="doc-figure doc-figure-narrow doc-figure-video">
-        <img src="images/kabarnet-cabinet.jpg" alt="The tool cabinet Leilani built, painted green, yellow and blue, with its doors and a drawer open to show power tools, supplies and a bucket of hand tools beside it" loading="lazy">
-        <figcaption>The tool cabinet I built for the workshop.</figcaption>
-      </figure>
     </div>
 
     <div class="doc-block">
