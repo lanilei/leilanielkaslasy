@@ -1029,21 +1029,25 @@
   /* How-to guide cards. Two-page guides flip over (like turning a card) on
      hover, or with the Page 2 button on touch screens; clicking opens the
      full guide. */
+  /* All guides in one row on wide screens; two per row on narrow ones. */
   .guide-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-    gap:clamp(16px,3vw,28px);
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:clamp(12px,2vw,20px);
     max-width:960px;
     margin-inline:auto;
+  }
+  @media (max-width:700px){
+    .guide-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   }
   .guide-card{
     display:flex;
     flex-direction:column;
-    gap:10px;
-    padding:12px;
+    gap:8px;
+    padding:10px;
     background:var(--cream);
     border-radius:12px;
-    box-shadow:6px 6px 0 var(--blue);
+    box-shadow:5px 5px 0 var(--blue);
   }
   .guide-open{display:block;perspective:1400px;border-radius:8px;}
   .guide-open:focus-visible{outline:3px solid var(--blue);outline-offset:3px;}
@@ -1073,11 +1077,11 @@
   @media (prefers-reduced-motion:reduce){
     .guide-pages{transition:none;}
   }
-  .guide-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .guide-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;}
   .guide-title{
     font-family:var(--font-heading);
     font-weight:700;
-    font-size:1.05rem;
+    font-size:.95rem;line-height:1.25;
     color:var(--blue);
   }
   .guide-flip-btn{
