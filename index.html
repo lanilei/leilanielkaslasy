@@ -2190,6 +2190,14 @@
             <h3 class="story-title">Cutting motorcycle inner tubes into elastic straps</h3>
           </div>
         </article>
+        <article class="story">
+          <figure class="split-media story-video">
+            <video class="loop-video" data-src="images/kabarnet-lesson-orthoplast.mp4" muted loop playsinline preload="none" width="404" height="720" style="aspect-ratio:404/720" aria-label="Leilani lifting a softened sheet of Orthoplast, cut in the shape of a hand splint, out of a jug of warm water, with a clinician beside her"></video>
+          </figure>
+          <div>
+            <h3 class="story-title">Using Orthoplast to make splints</h3>
+          </div>
+        </article>
       </div>
     </div>
   </div>
@@ -3640,7 +3648,9 @@
     if(!v.src) v.src = v.dataset.src;
     if(reduced){ v.controls = true; return; }
     var p = v.play();
-    if(p && p.catch) p.catch(function(){ v.controls = true; });
+    // Only fall back to visible controls when the browser blocks autoplay;
+    // other rejections (e.g. a play interrupted by scrolling away) are harmless.
+    if(p && p.catch) p.catch(function(err){ if(err && err.name === 'NotAllowedError') v.controls = true; });
   }
   if(!('IntersectionObserver' in window)){ vids.forEach(start); return; }
   var io = new IntersectionObserver(function(entries){
