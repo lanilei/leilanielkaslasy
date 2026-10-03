@@ -1069,10 +1069,12 @@
   /* Before / after photo pair inside a story */
   .before-after{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
   .before-after figure{margin:0;}
+  /* Both photos are pre-cropped to 2:3 with the feet on the same line,
+     so they must be shown uncropped to keep that alignment. */
   .before-after img,.before-after .photo-slot{
     width:100%;
-    aspect-ratio:3/4;
-    object-fit:cover;
+    aspect-ratio:2/3;
+    object-fit:fill;
     border-radius:8px;
   }
   .before-after .photo-slot{font-size:.75rem;}
