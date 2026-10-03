@@ -1026,6 +1026,42 @@
   .story-video{max-width:260px;justify-self:center;width:100%;}
   .story-video .loop-video{aspect-ratio:478/850;box-shadow:6px 6px 0 var(--blue);}
 
+  /* How-to guide cards: tall illustrated guides, click to open full size */
+  .guide-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:clamp(16px,3vw,28px);
+    max-width:960px;
+    margin-inline:auto;
+  }
+  .guide-card{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    padding:12px;
+    background:var(--cream);
+    border-radius:12px;
+    box-shadow:6px 6px 0 var(--blue);
+    text-decoration:none;
+    transition:transform .15s ease;
+  }
+  .guide-card:hover,.guide-card:focus-visible{transform:translateY(-3px);}
+  .guide-card img{
+    width:100%;
+    aspect-ratio:3/4;
+    object-fit:cover;
+    object-position:top;
+    background:#fff;
+    border-radius:8px;
+  }
+  .guide-title{
+    font-family:var(--font-heading);
+    font-weight:700;
+    font-size:1.05rem;
+    color:var(--blue);
+  }
+  .guide-title::after{content:" ↗";opacity:.6;}
+
   /* Before / after photo pair inside a story */
   .before-after{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
   .before-after figure{margin:0;}
@@ -2094,6 +2130,21 @@
         </li>
       </ol>
       <p class="doc-text doc-text-after">The structured weeks were productive, but I wanted to move teachers quickly from following instructions to solving problems on their own. I interviewed 40 teachers, met with 70 learners, and scoped an individualized project for each teacher and learner. With teachers' limited time, I knew much of the work would fall to me, so I made sure to bring them into the workshop at the critical points: ideating, designing, and making the first prototype together.</p>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>How-To Guides</h2></div>
+      <p class="doc-text">Illustrated step-by-step guides I made so anyone in the workshop can build these devices, whatever their experience with tools. Click a guide to open it full size.</p>
+      <div class="guide-grid">
+        <a class="guide-card" href="images/guide-tactile-cue-cards.jpg" target="_blank" rel="noopener">
+          <img src="images/guide-tactile-cue-cards.jpg" alt="Illustrated how-to guide for tactile cue cards in six steps: measure and mark 4 by 6 inches on wood, cut along the lines, drill through the wood and the object of reference, sand the block and round its edges, paint the block, and tie the object to the block with string" loading="lazy">
+          <span class="guide-title">Tactile Cue Cards</span>
+        </a>
+        <a class="guide-card" href="images/guide-custom-handles.jpg" target="_blank" rel="noopener">
+          <img src="images/guide-custom-handles.jpg" alt="Two-page illustrated how-to guide for custom handles in eleven steps: cut and peel a fresh branch, taper one end, cut to length, sand, notch the tapered end, snap and drill a spoon, screw it into the handle, fill gaps with wedges and sawdust glue, then sand flush. Bonus variations: toothbrush, pencil, paintbrush, and a version with a strap" loading="lazy">
+          <span class="guide-title">Custom Handles</span>
+        </a>
+      </div>
     </div>
 
     <div class="doc-block">
