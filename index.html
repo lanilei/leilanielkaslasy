@@ -1066,6 +1066,27 @@
   .story p{margin:0 0 .8rem;line-height:1.7;color:var(--ink);}
   @media (max-width:640px){ .story{grid-template-columns:1fr;} }
 
+  /* Before / after photo pair inside a story */
+  .before-after{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .before-after figure{margin:0;}
+  .before-after img,.before-after .photo-slot{
+    width:100%;
+    aspect-ratio:3/4;
+    object-fit:cover;
+    border-radius:8px;
+  }
+  .before-after .photo-slot{font-size:.75rem;}
+  .before-after figcaption{
+    margin-top:6px;
+    text-align:center;
+    font-family:var(--font-heading);
+    font-weight:700;
+    font-size:.85rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--blue);
+  }
+
   /* Project portfolio boxes */
   .portfolio-grid{
     display:grid;
@@ -2143,7 +2164,16 @@
           </div>
         </article>
         <article class="story">
-          <div class="photo-slot">Photos coming soon</div>
+          <div class="before-after">
+            <figure>
+              <img src="images/kabarnet-wheelchair-before.jpg" alt="Before fitting: a learner slumped forward over the tray of an ill-fitting wheelchair, without support to sit upright; her face is covered for privacy" loading="lazy">
+              <figcaption>Before</figcaption>
+            </figure>
+            <figure>
+              <div class="photo-slot">After photo coming soon</div>
+              <figcaption>After</figcaption>
+            </figure>
+          </div>
           <div>
             <h3 class="story-title">Wheelchair fitting</h3>
             <p>Fitting wheelchairs for learners who had been held in place with bed sheets.</p>
