@@ -622,6 +622,7 @@
     z-index:200;
     background:var(--yellow);
     overflow-y:auto;
+    overflow-x:hidden;
   }
   .subpage.is-open{display:block;}
   .subpage-inner{
@@ -1096,6 +1097,53 @@
     cursor:pointer;
   }
   @media (hover:hover){ .guide-flip-btn{display:none;} }
+
+  /* Rolling banner of the project portfolio cards (built by script from
+     the Project Portfolio grid, so it stays in sync). */
+  .portfolio-reel{
+    position:relative;
+    margin:clamp(20px,3vw,32px) calc(50% - 50vw) 0;
+    padding:14px 0 18px;
+    overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+  }
+  .portfolio-reel-track{
+    display:flex;
+    gap:16px;
+    width:max-content;
+    animation:reel-scroll var(--reel-duration,70s) linear infinite;
+  }
+  .portfolio-reel:hover .portfolio-reel-track{animation-play-state:paused;}
+  @keyframes reel-scroll{to{transform:translateX(-50%);}}
+  .reel-card{
+    flex:none;
+    width:150px;
+    padding:8px;
+    background:var(--cream);
+    border-radius:10px;
+    box-shadow:4px 4px 0 var(--blue);
+    text-decoration:none;
+  }
+  .reel-card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;background:#fff;}
+  .reel-card span{
+    display:block;
+    margin-top:6px;
+    font-family:var(--font-heading);
+    font-weight:700;
+    font-size:.8rem;
+    line-height:1.25;
+    color:var(--blue);
+  }
+  /* Smaller version that sits inside the Kenya card on the main page */
+  .portfolio-reel-card{margin:1.4rem 0 0;padding:6px 0 12px;}
+  .portfolio-reel-card .portfolio-reel-track{gap:12px;}
+  .portfolio-reel-card .reel-card{width:110px;padding:6px;box-shadow:3px 3px 0 var(--blue);}
+  .portfolio-reel-card .reel-card span{font-size:.7rem;text-align:left;}
+  @media (prefers-reduced-motion:reduce){
+    .portfolio-reel{overflow-x:auto;-webkit-mask-image:none;mask-image:none;}
+    .portfolio-reel-track{animation:none;padding-inline:16px;}
+  }
 
   /* Before / after photo pair inside a story */
   .before-after{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
@@ -1827,6 +1875,7 @@
       <figure class="currently-photo">
         <img src="images/currently-kadc-photo.jpg" alt="Leilani kneeling beside a teacher using a jigsaw to cut wood on a workbench outside the school">
       </figure>
+      <div class="portfolio-reel portfolio-reel-card" aria-label="Projects from the workshop, scrolling"><div class="portfolio-reel-track"></div></div>
       <a href="#back-to-school" class="currently-learn-more" data-subpage-link="back-to-school">Learn More <span aria-hidden="true">→</span></a>
     </div>
   </div>
@@ -2116,6 +2165,7 @@
     </div>
     <p class="subpage-eyebrow">Watson Fellowship · Kabarnet School for the DeafBlind · Kabarnet, Kenya</p>
     <h1 class="subpage-title">Back to School Looks a Little Different This Year</h1>
+    <div class="portfolio-reel" aria-label="Projects from the workshop, scrolling"><div class="portfolio-reel-track"></div></div>
     <p class="subpage-lede">This fall I began a residency at Kabarnet School for the DeafBlind, where I'm starting a workshop to build assistive devices for learners with disabilities, and running a curriculum with the teachers so they can keep adapting to their learners' challenges through design after I leave.</p>
 
     <div class="doc-block">
@@ -3863,6 +3913,47 @@
   updateHud();
   setWind();
   resize();
+})();
+</script>
+
+<script>
+(function(){
+  // Rolling banner on the Kenya page: copy each Project Portfolio card's
+  // photo and title into the reel. The set is added twice so the CSS
+  // animation (which slides by 50%) loops seamlessly.
+  var reels = document.querySelectorAll('.portfolio-reel-track');
+  var grid = document.querySelector('#back-to-school .portfolio-grid');
+  if(!reels.length || !grid) return;
+  reels.forEach(function(reel){ fill(reel); });
+  function fill(reel){
+  var cards = [];
+  grid.querySelectorAll('.portfolio-card').forEach(function(card){
+    var img = card.querySelector('img');
+    var title = card.querySelector('h3');
+    if(!img || !title) return;
+    var a = document.createElement('div');
+    a.className = 'reel-card';
+    var copy = document.createElement('img');
+    copy.src = img.getAttribute('src');
+    copy.alt = '';
+    copy.loading = 'lazy';
+    if(img.style.objectFit) copy.style.objectFit = img.style.objectFit;
+    var label = document.createElement('span');
+    label.textContent = title.textContent;
+    a.appendChild(copy);
+    a.appendChild(label);
+    cards.push(a);
+  });
+  if(!cards.length) return;
+  cards.forEach(function(c){ reel.appendChild(c); });
+  cards.forEach(function(c){
+    var dup = c.cloneNode(true);
+    dup.setAttribute('aria-hidden','true');
+    reel.appendChild(dup);
+  });
+  // Keep a steady speed (about 4 seconds per card) however many projects there are.
+  reel.style.setProperty('--reel-duration', (cards.length * 4) + 's');
+  }
 })();
 </script>
 
