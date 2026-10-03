@@ -1373,6 +1373,54 @@
   .spec-table tbody th{color:var(--blue);font-weight:700;}
   .spec-table td:last-child{font-weight:700;}
   .spec-table tbody tr:last-child th,.spec-table tbody tr:last-child td{border-bottom:none;}
+  /* Click a poster to open it full screen and zoom in */
+  .pdf-zoomable{cursor:zoom-in;}
+  .pdf-zoomable:focus-visible{outline:3px solid var(--blue);outline-offset:-3px;}
+  .doc-frame-poster{position:relative;}
+  .doc-frame-poster::after{
+    content:"Click to zoom ⤢";
+    position:absolute;
+    right:10px;
+    bottom:10px;
+    padding:.3rem .7rem;
+    border-radius:999px;
+    background:var(--blue);
+    color:var(--cream);
+    font:700 .8rem var(--font-body);
+    pointer-events:none;
+    opacity:.9;
+  }
+  html.poster-zoom-open,html.poster-zoom-open body{overflow:hidden;}
+  .poster-zoom{
+    position:fixed;
+    inset:0;
+    z-index:500;
+    display:flex;
+    flex-direction:column;
+    background:rgba(20,20,19,.94);
+  }
+  .poster-zoom[hidden]{display:none;}
+  .poster-zoom-bar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 14px;
+    background:var(--blue);
+  }
+  .poster-zoom-bar button{
+    min-width:40px;
+    padding:.4rem .8rem;
+    border:none;
+    border-radius:999px;
+    background:var(--cream);
+    color:var(--blue);
+    font:700 1rem var(--font-body);
+    cursor:pointer;
+  }
+  .poster-zoom-hint{color:var(--cream);font-size:.85rem;opacity:.85;}
+  .poster-zoom-close{margin-left:auto;}
+  .poster-zoom-scroll{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;}
+  .poster-zoom-scroll canvas{display:block;margin:0 auto;background:#fff;}
   .doc-pending{
     max-width:760px;
     margin-inline:auto;
@@ -3296,8 +3344,12 @@
     var page = slot._pdfPage;
     var cssWidth = slot.clientWidth || 800;
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Posters pack lots of small text into a small box, so draw them at
+    // double resolution; they stay crisp when the page itself is zoomed.
+    var isPoster = !!slot.closest('.doc-frame-poster');
+    var boost = isPoster ? 2 : 1;
     var base = page.getViewport({scale:1});
-    var viewport = page.getViewport({scale:(cssWidth * dpr) / base.width});
+    var viewport = page.getViewport({scale:(cssWidth * dpr * boost) / base.width});
     var canvas = document.createElement('canvas');
     canvas.width = Math.floor(viewport.width);
     canvas.height = Math.floor(viewport.height);
@@ -3306,7 +3358,68 @@
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     page.render({canvasContext:ctx, viewport:viewport}).promise.then(function(){
       slot.appendChild(canvas);
+      if(isPoster){
+        slot.classList.add('pdf-zoomable');
+        slot.setAttribute('role','button');
+        slot.setAttribute('tabindex','0');
+        slot.setAttribute('aria-label','Open poster full screen to zoom in');
+        var open = function(){ openPosterZoom(page); };
+        slot.addEventListener('click', open);
+        slot.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(); } });
+      }
     });
+  }
+
+  // Full-screen poster viewer: renders the page large and sharp, with zoom
+  // buttons; scroll (or drag on touch screens) to move around.
+  var zoomBox = null;
+  function openPosterZoom(page){
+    if(!zoomBox){
+      zoomBox = document.createElement('div');
+      zoomBox.className = 'poster-zoom';
+      zoomBox.setAttribute('role','dialog');
+      zoomBox.setAttribute('aria-label','Poster, zoomed in');
+      zoomBox.innerHTML = '<div class="poster-zoom-bar">' +
+        '<button type="button" data-z="-1" aria-label="Zoom out">−</button>' +
+        '<button type="button" data-z="1" aria-label="Zoom in">+</button>' +
+        '<span class="poster-zoom-hint">Scroll to move around</span>' +
+        '<button type="button" class="poster-zoom-close" aria-label="Close">✕ Close</button></div>' +
+        '<div class="poster-zoom-scroll"><canvas></canvas></div>';
+      document.body.appendChild(zoomBox);
+      zoomBox.querySelector('.poster-zoom-close').addEventListener('click', closeZoom);
+      zoomBox.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeZoom(); });
+      zoomBox.querySelectorAll('[data-z]').forEach(function(b){
+        b.addEventListener('click', function(){ setZoom(zoomBox._zoom + (+b.dataset.z) * 0.5); });
+      });
+    }
+    zoomBox._page = page;
+    zoomBox.hidden = false;
+    document.documentElement.classList.add('poster-zoom-open');
+    zoomBox.querySelector('.poster-zoom-close').focus();
+    setZoom(1.5);
+  }
+  function setZoom(z){
+    z = Math.max(1, Math.min(4, z));
+    zoomBox._zoom = z;
+    var page = zoomBox._page;
+    var scroller = zoomBox.querySelector('.poster-zoom-scroll');
+    var canvas = zoomBox.querySelector('canvas');
+    var base = page.getViewport({scale:1});
+    var cssW = scroller.clientWidth * z;          // zoom 1 = fit the screen width
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var scale = Math.min(cssW * dpr / base.width, 8000 / base.width); // cap canvas size
+    var vp = page.getViewport({scale:scale});
+    canvas.width = Math.floor(vp.width);
+    canvas.height = Math.floor(vp.height);
+    canvas.style.width = cssW + 'px';
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    page.render({canvasContext:ctx, viewport:vp});
+  }
+  function closeZoom(){
+    zoomBox.hidden = true;
+    document.documentElement.classList.remove('poster-zoom-open');
   }
 
   function loadView(view){
