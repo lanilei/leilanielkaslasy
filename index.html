@@ -524,6 +524,7 @@
     display:block;
   }
   .currently-spotlight + .currently-spotlight{margin-top:clamp(24px,4vw,36px);}
+  .currently-badges{justify-content:center;margin:-.3rem 0 1rem;}
   .currently-standalone-title{
     font-family:var(--font-heading);
     font-weight:800;
@@ -1766,13 +1767,14 @@
       </div>
     </div>
 
-    <div class="currently-spotlight reveal">
+    <div class="currently-spotlight reveal" data-badges="design accessibility leadership sustainability">
       <div class="currently-marks">
         <span class="currently-kadc-logo-wrap">
           <img src="images/kadc-logo.png" alt="Kabarnet Adaptive Design Center logo" class="currently-kadc-logo">
         </span>
       </div>
       <h3 class="currently-standalone-title">Back to School Looks a Little Different This Year</h3>
+      <div class="item-badges currently-badges"><span class="badge design">Design</span><span class="badge accessibility">Accessibility</span><span class="badge leadership">Leadership</span><span class="badge sustainability">Sustainability</span></div>
       <p>Learn about my time with Kabarnet School for the DeafBlind — starting a workshop and training the teachers in adaptive design so that we can improve how we support learners' wellbeing.</p>
       <figure class="currently-photo">
         <img src="images/currently-kadc-photo.jpg" alt="Leilani kneeling beside a teacher using a jigsaw to cut wood on a workbench outside the school">
@@ -3134,7 +3136,8 @@
   // Category filtering, driven by the hero filter bubbles
   var bubbles = document.querySelectorAll('.topic-bubble');
   var lists = document.querySelectorAll('.item-list');
-  var allItems = document.querySelectorAll('.item');
+  // Project/research/experience cards plus any other tagged card (e.g. the Kenya residency)
+  var allItems = document.querySelectorAll('.item, .currently-spotlight[data-badges]');
   var activeFilter = null;
   var showAllBtn = null;
 
