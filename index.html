@@ -1066,6 +1066,9 @@
   .story p{margin:0 0 .8rem;line-height:1.7;color:var(--ink);}
   @media (max-width:640px){ .story{grid-template-columns:1fr;} }
 
+  .story-video{max-width:260px;justify-self:center;width:100%;}
+  .story-video .loop-video{aspect-ratio:478/850;box-shadow:6px 6px 0 var(--blue);}
+
   /* Before / after photo pair inside a story */
   .before-after{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
   .before-after figure{margin:0;}
@@ -2158,7 +2161,9 @@
           </div>
         </article>
         <article class="story">
-          <div class="photo-slot">Photos coming soon</div>
+          <figure class="split-media story-video">
+            <video class="loop-video" data-src="images/kabarnet-celebration.mp4" muted loop playsinline preload="none" width="478" height="850" aria-label="Leilani and a teacher clapping and celebrating beside a learner in her wheelchair; another learner's face is covered with a flower for privacy"></video>
+          </figure>
           <div>
             <h3 class="story-title">Eating independently</h3>
             <p>Three learners who couldn't eat on their own before can now feed themselves with built-up spoon handles.</p>
