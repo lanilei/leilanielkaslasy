@@ -1234,6 +1234,9 @@
     color:var(--blue);
     opacity:.8;
   }
+  /* Weeks that haven't happened yet */
+  .role-upcoming::before{background:var(--cream);border-style:dashed;}
+  .role-upcoming .role-title,.role-upcoming p{opacity:.75;}
   .role-title{
     font-family:var(--font-heading);
     font-weight:800;
@@ -2267,10 +2270,14 @@
           <h3 class="role-title">Engaging the learners</h3>
           <p>Planned weekly activities for the learners, including an art club, a run club and a dance club, and brought them into the workshop activities.</p>
         </li>
-        <li class="role">
-          <p class="role-when">Week 9</p>
+        <li class="role role-upcoming">
+          <p class="role-when">Week 9 · Upcoming</p>
           <h3 class="role-title">Independent Project Push</h3>
           <p>As people understood and embraced what the workshop is doing, new ideas arose. With the end of term approaching, we planned a big push, with assigned project teams fabricating the project queue.</p>
+        </li>
+        <li class="role role-upcoming">
+          <p class="role-when">Week 10 · Upcoming</p>
+          <h3 class="role-title">Coming soon</h3>
         </li>
       </ol>
       <p class="doc-text doc-text-after">The structured weeks were productive, but I wanted to move teachers quickly from following instructions to solving problems on their own. I interviewed 40 teachers, met with 70 learners, and scoped an individualized project for each teacher and learner. With teachers' limited time, I knew much of the work would fall to me, so I made sure to bring them into the workshop at the critical points: ideating, designing, and making the first prototype together.</p>
