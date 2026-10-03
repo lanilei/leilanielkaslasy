@@ -1026,7 +1026,9 @@
   .story-video{max-width:260px;justify-self:center;width:100%;}
   .story-video .loop-video{aspect-ratio:478/850;box-shadow:6px 6px 0 var(--blue);}
 
-  /* How-to guide cards: tall illustrated guides, click to open full size */
+  /* How-to guide cards. Two-page guides flip over (like turning a card) on
+     hover, or with the Page 2 button on touch screens; clicking opens the
+     full guide. */
   .guide-grid{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
@@ -1042,25 +1044,53 @@
     background:var(--cream);
     border-radius:12px;
     box-shadow:6px 6px 0 var(--blue);
-    text-decoration:none;
-    transition:transform .15s ease;
   }
-  .guide-card:hover,.guide-card:focus-visible{transform:translateY(-3px);}
-  .guide-card img{
+  .guide-open{display:block;perspective:1400px;border-radius:8px;}
+  .guide-open:focus-visible{outline:3px solid var(--blue);outline-offset:3px;}
+  .guide-pages{
+    position:relative;
+    aspect-ratio:1000/1294;
+    transform-style:preserve-3d;
+    transition:transform .7s cubic-bezier(.3,.7,.2,1);
+  }
+  .guide-face{
+    position:absolute;
+    inset:0;
     width:100%;
-    aspect-ratio:3/4;
+    height:100%;
     object-fit:cover;
     object-position:top;
     background:#fff;
     border-radius:8px;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
   }
+  .guide-back{transform:rotateY(180deg);}
+  @media (hover:hover){
+    .guide-two-page:hover .guide-pages{transform:rotateY(180deg);}
+  }
+  .guide-two-page.is-flipped .guide-pages{transform:rotateY(180deg);}
+  @media (prefers-reduced-motion:reduce){
+    .guide-pages{transition:none;}
+  }
+  .guide-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;}
   .guide-title{
     font-family:var(--font-heading);
     font-weight:700;
     font-size:1.05rem;
     color:var(--blue);
   }
-  .guide-title::after{content:" ↗";opacity:.6;}
+  .guide-flip-btn{
+    flex:none;
+    padding:.3rem .7rem;
+    border:2px solid var(--blue);
+    border-radius:999px;
+    background:transparent;
+    color:var(--blue);
+    font:700 .78rem var(--font-body);
+    cursor:pointer;
+  }
+  @media (hover:hover){ .guide-flip-btn{display:none;} }
 
   /* Before / after photo pair inside a story */
   .before-after{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
@@ -2134,20 +2164,34 @@
 
     <div class="doc-block">
       <div class="doc-head"><h2>How-To Guides</h2></div>
-      <p class="doc-text">Illustrated step-by-step guides I made so anyone in the workshop can build these devices, whatever their experience with tools. Click a guide to open it full size.</p>
+      <p class="doc-text">Illustrated step-by-step guides I made so anyone in the workshop can build these devices, whatever their experience with tools. Hover over a two-page guide to flip it, or click any guide to open it full size.</p>
       <div class="guide-grid">
-        <a class="guide-card" href="images/guide-tactile-cue-cards.jpg" target="_blank" rel="noopener">
-          <img src="images/guide-tactile-cue-cards.jpg" alt="Illustrated how-to guide for tactile cue cards in six steps: measure and mark 4 by 6 inches on wood, cut along the lines, drill through the wood and the object of reference, sand the block and round its edges, paint the block, and tie the object to the block with string" loading="lazy">
-          <span class="guide-title">Tactile Cue Cards</span>
-        </a>
-        <a class="guide-card" href="images/guide-custom-handles.jpg" target="_blank" rel="noopener">
-          <img src="images/guide-custom-handles.jpg" alt="Two-page illustrated how-to guide for custom handles in eleven steps: cut and peel a fresh branch, taper one end, cut to length, sand, notch the tapered end, snap and drill a spoon, screw it into the handle, fill gaps with wedges and sawdust glue, then sand flush. Bonus variations: toothbrush, pencil, paintbrush, and a version with a strap" loading="lazy">
-          <span class="guide-title">Custom Handles</span>
-        </a>
-        <a class="guide-card" href="images/guide-sensory-play-stand.jpg" target="_blank" rel="noopener">
-          <img src="images/guide-sensory-play-stand.jpg" alt="Two-page illustrated how-to guide for a sensory play stand: measure the learner's reach sitting, standing or lying down; cut PVC pipe into labeled pieces; assemble the frame with elbows and T joints; string beads, bells and textiles; and tie them to the frame. Bonus ideas: paint the frame, make interchangeable sensory rods, and fill the base pipes with rocks for stability" loading="lazy">
-          <span class="guide-title">Sensory Play Stand</span>
-        </a>
+        <div class="guide-card">
+          <a class="guide-open" href="images/guide-tactile-cue-cards.jpg" target="_blank" rel="noopener" aria-label="Open the Tactile Cue Cards guide full size">
+            <div class="guide-pages">
+              <img class="guide-face" src="images/guide-tactile-cue-cards.jpg" alt="Illustrated how-to guide for tactile cue cards in six steps: measure and mark 4 by 6 inches on wood, cut along the lines, drill through the wood and the object of reference, sand the block and round its edges, paint the block, and tie the object to the block with string" loading="lazy">
+            </div>
+          </a>
+          <div class="guide-foot"><span class="guide-title">Tactile Cue Cards</span></div>
+        </div>
+        <div class="guide-card guide-two-page">
+          <a class="guide-open" href="images/guide-custom-handles.jpg" target="_blank" rel="noopener" aria-label="Open the Custom Handles guide full size, both pages">
+            <div class="guide-pages">
+              <img class="guide-face" src="images/guide-custom-handles-1.jpg" alt="Custom handles guide, page 1: cut and peel a fresh branch, taper one end with a chisel, cut to length, sand smooth, and notch the tapered end to fit a spoon" loading="lazy">
+              <img class="guide-face guide-back" src="images/guide-custom-handles-2.jpg" alt="Custom handles guide, page 2: snap the spoon, drill and screw it into the handle, fill gaps with wedges and sawdust glue, then sand flush. Bonus variations for a toothbrush, pencil, paintbrush, and a version with a strap" loading="lazy">
+            </div>
+          </a>
+          <div class="guide-foot"><span class="guide-title">Custom Handles</span><button type="button" class="guide-flip-btn" aria-pressed="false">Page 2 ↻</button></div>
+        </div>
+        <div class="guide-card guide-two-page">
+          <a class="guide-open" href="images/guide-sensory-play-stand.jpg" target="_blank" rel="noopener" aria-label="Open the Sensory Play Stand guide full size, both pages">
+            <div class="guide-pages">
+              <img class="guide-face" src="images/guide-sensory-play-stand-1.jpg" alt="Sensory play stand guide, page 1: measure the learner's reach sitting, standing or lying down, cut PVC pipe into labeled pieces, and assemble the frame with elbows and T joints" loading="lazy">
+              <img class="guide-face guide-back" src="images/guide-sensory-play-stand-2.jpg" alt="Sensory play stand guide, page 2: string beads, bells and textiles and tie them to the frame. Bonus ideas: paint the frame, make interchangeable sensory rods, and fill the base pipes with rocks for stability" loading="lazy">
+            </div>
+          </a>
+          <div class="guide-foot"><span class="guide-title">Sensory Play Stand</span><button type="button" class="guide-flip-btn" aria-pressed="false">Page 2 ↻</button></div>
+        </div>
       </div>
     </div>
 
@@ -3689,6 +3733,21 @@
   updateHud();
   setWind();
   resize();
+})();
+</script>
+
+<script>
+(function(){
+  // "Page 2" button flips a two-page how-to guide on touch screens
+  // (on devices with a mouse, hovering flips it via CSS).
+  document.querySelectorAll('.guide-flip-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var card = btn.closest('.guide-card');
+      var flipped = card.classList.toggle('is-flipped');
+      btn.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+      btn.textContent = flipped ? 'Page 1 ↻' : 'Page 2 ↻';
+    });
+  });
 })();
 </script>
 
