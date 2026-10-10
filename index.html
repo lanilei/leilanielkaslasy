@@ -898,6 +898,45 @@
     font-variant-numeric:tabular-nums;
   }
 
+  /* "At a glance" strip at the top of project pages */
+  .glance{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:clamp(10px,2vw,18px);
+    max-width:960px;
+    margin:clamp(20px,3vw,32px) 0 clamp(18px,3vw,26px);
+  }
+  .glance > div{padding:.9rem 1rem;background:rgba(255,255,255,.5);border-radius:10px;border-top:4px solid var(--blue);}
+  .glance dt{
+    font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--blue);margin-bottom:.3rem;
+  }
+  .glance dd{margin:0;font-size:.92rem;line-height:1.5;color:var(--ink);}
+  @media (max-width:760px){ .glance{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  @media (max-width:440px){ .glance{grid-template-columns:1fr;} }
+
+  /* Collapsed "Dig deeper" section holding the full documents */
+  .deep-dive{
+    max-width:960px;
+    margin:clamp(36px,6vw,56px) auto 0;
+    border:3px solid var(--blue);
+    border-radius:12px;
+    background:rgba(255,255,255,.35);
+  }
+  .deep-dive > summary{
+    cursor:pointer;
+    list-style:none;
+    padding:1rem 1.2rem;
+    font-family:var(--font-heading);
+    font-weight:800;
+    font-size:clamp(1.1rem,2vw,1.3rem);
+    color:var(--blue);
+  }
+  .deep-dive > summary::-webkit-details-marker{display:none;}
+  .deep-dive > summary::before{content:"▸ ";display:inline-block;transition:transform .2s ease;}
+  .deep-dive[open] > summary::before{transform:rotate(90deg);}
+  .deep-dive > .doc-block{margin:0;padding:0 1.2rem 1.4rem;}
+
   /* Headline numbers on detail pages */
   .stat-row{
     display:grid;
@@ -2485,28 +2524,84 @@
     <div class="subpage-topbar">
       <a href="#experience" class="subpage-back" data-subpage-close>← Back to Portfolio</a>
     </div>
-    <p class="subpage-eyebrow">Engineering Team Lead · Xdemics Clinic</p>
+    <p class="subpage-eyebrow">Harvey Mudd Engineering Clinic × XDemics · 2025–2026</p>
     <h1 class="subpage-title">Multi-Axis Motion and Vibration System for Bioreactor Cell Seeding and Recovery</h1>
 
+    <dl class="glance">
+      <div><dt>The challenge</dt><dd>Bioreactors are still rotated, tilted and shaken by hand, a bottleneck for scaling up life-saving biologics.</dd></div>
+      <div><dt>My role</dt><dd>Fall Team Lead on an eight-person clinic team.</dd></div>
+      <div><dt>Partner</dt><dd>XDemics, a bioreactor company; advised by Prof. Angie Lee.</dd></div>
+      <div><dt>Outcome</dt><dd>A working proof-of-concept that automates wetting, seeding and cell recovery.</dd></div>
+    </dl>
+
+    <div class="stat-row">
+      <div class="stat"><span class="stat-num">&gt;95%</span><span class="stat-label">of cells detached and recovered by vibration</span></div>
+      <div class="stat"><span class="stat-num">~84%</span><span class="stat-label">cell viability after recovery</span></div>
+      <div class="stat"><span class="stat-num">15°</span><span class="stat-label">minimum tilt for bubble-free wetting</span></div>
+      <div class="stat"><span class="stat-num">8</span><span class="stat-label">students across two semesters</span></div>
+    </div>
+
     <div class="doc-block">
-      <div class="doc-head">
-        <h2>Poster</h2>
-        <a href="docs/xdemics-poster.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+      <div class="doc-head"><h2>The Challenge</h2></div>
+      <p class="doc-text">XDemics builds high-density bioreactors that grow cells for therapies. Every bioreactor has to be rotated, tilted and vibrated at precise moments to fill it with media, seed it with cells and later shake the cells free. Today that's done by hand, which limits how many can run at once, adds contamination risk and makes results vary from person to person. Our brief: design, build and test a robotic system to automate it.</p>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>What We Built</h2></div>
+      <div class="split">
+        <figure class="split-media"><img src="images/xdemics-rotation.jpg" alt="CAD render of the spinner: a bioreactor clamped between two blue fixtures on a rotating axle, driven by a belt and motor, on a metal frame" loading="lazy"></figure>
+        <div class="split-text">
+          <p><strong>Rotation and tilt.</strong> A belt-driven "spinner" rotates the bioreactor 90° for seeding and 180° for transfection, sitting on a hinged tilt plate that a motorized pusher raises to tilt it for wetting. We chose this simple single-axis design over more complex alternatives for reliability.</p>
+        </div>
       </div>
-      <div class="doc-frame doc-frame-poster" style="--doc-ratio:2592/4032">
-        <div class="pdf-view" data-pdf="docs/xdemics-poster.pdf" role="document" aria-label="Xdemics clinic poster"></div>
+      <figure class="doc-figure doc-figure-top">
+        <img src="images/xdemics-fixture.jpg" alt="The bioreactor fixture with labels: vibrator slot, bioreactor slots, pin slot, backing, and the plank that makes the fixtures rotate together" loading="lazy">
+        <figcaption>Fixturing and agitation: slotted guides lock the bioreactor in place and couple a vibrator directly to it.</figcaption>
+      </figure>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Testing</h2></div>
+      <div class="split">
+        <div class="split-text">
+          <p><strong>Wetting.</strong> We perfused a five-membrane bioreactor at increasing tilt angles to find the minimum angle that fills every well without trapping air. Everything below 15° failed, even with vibration; 15° passed.</p>
+        </div>
+        <figure class="split-media"><img src="images/xdemics-wetting.jpg" alt="Wetting test table: 0, 5 and 10 degrees fail, 10 degrees with vibration fails, 15 degrees passes; photos show a membrane with trapped air bubbles versus one evenly wetted" loading="lazy"></figure>
+      </div>
+      <div class="split doc-figure-top">
+        <figure class="split-media"><img src="images/xdemics-cells.jpg" alt="Four microscope images of HEK293 cells from the site visit tests, showing cells clumped and removed from the wells, and a better single-cell suspension in test 5" loading="lazy"></figure>
+        <div class="split-text">
+          <p><strong>Cell recovery at XDemics.</strong> On a site visit to XDemics, we ran our vibration system with live HEK293 cells. Combined with an enzyme treatment, five minutes of vibration detached more than 95% of adherent cells, and an incubate-and-shake cycle kept about 84% of them alive.</p>
+        </div>
       </div>
     </div>
 
     <div class="doc-block">
-      <div class="doc-head">
-        <h2>Final Report</h2>
-        <a href="docs/xdemics-final-report.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
-      </div>
-      <div class="doc-frame doc-frame-report">
-        <div class="pdf-view" data-pdf="docs/xdemics-final-report.pdf" role="document" aria-label="Xdemics clinic final report"></div>
-      </div>
+      <div class="doc-head"><h2>What's Next</h2></div>
+      <p class="doc-text">The system proved that a simple, mechanically driven approach can reliably handle the key bioreactor operations. Next steps for XDemics: tune the vibrator's distance for better energy transfer, add a motor control system for full automation, and design for cleanroom standards.</p>
     </div>
+
+    <details class="deep-dive">
+      <summary>Dig deeper: poster and full report</summary>
+      <div class="doc-block">
+        <div class="doc-head">
+          <h2>Poster</h2>
+          <a href="docs/xdemics-poster.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+        </div>
+        <div class="doc-frame doc-frame-poster" style="--doc-ratio:2592/4032">
+          <div class="pdf-view" data-pdf="docs/xdemics-poster.pdf" role="document" aria-label="Xdemics clinic poster"></div>
+        </div>
+      </div>
+      <div class="doc-block">
+        <div class="doc-head">
+          <h2>Final Report</h2>
+          <a href="docs/xdemics-final-report.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+        </div>
+        <div class="doc-frame doc-frame-report">
+          <div class="pdf-view" data-pdf="docs/xdemics-final-report.pdf" role="document" aria-label="Xdemics clinic final report"></div>
+        </div>
+      </div>
+    </details>
   </div>
 </div>
 
@@ -3462,11 +3557,13 @@
 
   function renderPage(slot){
     var page = slot._pdfPage;
-    var cssWidth = slot.clientWidth || 800;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
     // Posters pack lots of small text into a small box, so draw them at
     // double resolution; they stay crisp when the page itself is zoomed.
     var isPoster = !!slot.closest('.doc-frame-poster');
+    // A poster inside a just-opened "Dig deeper" section can measure narrow
+    // mid-layout, so never draw it smaller than its full frame width.
+    var cssWidth = Math.max(slot.clientWidth || 0, isPoster ? 760 : 0) || 800;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
     var boost = isPoster ? 2 : 1;
     var base = page.getViewport({scale:1});
     var viewport = page.getViewport({scale:(cssWidth * dpr * boost) / base.width});
