@@ -915,6 +915,36 @@
   @media (max-width:760px){ .glance{grid-template-columns:repeat(2,minmax(0,1fr));} }
   @media (max-width:440px){ .glance{grid-template-columns:1fr;} }
 
+  /* A playful aside box on a project page */
+  .side-quest{
+    max-width:960px;
+    margin:clamp(36px,6vw,56px) auto 0;
+    padding:clamp(18px,3vw,28px);
+    background:var(--cream);
+    border:3px dashed var(--amber);
+    border-radius:16px;
+    transform:rotate(-.4deg);
+  }
+  .side-quest-tag{
+    display:inline-block;
+    margin:0 0 .4rem;
+    padding:.2rem .8rem;
+    border-radius:999px;
+    background:var(--amber);
+    color:var(--cream);
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .side-quest-title{
+    margin:0 0 1rem;
+    font-family:var(--font-heading);
+    font-weight:800;
+    font-size:clamp(1.5rem,3vw,2rem);
+    color:var(--blue);
+  }
+
   /* Collapsed "Dig deeper" section holding the full documents */
   .deep-dive{
     max-width:960px;
@@ -2908,6 +2938,23 @@
         </div>
       </div>
     </div>
+
+    <section class="side-quest">
+      <p class="side-quest-tag">Side quest</p>
+      <h2 class="side-quest-title">A Slice of Material Science for Fun</h2>
+      <div class="split">
+        <figure class="split-media"><img src="images/pizza-slide-test.jpg" alt="Leilani tilting a wooden pizza peel and a metal tray with a disk of dough on each, measuring the slide angle with a phone protractor" loading="lazy"><figcaption>Measuring the angle where the dough starts to slide.</figcaption></figure>
+        <div class="split-text">
+          <p>Every pizza maker faces the same dilemma: too little flour and the dough sticks to the peel, too much and it burns in the oven. So we brought tribology to the kitchen.</p>
+          <p>We dusted identical rounds of dough with measured amounts of fine and coarse semolina, set them on wooden and metal peels, and tilted until they slid, using the slide angle to calculate the friction.</p>
+          <p>The sweet spot: about <strong>0.4–0.5% semolina by weight</strong>. Past that, the dough slides just as easily, and the extra flour only burns.</p>
+        </div>
+      </div>
+      <figure class="doc-figure doc-figure-top">
+        <img src="images/pizza-results.jpg" alt="Two pizzas on wooden boards: one with a golden crust baked with the optimal amount of semolina, and a pepperoni pizza with a burned crust from too much semolina" loading="lazy">
+        <figcaption>Just right (left) vs. too much semolina (right).</figcaption>
+      </figure>
+    </section>
 
     <details class="deep-dive" open>
       <summary>Dig Deeper: Talks and Posters</summary>
