@@ -3141,32 +3141,85 @@
     <div class="subpage-topbar">
       <a href="#experience" class="subpage-back" data-subpage-close>← Back to Portfolio</a>
     </div>
-    <p class="subpage-eyebrow">Hardware Engineer · Auburn University &amp; USDA Clinic</p>
+    <p class="subpage-eyebrow">Harvey Mudd Engineering Clinic × Auburn University &amp; USDA · 2024–2025</p>
     <h1 class="subpage-title">Digital AC-DC Electropenetrograph (EPG)</h1>
-    <figure class="doc-figure doc-figure-narrow doc-figure-top">
-      <img src="images/usda-testing.jpg" alt="Leilani smiling as she positions a wire probe on a bean plant inside a metal-mesh Faraday cage at the USDA, while a teammate works on a laptop behind her" loading="lazy">
-      <figcaption>Testing the electropenetrograph with a plant and insect inside the Faraday cage at the USDA.</figcaption>
-    </figure>
+
+    <dl class="glance">
+      <div><dt>The challenge</dt><dd>The instrument used to study how disease-spreading insects feed fills an 8×4-foot bench and needs wall power.</dd></div>
+      <div><dt>My role</dt><dd>Hardware Engineer on an eight-person clinic team.</dd></div>
+      <div><dt>Partners</dt><dd>Auburn University and the USDA, with EPG Technologies; funded by NSF and USDA.</dd></div>
+      <div><dt>Outcome</dt><dd>A hand-held, battery-powered, Bluetooth EPG whose traces matched the legacy monitor.</dd></div>
+    </dl>
+
+    <div class="stat-row">
+      <div class="stat"><span class="stat-num">7000×</span><span class="stat-label">maximum amplification of the insect's signal</span></div>
+      <div class="stat"><span class="stat-num">46 ft</span><span class="stat-label">reliable Bluetooth range, through lab walls</span></div>
+      <div class="stat"><span class="stat-num">10 GΩ</span><span class="stat-label">selectable resistance for different insects</span></div>
+      <div class="stat"><span class="stat-num">100 Hz</span><span class="stat-label">live feeding data streamed to the app</span></div>
+    </div>
 
     <div class="doc-block">
-      <div class="doc-head">
-        <h2>Poster</h2>
-        <a href="docs/usda-poster.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
-      </div>
-      <div class="doc-frame doc-frame-poster" style="--doc-ratio:2592/4032">
-        <div class="pdf-view" data-pdf="docs/usda-poster.pdf" role="document" aria-label="Auburn-USDA Projects Day poster"></div>
+      <div class="doc-head"><h2>The Challenge</h2></div>
+      <div class="split">
+        <div class="split-text">
+          <p>Insects like the Asian citrus psyllid and mosquitoes spread diseases that threaten crops, livestock and people. An electropenetrograph (EPG) lets researchers study how these insects feed by making the insect part of an electrical circuit: its feeding shows up as changes in the measured voltage.</p>
+          <p>But the existing AC-DC EPG is bulky and wired to wall power, which makes it nearly impossible to use in the field, especially for blood-feeding insects studied on large livestock. Our goal: shrink it, cut the wires, and improve its signal.</p>
+        </div>
+        <figure class="split-media"><img src="images/usda-legacy.jpg" alt="The legacy EPG: a large control box covered in gain and offset knobs and cables, next to a Faraday cage holding a plant" loading="lazy"><figcaption>The legacy system: a control box of knobs plus a Faraday cage.</figcaption></figure>
       </div>
     </div>
 
     <div class="doc-block">
-      <div class="doc-head">
-        <h2>Final Report</h2>
-        <a href="docs/usda-final-report.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
-      </div>
-      <div class="doc-frame doc-frame-report">
-        <div class="pdf-view" data-pdf="docs/usda-final-report.pdf" role="document" aria-label="Auburn-USDA final report"></div>
+      <div class="doc-head"><h2>What We Built</h2></div>
+      <figure class="doc-figure">
+        <img src="images/usda-system.jpg" alt="System overview: a custom analog board applies a stimulus to the plant and amplifies and filters the insect's signal; a digital board with an ADC, Bluetooth modem and battery management sends feeding data to software that shows live plots and adjustable settings" loading="lazy">
+        <figcaption>A custom analog board conditions the insect's signal, a digital board digitizes it and streams it over Bluetooth, and an app shows it live.</figcaption>
+      </figure>
+      <div class="split doc-figure-top">
+        <div class="split-text">
+          <p><strong>Analog board.</strong> Applies a 1000 Hz (AC) or DC excitation voltage, selects a resistance up to 10 GΩ for the insect under test, amplifies its waveform up to 7000×, shifts it into the converter's range and filters it to prevent aliasing.</p>
+          <p><strong>Digital board and software.</strong> Firmware on an nRF5340 board configures the analog chips and relays data over Bluetooth to an app where researchers adjust settings and watch feeding in real time.</p>
+        </div>
+        <figure class="split-media"><img src="images/usda-board.jpg" alt="Close-up of the compact 2025 AC-DC EPG circuit board in its enclosure, with BNC connectors and ribbon cables" loading="lazy"><figcaption>The new EPG, small enough to hold in one hand.</figcaption></figure>
       </div>
     </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Results</h2></div>
+      <div class="split">
+        <figure class="split-media"><img src="images/usda-testing.jpg" alt="Leilani smiling as she positions a wire probe on a bean plant inside a metal-mesh Faraday cage at the USDA, while a teammate works on a laptop behind her" loading="lazy"><figcaption>Testing at the USDA research center in Parlier, CA.</figcaption></figure>
+        <div class="split-text">
+          <p>On site visits to the USDA research center in Parlier, California, our prototype recorded pea aphids feeding, and its traces matched the legacy monitor through each phase: probing, the potential drops as mouthparts reach the phloem, and the "fish skeleton" pattern of active feeding.</p>
+          <p>Bluetooth held up to 46 feet through lab walls, and entomologists could run experiments through our interface.</p>
+        </div>
+      </div>
+      <figure class="doc-figure doc-figure-top">
+        <img src="images/usda-results.jpg" alt="Side-by-side voltage traces from the legacy monitor and the clinic prototype for three feeding phases: probing, potential drops, and fish skeletons" loading="lazy">
+        <figcaption>Legacy monitor (top) vs. our prototype (bottom) across three feeding phases.</figcaption>
+      </figure>
+    </div>
+
+    <details class="deep-dive">
+      <summary>Dig deeper: poster and full report</summary>
+      <div class="doc-block">
+        <div class="doc-head">
+          <h2>Poster</h2>
+          <a href="docs/usda-poster.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+        </div>
+        <div class="doc-frame doc-frame-poster" style="--doc-ratio:2592/4032">
+          <div class="pdf-view" data-pdf="docs/usda-poster.pdf" role="document" aria-label="Auburn-USDA Projects Day poster"></div>
+        </div>
+      </div>
+      <div class="doc-block">
+        <div class="doc-head">
+          <h2>Final Report</h2>
+          <a href="docs/usda-final-report.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+        </div>
+        <div class="doc-frame doc-frame-report">
+          <div class="pdf-view" data-pdf="docs/usda-final-report.pdf" role="document" aria-label="Auburn-USDA final report"></div>
+        </div>
+      </div>
+    </details>
   </div>
 </div>
 
