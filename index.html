@@ -1352,6 +1352,8 @@
     max-width:720px;
     margin:clamp(20px,3vw,28px) auto 0;
   }
+  .photo-pair-even{grid-template-columns:1fr 1fr;max-width:620px;}
+  .photo-pair-even img{aspect-ratio:1;object-fit:cover;}
   @media (max-width:520px){
     .photo-pair{grid-template-columns:1fr;max-width:400px;}
   }
@@ -3116,23 +3118,71 @@
     <div class="subpage-topbar">
       <a href="#projects" class="subpage-back" data-subpage-close>← Back to Portfolio</a>
     </div>
+    <p class="subpage-eyebrow">Harvey Mudd College · E80 Experimental Engineering · Spring 2024</p>
     <h1 class="subpage-title">Autonomous Surface Vehicle Design</h1>
 
-    <div class="sim-stack">
-      <img src="images/asv-sim-2.png" alt="Flow simulation around a cone-shaped nose showing a narrower wake" loading="lazy">
-      <img src="images/asv-sim-1.png" alt="Flow simulation around a flat, box-shaped nose showing a wide low-velocity wake" loading="lazy">
-      <img src="images/asv-sim-3.png" alt="Flow simulation around a dome-shaped nose with the wake region highlighted" loading="lazy">
+    <dl class="glance">
+      <div><dt>The question</dt><dd>Which nose shape is more hydrodynamic, a cone or a dome, and how well does simulation predict the real ocean?</dd></div>
+      <div><dt>Team</dt><dd>Four students: Kala Romanowski, Kanoa Parker, Leilani Elkaslasy and Wilson Zambrano.</dd></div>
+      <div><dt>Approach</dt><dd>A sensor-laden robot measured drag in the ocean at Dana Point; COMSOL simulated the same shapes.</dd></div>
+      <div><dt>Finding</dt><dd>The cone beat the dome in both, but the real ocean ran 20–30% slower than simulation predicted.</dd></div>
+    </dl>
+
+    <div class="stat-row">
+      <div class="stat"><span class="stat-num">0.96</span><span class="stat-label">measured drag coefficient, cone nose</span></div>
+      <div class="stat"><span class="stat-num">1.44</span><span class="stat-label">measured drag coefficient, dome nose</span></div>
+      <div class="stat"><span class="stat-num">20–30%</span><span class="stat-label">slower in the ocean than simulation predicted</span></div>
+      <div class="stat"><span class="stat-num">5</span><span class="stat-label">onboard sensors read by a Teensy microcontroller</span></div>
     </div>
 
     <div class="doc-block">
-      <div class="doc-head">
-        <h2>Final Report</h2>
-        <a href="docs/asv-final-report.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+      <div class="doc-head"><h2>What We Built</h2></div>
+      <div class="split">
+        <figure class="split-media"><img src="images/asv-robot.jpg" alt="The surface robot in the ocean: a PVC frame with pool-noodle outrigger floats, a waterproof electronics box, and an anemometer on a mast, leaving a wake" loading="lazy"><figcaption>Deployed at Dana Point, followed by kayak.</figcaption></figure>
+        <div class="split-text">
+          <p>A PVC-framed surface robot with three motors and pool-noodle outriggers for stability. An arm below the waterline held swappable 3D-printed nose cones in front of a force sensor, so the drag on each nose could be measured directly.</p>
+          <p>Onboard sensors, all designed and calibrated by our team: two pressure sensors working as a pitot tube for speed, the force sensor for drag, and an anemometer and weather vane to account for wind.</p>
+        </div>
       </div>
-      <div class="doc-frame doc-frame-report">
-        <div class="pdf-view" data-pdf="docs/asv-final-report.pdf" role="document" aria-label="Autonomous Surface Vehicle final report"></div>
+      <div class="photo-pair photo-pair-even">
+        <figure class="split-media"><img src="images/asv-cone.jpg" alt="The 3D-printed light blue cone nose" loading="lazy"><figcaption>Cone nose</figcaption></figure>
+        <figure class="split-media"><img src="images/asv-dome.jpg" alt="The 3D-printed white dome nose" loading="lazy"><figcaption>Dome nose</figcaption></figure>
       </div>
     </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Simulation</h2></div>
+      <p class="doc-text">We modeled each nose shape in COMSOL with a laminar flow simulation to predict its drag coefficient.</p>
+      <div class="sim-stack">
+        <img src="images/asv-sim-2.png" alt="Flow simulation around a cone-shaped nose showing a narrower wake" loading="lazy">
+        <img src="images/asv-sim-1.png" alt="Flow simulation around a flat, box-shaped nose showing a wide low-velocity wake" loading="lazy">
+        <img src="images/asv-sim-3.png" alt="Flow simulation around a dome-shaped nose with the wake region highlighted" loading="lazy">
+      </div>
+    </div>
+
+    <div class="doc-block">
+      <div class="doc-head"><h2>Results &amp; What We Learned</h2></div>
+      <div class="split">
+        <figure class="split-media"><img src="images/asv-drag-chart.jpg" alt="Bar chart of drag coefficients: simulated cone 0.64, experimental cone 0.96, simulated dome 0.70, experimental dome 1.44, with error bars on the experimental values" loading="lazy"></figure>
+        <div class="split-text">
+          <p>Both methods agreed the cone is more hydrodynamic than the dome. But the measured drag was well above the simulation, because the real ocean isn't laminar: currents, motor vibration, surface texture and the robot's own frame all add drag the model leaves out.</p>
+          <p>Launch day brought countless setbacks, from a broken sensor to a borrowed microcontroller. The lesson stuck: test sensors and code early and often, and bring backups.</p>
+        </div>
+      </div>
+    </div>
+
+    <details class="deep-dive" open>
+      <summary>Dig Deeper: Full Report</summary>
+      <div class="doc-block">
+        <div class="doc-head">
+          <h2>Final Report</h2>
+          <a href="docs/asv-final-report.pdf" target="_blank" rel="noopener" class="doc-open">Open PDF ↗</a>
+        </div>
+        <div class="doc-frame doc-frame-report">
+          <div class="pdf-view" data-pdf="docs/asv-final-report.pdf" role="document" aria-label="Autonomous Surface Vehicle final report"></div>
+        </div>
+      </div>
+    </details>
   </div>
 </div>
 
