@@ -328,7 +328,7 @@
     align-items:start;
     margin-bottom:clamp(40px,6vw,64px);
   }
-  .about-photo{margin:0;}
+  .about-photo{margin:0;position:sticky;top:100px;}
   .about-photo img{
     width:100%;
     aspect-ratio:4/5;
@@ -352,7 +352,7 @@
   .about-copy strong{font-weight:700;}
   @media (max-width:760px){
     .about-grid{grid-template-columns:1fr;}
-    .about-photo{max-width:320px;margin-inline:auto;}
+    .about-photo{max-width:320px;margin-inline:auto;position:static;}
   }
 
   .info-cards{
