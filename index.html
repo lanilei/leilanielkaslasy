@@ -57,6 +57,14 @@
     padding-inline:clamp(20px,5vw,64px);
   }
 
+  /* Scale the whole site up on wide, unscaled screens (big monitors, 4K)
+     so the 1240px column fills a similar share of the window as on a laptop. */
+  @media (min-width:1800px){html{zoom:1.2;}}
+  @media (min-width:2200px){html{zoom:1.4;}}
+  @media (min-width:2600px){html{zoom:1.65;}}
+  @media (min-width:3000px){html{zoom:1.9;}}
+  @media (min-width:3400px){html{zoom:2.2;}}
+
   /* ---------- NAV ---------- */
   .nav{
     position:sticky;
@@ -3776,7 +3784,7 @@
     // A poster inside a just-opened "Dig deeper" section can measure narrow
     // mid-layout, so never draw it smaller than its full frame width.
     var cssWidth = Math.max(slot.clientWidth || 0, isPoster ? 760 : 0) || 800;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var dpr = Math.min((window.devicePixelRatio || 1) * (parseFloat(getComputedStyle(document.documentElement).zoom) || 1), 3);
     var boost = isPoster ? 2 : 1;
     var base = page.getViewport({scale:1});
     var viewport = page.getViewport({scale:(cssWidth * dpr * boost) / base.width});
@@ -3836,7 +3844,7 @@
     var canvas = zoomBox.querySelector('canvas');
     var base = page.getViewport({scale:1});
     var cssW = scroller.clientWidth * z;          // zoom 1 = fit the screen width
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var dpr = Math.min((window.devicePixelRatio || 1) * (parseFloat(getComputedStyle(document.documentElement).zoom) || 1), 3);
     var scale = Math.min(cssW * dpr / base.width, 8000 / base.width); // cap canvas size
     var vp = page.getViewport({scale:scale});
     canvas.width = Math.floor(vp.width);
@@ -4433,7 +4441,7 @@
         if(my !== token) return;
         var base = p.getViewport({scale:1});
         frame.style.aspectRatio = base.width + ' / ' + base.height;
-        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var dpr = Math.min((window.devicePixelRatio || 1) * (parseFloat(getComputedStyle(document.documentElement).zoom) || 1), 3);
         var vp = p.getViewport({scale:(frame.clientWidth || 800) * dpr / base.width});
         if(task) task.cancel();
         // Draw off-screen first so the old slide stays visible until the new one is ready.
