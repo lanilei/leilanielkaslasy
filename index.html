@@ -1356,6 +1356,8 @@
   .role-photo{margin:.9rem 0 0;max-width:300px;}
   .role-photos{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,20px);max-width:620px;}
   .role-photos .role-photo{max-width:none;}
+  .role-photos-3{grid-template-columns:repeat(3,1fr);max-width:none;}
+  @media (max-width:520px){ .role-photos-3{grid-template-columns:1fr 1fr;} }
   .role-photo img{width:100%;border-radius:10px;box-shadow:5px 5px 0 var(--blue);}
   .role-photo figcaption{margin-top:.6rem;font-size:.85rem;font-style:italic;color:var(--blue);}
   .role-duties{
@@ -2390,9 +2392,11 @@
           <p class="role-when">Week 8</p>
           <h3 class="role-title">Engaging the learners</h3>
           <p>Planned weekly activities for the learners, including an art club, a run club and a dance club, and brought them into the workshop activities.</p>
-          <div class="role-photos">
+          <div class="role-photos role-photos-3">
             <figure class="role-photo"><img src="images/kabarnet-week8-painting.jpg" alt="A smiling learner in a yellow hoodie, seated in her wheelchair, painting a curved wooden board pink with a brush; her eyes are covered with a flower for privacy" loading="lazy"><figcaption>A learner joining in on the painting.</figcaption></figure>
+            <figure class="role-photo"><img src="images/kabarnet-art-class.jpg" alt="Learners drawing with crayons at two long tables during art class while Leilani leans in to help; learners' faces are covered with flowers and stars for privacy" loading="lazy"><figcaption>Art class.</figcaption></figure>
             <figure class="role-photo"><img src="images/kabarnet-week8-sanding.jpg" alt="Leilani smiling in a selfie beside a learner in a green school sweater who is sanding the edge of a wooden board; his face is covered with a star for privacy" loading="lazy"><figcaption>Sanding a board in the workshop.</figcaption></figure>
+            <figure class="role-photo" style="grid-column:span 2;"><img src="images/kabarnet-week8-parallel-bars.jpg" alt="A learner in a yellow sweater kneeling on the floor inside a new set of PVC parallel bars, tapping a joint into place with a white mallet, while a teacher stands beside her; her face is covered with a star for privacy" loading="lazy"><figcaption>Helping assemble the parallel bars.</figcaption></figure>
           </div>
         </li>
         <li class="role role-upcoming">
