@@ -1296,6 +1296,7 @@
   }
   .portfolio-card .photo-slot{aspect-ratio:1;font-size:.75rem;}
   .portfolio-card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;}
+  .portfolio-card .loop-video{aspect-ratio:1;object-fit:cover;border:0;border-radius:8px;box-shadow:none;}
   @media (min-width:520px){
     .portfolio-card-wide{grid-column:span 2;}
     .portfolio-card-wide img{aspect-ratio:auto;height:auto;}
@@ -2557,7 +2558,7 @@
         <div class="portfolio-card"><img src="images/kabarnet-foot-straps.jpg" alt="A learner's sneakers held in place on a wheelchair's footrests by black webbing foot straps" loading="lazy"><h3>Foot straps</h3></div>
         <div class="portfolio-card"><img src="images/kabarnet-soft-footrest.jpg" alt="A wheelchair fitted with a soft green vinyl sling footrest, with its footrest posts padded and taped" loading="lazy"><h3>Soft footrest</h3></div>
         <div class="portfolio-card"><img src="images/kabarnet-pommel.jpg" alt="A wheelchair fitted with a padded gray chest harness and a fabric-covered pommel (abductor) cushion on the seat" loading="lazy"><h3>Pommel / abductor</h3></div>
-        <div class="portfolio-card"><img src="images/kabarnet-wheelchair-table.jpg" alt="A red-painted wooden wheelchair tray with a curved cutout for the learner, mounted across the armrests of a padded wheelchair" loading="lazy"><h3>Wheelchair table</h3></div>
+        <div class="portfolio-card"><video class="loop-video" data-src="images/kabarnet-wheelchair-table.mp4" poster="images/kabarnet-wheelchair-table.jpg" muted loop playsinline preload="none" aria-label="Video showing how the wheelchair table mechanism works"></video><h3>Wheelchair table</h3></div>
         <div class="portfolio-card"><img src="images/kabarnet-washing-table.jpg" alt="A learner in a wheelchair, seen from behind, pulled up to a wooden washing table holding a green basin, a cup, soap and toothpaste, while a teacher and another learner help" loading="lazy"><h3>Washing table</h3><p class="portfolio-note">Brings daily activities like washing and brushing teeth, once done on the ground, up to wheelchair height.</p></div>
         <div class="portfolio-card"><img src="images/kabarnet-gutter-garden.jpg" style="object-position:50% 58%;" alt="Learners, Leilani and a teacher gathered around a raised garden bed made from a reclaimed rain gutter, pressing seeds into the soil beside a row of green onions; learners' faces are covered with flowers and stars for privacy" loading="lazy"><h3>Accessible garden bed</h3><p class="portfolio-note">Made from a reclaimed rain gutter.</p></div>
         <div class="portfolio-card"><img src="images/kabarnet-beaded-mat.jpg" style="object-position:60% 50%;" alt="Teachers and a learner around a purple table, running their hands over a beaded mat of dark and light wooden beads strung onto plastic canvas; the learner's face is covered with a star for privacy" loading="lazy"><h3>Beaded sensory / massage mat</h3></div>
@@ -2876,7 +2877,7 @@
         <div class="portfolio-card"><img src="images/kabarnet-foot-straps.jpg" alt="A learner's sneakers held in place on a wheelchair's footrests by black webbing foot straps" loading="lazy"><h3>Foot straps</h3><p class="portfolio-note">Keep feet on the footrests.</p><span class="device-where">Kabarnet, Kenya</span></div>
         <div class="portfolio-card"><img src="images/kabarnet-soft-footrest.jpg" alt="A wheelchair fitted with a soft green vinyl sling footrest, with its footrest posts padded and taped" loading="lazy"><h3>Soft footrest</h3><p class="portfolio-note">Padded footrest.</p><span class="device-where">Kabarnet, Kenya</span></div>
         <div class="portfolio-card"><img src="images/kabarnet-pommel.jpg" alt="A wheelchair fitted with a padded gray chest harness and a fabric-covered pommel (abductor) cushion on the seat" loading="lazy"><h3>Pommel / abductor</h3><p class="portfolio-note">Block between the knees for better hip position.</p><span class="device-where">Kabarnet, Kenya</span></div>
-        <div class="portfolio-card"><img src="images/kabarnet-wheelchair-table.jpg" alt="A red-painted wooden wheelchair tray with a curved cutout for the learner, mounted across the armrests of a padded wheelchair" loading="lazy"><h3>Wheelchair table</h3><p class="portfolio-note">Tray table that fits over the wheelchair.</p><span class="device-where">Kabarnet, Kenya</span></div>
+        <div class="portfolio-card"><video class="loop-video" data-src="images/kabarnet-wheelchair-table.mp4" poster="images/kabarnet-wheelchair-table.jpg" muted loop playsinline preload="none" aria-label="Video showing how the wheelchair table mechanism works"></video><h3>Wheelchair table</h3><p class="portfolio-note">Tray table that fits over the wheelchair.</p><span class="device-where">Kabarnet, Kenya</span></div>
       </div>
     </div>
 
@@ -4510,13 +4511,13 @@
   function fill(reel){
   var cards = [];
   grid.querySelectorAll('.portfolio-card').forEach(function(card){
-    var img = card.querySelector('img');
+    var img = card.querySelector('img') || card.querySelector('video[poster]');
     var title = card.querySelector('h3');
     if(!img || !title) return;
     var a = document.createElement('div');
     a.className = 'reel-card';
     var copy = document.createElement('img');
-    copy.src = img.getAttribute('src');
+    copy.src = img.getAttribute('src') || img.getAttribute('poster');
     copy.alt = '';
     copy.loading = 'lazy';
     if(img.style.objectFit) copy.style.objectFit = img.style.objectFit;
